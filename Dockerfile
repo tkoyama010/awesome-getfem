@@ -1,6 +1,5 @@
 FROM getfemdoc/getfem:latest
 ENV DEBIAN_FRONTEND noninteractive
-ENV PYTHONPATH="/usr/local/lib/python3.6/site-packages:$PYTHONPATH"
 RUN apt update && apt -y install python3-pip
 
 # install the notebook package
