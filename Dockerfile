@@ -1,5 +1,6 @@
 FROM getfemdoc/getfem:latest
 ENV DEBIAN_FRONTEND noninteractive
+ENV PYTHONPATH="/usr/local/lib/python3.6/site-packages:$PYTHONPATH"
 RUN apt update && apt -y install python3-pip
 
 # install the notebook package
@@ -20,6 +21,5 @@ WORKDIR ${HOME}
 USER root
 COPY . ${HOME}
 RUN pip3 install -r requirements.txt
-RUN export PYTHONPATH="/usr/local/lib/python3.6/site-packages:$PYTHONPATH"
 RUN chown -R ${NB_USER} ${HOME}
 USER ${USER}
