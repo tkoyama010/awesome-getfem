@@ -1,9 +1,7 @@
 FROM getfemdoc/getfem:latest
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && \
-    apt -y install python3-pip && \
-    apt -y install python3-meshio && \
-    apt -y install python3-matplotlib
+    apt -y install python3-pip
 
 # install the notebook package
 RUN pip3 install --no-cache --upgrade pip && \
@@ -22,5 +20,6 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 USER root
 COPY . ${HOME}
+RUN pip3 install -r requirements.txt
 RUN chown -R ${NB_USER} ${HOME}
 USER ${USER}
