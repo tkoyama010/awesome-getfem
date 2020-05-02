@@ -1,8 +1,7 @@
-FROM ubuntu:20.04
+FROM getfemdoc/getfem:latest
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && \
     apt -y install python3-pip && \
-    apt -y install python3-getfem++ && \
     apt -y install python3-meshio && \
     apt -y install python3-matplotlib
 
