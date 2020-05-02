@@ -1,10 +1,7 @@
-FROM ubuntu:20.04
+FROM getfemdoc/getfem:latest
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update && \
-    apt -y install python3-pip && \
-    apt -y install python3-getfem++ && \
-    apt -y install python3-meshio && \
-    apt -y install python3-matplotlib
+ENV PYTHONPATH="/usr/local/lib/python3.6/site-packages:$PYTHONPATH"
+RUN apt update && apt -y install python3-pip
 
 # install the notebook package
 RUN pip3 install --no-cache --upgrade pip && \
@@ -23,5 +20,6 @@ RUN adduser --disabled-password \
 WORKDIR ${HOME}
 USER root
 COPY . ${HOME}
+RUN pip3 install -r requirements.txt
 RUN chown -R ${NB_USER} ${HOME}
 USER ${USER}
