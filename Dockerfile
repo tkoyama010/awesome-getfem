@@ -3,7 +3,6 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt -y install python3-pip
 
 # install the notebook package
-RUN ln -s /usr/local/lib/python3.6/site-packages/getfem /usr/local/lib/python3.6/dist-packages/getfem
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache notebook
 
