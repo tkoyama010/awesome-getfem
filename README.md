@@ -1,4 +1,4 @@
-# Jupyter notebook of GetFEM
+# Jupyter notebook using GetFEM
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/getfem-doc/getfem-binder/master?filepath=index.ipynb)
 
