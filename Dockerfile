@@ -1,4 +1,4 @@
-FROM getfemdoc/getfem:latest
+FROM getfemdoc/getfem:stable
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt -y install python3-pip
 
