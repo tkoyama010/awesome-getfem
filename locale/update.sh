@@ -2,13 +2,14 @@
 #!/bin/sh
 # update transifex pot and local po files
 set -ex
+LOCAL_PYTHON_PATH="/home/runner/.local/bin"
 # pull po files from transifex
 cd `dirname $0`
-sphinx-intl create-transifexrc
-sphinx-build -T -b gettext ../ pot
-sphinx-intl update-txconfig-resources -p pot -d .
+$LOCAL_PYTHON_PATH/sphinx-intl create-transifexrc
+$LOCAL_PYTHON_PATH/sphinx-build -T -b gettext ../ pot
+$LOCAL_PYTHON_PATH/sphinx-intl update-txconfig-resources -p pot -d .
 cat .tx/config
-tx push -s --skip
+$LOCAL_PYTHON_PATH/tx push -s --skip
 rm -Rf ja
-tx pull -l ja
+$LOCAL_PYTHON_PATH/tx pull -l ja
 git checkout .tx/config
