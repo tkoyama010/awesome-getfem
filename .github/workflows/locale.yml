@@ -10,6 +10,12 @@ jobs:
   script:
     runs-on: ubuntu-latest
     steps:
+    - name: Get Job URL
+      uses: Tiryoh/gha-jobid-action@v0
+      id: jobs
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        job_name: script
     - name: checkout
       uses: actions/checkout@master
       with:
