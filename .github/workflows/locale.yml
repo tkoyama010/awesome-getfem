@@ -9,18 +9,19 @@ on:
 jobs:
   script:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]
     steps:
-    - name: Get Job URL
-      uses: Tiryoh/gha-jobid-action@v0
-      id: jobs
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        job_name: script
     - name: checkout
       uses: actions/checkout@master
       with:
         token: ${{ secrets.PERSONAL_ACCESSTOKEN }}
         ref: ${{ github.ref }}
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
     - name: Setup SSH
       uses: MrSquaare/ssh-setup-action@v1
       with:
