@@ -25,4 +25,4 @@ Tutorial
 .. toctree::
    :glob:
 
-   *.ipynb
+   index.ipynb
