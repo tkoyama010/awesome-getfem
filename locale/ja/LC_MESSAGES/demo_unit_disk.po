@@ -3,6 +3,9 @@
 # This file is distributed under the same license as the getfem-binder package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Tetsuo Koyama <tkoyama010@gmail.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,6 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 05:10+0000\n"
 "PO-Revision-Date: 2020-05-17 04:07+0000\n"
+"Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +23,7 @@ msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:9
 msgid "Introduction to FEM Analysis with Python"
-msgstr ""
+msgstr "Pythonを使用したFEM解析の概要"
 
 #: ../../doc/demo_unit_disk.ipynb:11
 msgid ""
@@ -34,16 +38,25 @@ msgid ""
 "on YouTube below. This tutorial is based on the following `official GetFEM "
 "page tutorial <http://getfem.org/tutorial/thermo_coupling.html>`__."
 msgstr ""
+"このチュートリアルでは、Pythonを使用して有限要素法解析の前処理、求解、および後処理を行う方法を説明します。これは、前処理と求解に `GetFEM "
+"<http://getfem.org/>`__ と呼ばれるPythonインタフェースを持つ有限要素法ライブラリを使用します。vtkファイルを "
+"`meshio <https://github.com/nschloe/meshio>`__ を使ってロードし、前処理と後処理で `matplotlib"
+" <https://github.com/matplotlib/matplotlib>`__ を使って視覚化します。このチュートリアルは "
+"`PyConJP 2019 talk <https://pycon.jp/2019/schedule/?sessionId=120>`__ "
+"で使われました。以下のYouTubeでトークを見ることができます。このチュートリアルは、次の `official GetFEM page "
+"tutorial <http://getfem.org/tutorial/thermo_coupling.html>`__ に基づいています。"
 
 #: ../../doc/demo_unit_disk.ipynb:66
 msgid "Installation"
-msgstr ""
+msgstr "インストール"
 
 #: ../../doc/demo_unit_disk.ipynb:68
 msgid ""
 "GetFEM including its python interface can be installed from a terminal by "
 "executing aptitude update and aptitude install python-getfem++."
 msgstr ""
+"Pythonインターフェースを含むGetFEMは aptitude update と aptitude install python-getfem++ "
+"を実行することで端末からインストールできます。"
 
 #: ../../doc/demo_unit_disk.ipynb:91
 msgid ""
