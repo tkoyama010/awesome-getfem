@@ -45,8 +45,8 @@ jobs:
         HTML_URL: ${{ steps.jobs.outputs.html_url }}
       run: |
         git fetch origin -p
-        git checkout tkoyama010-patch-1
+        git checkout master
         git add .
         git commit --allow-empty -m ":green_heart: $JOB_ID
         $HTML_URL"
-        git push origin tkoyama010-patch-1
+        git push origin master
