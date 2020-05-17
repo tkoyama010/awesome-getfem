@@ -4,3 +4,4 @@ sphinx
 nbsphinx
 sphinx-intl
 transifex-client
+jupyter_client
