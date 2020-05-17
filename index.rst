@@ -18,3 +18,11 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Tutorial
+========
+
+.. toctree::
+   :glob:
+
+   *.ipynb
