@@ -267,55 +267,57 @@ msgid ""
 "source term. We can add Laplacian term (which called brick in GetFEM) by "
 "using ``add_Laplacian_brick``."
 msgstr ""
+"Poisson方程式を定義するために、 Laplacian項とRHSソース項を定義しなければなりません。 ``add_Laplacian_brick``"
+" を用いて、Laplacian項(GetFEMではブリックと呼ばれています)を加えることができます。"
 
 #: ../../doc/demo_unit_disk.ipynb:525
 msgid ""
 "If you want to define constants in GetFEM, we use ``add_fem_data`` method."
-msgstr ""
+msgstr "GetFEMで定数を定義する場合は、  ``add_fem_data`` メソッドを使用します。"
 
 #: ../../doc/demo_unit_disk.ipynb:547
 msgid "We can set constant values with the ``set_variable`` method."
-msgstr ""
+msgstr "定数値は ``set_variable`` メソッドで設定できます。"
 
 #: ../../doc/demo_unit_disk.ipynb:568
 msgid ""
 "We define the term RHS using the constant F defined. We use the "
 "``add_source_term_brick`` method for the definition."
-msgstr ""
+msgstr "定義した定数Fを用いてRHSという項を定義します。定義には ``add_source_term_brick`` メソッドを使用します。"
 
 #: ../../doc/demo_unit_disk.ipynb:609
 msgid "Finally, we set the Dirichlet condition at the boundary."
-msgstr ""
+msgstr "最後に、境界にDirichlet条件を設定します。"
 
 #: ../../doc/demo_unit_disk.ipynb:651
 msgid "Model solve"
-msgstr ""
+msgstr "モデルを解く"
 
 #: ../../doc/demo_unit_disk.ipynb:653
 msgid "Once the model is correctly defined, we can simply solve it by:"
-msgstr ""
+msgstr "モデルが正しく定義されると、次のようにして問題を簡単に解くことができます。"
 
 #: ../../doc/demo_unit_disk.ipynb:695
 msgid "Export/visualization of the solution"
-msgstr ""
+msgstr "解のエクスポート/可視化"
 
 #: ../../doc/demo_unit_disk.ipynb:697
 msgid ""
 "The finite element problem is now solved. We can get the solution :math:`u` "
 "by using ``variable`` method."
-msgstr ""
+msgstr "有限要素の問題が解かれました。 ``variable`` メソッドを使うと、 :math:`u` という解を得ることができます。"
 
 #: ../../doc/demo_unit_disk.ipynb:718
 msgid "We can output the computed u with the mesh of the Slice object."
-msgstr ""
+msgstr "Sliceオブジェクトのメッシュを使用して、計算された u を出力できます。"
 
 #: ../../doc/demo_unit_disk.ipynb:791
 msgid "Exact solution"
-msgstr ""
+msgstr "理論解"
 
 #: ../../doc/demo_unit_disk.ipynb:793
 msgid "The exact solution to this problem is given by the following equation:"
-msgstr ""
+msgstr "この問題の理論解は、次の式で与えられます。"
 
 #: ../../doc/demo_unit_disk.ipynb:795
 msgid "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
