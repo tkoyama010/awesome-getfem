@@ -193,26 +193,29 @@ msgid ""
 "output triangles. Therefore, we convert mesh to triangles on the slice "
 "object."
 msgstr ""
+"作成したメッシュを視覚化して品質をチェックします。Sliceオブジェクトを作成して、メッシュスライスを作成します。メッシュオブジェクトは出力できますが、matplotlibは三角形のみを出力できます。したがって、メッシュをsliceオブジェクト上の三角形に変換します。"
 
 #: ../../doc/demo_unit_disk.ipynb:295
 msgid "We can export a slice to VTK file by using export\\_to\\_vtk method."
-msgstr ""
+msgstr "export\\_to\\_vtkメソッドを使用すると、sliceをVTKファイルにエクスポートできます。"
 
 #: ../../doc/demo_unit_disk.ipynb:316
 msgid ""
 "We can rendere VTK files using Paraview or mayavi2. In order to display in "
 "the jupyter notebook this time, we read in meshio and draw in matplotlib."
 msgstr ""
+"VTKファイルはParaviewまたはmayavi 2を使用してレンダリングできます。今回はjupyter "
+"notebookに表示するために、meshioを読み込んでmatplotlibで描画します。"
 
 #: ../../doc/demo_unit_disk.ipynb:388
 msgid "Definition of finite element methods and integration method"
-msgstr ""
+msgstr "有限要素法及び積分法の定義"
 
 #: ../../doc/demo_unit_disk.ipynb:390
 msgid ""
 "We define the finite element and integration methods to use. We define a "
 "MeshFem that defines the degree of freedom of the mesh in the first order."
-msgstr ""
+msgstr "使用する有限要素法と積分法を定義します。メッシュの自由度が1次で定義されているMeshFemを定義します。"
 
 #: ../../doc/demo_unit_disk.ipynb:411
 msgid ""
@@ -220,6 +223,9 @@ msgid ""
 "continuous Lagrange element and remember that elements\\_degree has been set"
 " to 2 which means that we will use quadratic (isoparametric) elements."
 msgstr ""
+"次に、使用する有限要素を設定します。``classical_finite_element`` は連続したLagrange要素を意味し、 "
+"elements\\_degree が2に設定されていることを覚えておいてください。これは2次 の(isoparametric) "
+"要素を使用することを意味します。"
 
 #: ../../doc/demo_unit_disk.ipynb:433
 msgid ""
@@ -229,10 +235,12 @@ msgid ""
 "sufficient to make a convenient integration of the selected finite element "
 "method. Here, the square of ``elements_degree`` is sufficient."
 msgstr ""
+"最後に定義するのは、積分法mimです。GetFEMにはデフォルトの積分方法がないため、積分方法を定義するにはこれが必須です。もちろん、積分法の次数は、選択された有限要素法の便利な積分を行うのに十分なものを選択しなければなりません。ここでは、"
+" ``elements_degree`` の2乗で十分です。"
 
 #: ../../doc/demo_unit_disk.ipynb:455
 msgid "Model definition"
-msgstr ""
+msgstr "モデル定義"
 
 #: ../../doc/demo_unit_disk.ipynb:457
 msgid ""
