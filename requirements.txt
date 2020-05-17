@@ -5,3 +5,4 @@ nbsphinx
 sphinx-intl
 transifex-client
 jupyter_client
+requests<3.0.0,>=2.19.1

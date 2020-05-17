@@ -25,4 +25,4 @@ Tutorial
 .. toctree::
    :glob:
 
-   index.ipynb
+   demo_unit_disk.ipynb

@@ -1,0 +1,52 @@
+name: getfem-binder-auto-update
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+jobs:
+  script:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get Job URL
+      uses: Tiryoh/gha-jobid-action@v0
+      id: jobs
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        job_name: script
+    - name: checkout
+      uses: actions/checkout@master
+      with:
+        token: ${{ secrets.PERSONAL_ACCESSTOKEN }}
+        ref: ${{ github.ref }}
+    - name: Setup SSH
+      uses: MrSquaare/ssh-setup-action@v1
+      with:
+        host: github.com
+        private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: install
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends pandoc
+        pip3 install -U pip setuptools
+        pip3 install -r ./requirements.txt
+    - name: update
+      env:
+        SPHINXINTL_TRANSIFEX_USERNAME: api
+        SPHINXINTL_TRANSIFEX_PROJECT_NAME: getfem-binder
+        TX_TOKEN: ${{ secrets.TX_TOKEN }}
+      run: |
+        sh ./locale/update.sh
+    - name: git_config
+      run: |
+        git config --global user.email $GITHUB_REPOSITORY
+        git config --global user.name $GITHUB_REPOSITORY
+    - name: commit
+      env:
+        JOB_ID: ${{ steps.jobs.outputs.job_id }}
+        HTML_URL: ${{ steps.jobs.outputs.html_url }}
+      run: |
+        git fetch origin -p
+        git checkout tkoyama010-patch-1
+        git add .
+        git commit --allow-empty -m ":green_heart: $JOB_ID
+        $HTML_URL"
+        git push origin tkoyama010-patch-1
