@@ -250,6 +250,8 @@ msgid ""
 "variable or linking several variables. They are used to make the assembly of"
 " the (tangent) linear system (see The model object for more details)."
 msgstr ""
+"GetFEMのmodelオブジェクトは、モデル(未知数)、データ、およびモデルブリックと呼ばれるものの変数を収集します。モデルブリックは、1つの変数に適用された、または複数の変数をリンクした、モデルの一部(線形項または非線形項)です。これらは、"
+" (接線) 線形システムのアセンブリを作成するために使用されます(詳細については、modelオブジェクトを参照してください)。"
 
 #: ../../doc/demo_unit_disk.ipynb:459
 msgid "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
@@ -257,7 +259,7 @@ msgstr "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
 
 #: ../../doc/demo_unit_disk.ipynb:482
 msgid "Poisson's equation"
-msgstr ""
+msgstr "Poisson方程式"
 
 #: ../../doc/demo_unit_disk.ipynb:484
 msgid ""
