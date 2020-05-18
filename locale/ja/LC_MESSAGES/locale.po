@@ -3,6 +3,9 @@
 # This file is distributed under the same license as the getfem-binder package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Tetsuo Koyama <tkoyama010@gmail.com>, 2020
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,6 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 04:29+0000\n"
 "PO-Revision-Date: 2020-05-17 07:09+0000\n"
+"Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +24,7 @@ msgstr ""
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:9
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:9
 msgid "Introduction to FEM Analysis with Python"
-msgstr ""
+msgstr "Pythonを使用したFEM解析の概要"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:11
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:11
@@ -36,11 +40,18 @@ msgid ""
 "on YouTube below. This tutorial is based on the following `official GetFEM "
 "page tutorial <http://getfem.org/tutorial/thermo_coupling.html>`__."
 msgstr ""
+"このチュートリアルでは、Pythonを使用して有限要素法解析の前処理、求解、および後処理を行う方法を説明します。これは、前処理と求解に `GetFEM "
+"<http://getfem.org/>`__ と呼ばれるPythonインタフェースを持つ有限要素法ライブラリを使用します。vtkファイルを "
+"`meshio <https://github.com/nschloe/meshio>`__ を使ってロードし、前処理と後処理で `matplotlib"
+" <https://github.com/matplotlib/matplotlib>`__ を使って視覚化します。このチュートリアルは "
+"`PyConJP 2019 talk <https://pycon.jp/2019/schedule/?sessionId=120>`__ "
+"で使われました。以下のYouTubeでトークを見ることができます。このチュートリアルは、次の `official GetFEM page "
+"tutorial <http://getfem.org/tutorial/thermo_coupling.html>`__ に基づいています。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:66
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:66
 msgid "Installation"
-msgstr ""
+msgstr "インストール"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:68
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:68
@@ -48,6 +59,8 @@ msgid ""
 "GetFEM including its python interface can be installed from a terminal by "
 "executing aptitude update and aptitude install python-getfem++."
 msgstr ""
+"Pythonインターフェースを含むGetFEMは aptitude update と aptitude install python-getfem++ "
+"を実行することで端末からインストールできます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:91
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:91
@@ -58,11 +71,15 @@ msgid ""
 "already configured in the `Dockerfile <https://github.com/getfem-doc/getfem-"
 "binder/blob/master/Dockerfile>`__."
 msgstr ""
+"このチュートリアルには、 `requirements.txt <https://github.com/getfem-doc/getfem-"
+"binder/blob/master/requirements.txt>`__ の追加パッケージが必要です。これらの環境はすでに `Dockerfile"
+" <https://github.com/getfem-doc/getfem-binder/blob/master/Dockerfile>`__ "
+"で設定されているため、構築する必要はありません。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:103
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:103
 msgid "The problem setting"
-msgstr ""
+msgstr "問題の設定"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:105
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:105
@@ -71,21 +88,24 @@ msgid ""
 "<https://mathworks.com/help/pde/ug/solve-poissons-equation-on-a-unit-"
 "disk.html>`__ published by Math Works's homepage."
 msgstr ""
+"問題は、Math Worksのホームページに掲載されている `\"Poisson's Equation on Unit Disk\" "
+"<https://mathworks.com/help/pde/ug/solve-poissons-equation-on-a-unit-"
+"disk.html>`__ を参照しています。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:107
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:107
 msgid "−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega"
-msgstr ""
+msgstr "−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:109
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:109
 msgid "|pdedemo1\\_01|"
-msgstr ""
+msgstr "|pdedemo1\\_01|"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:123
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:123
 msgid "How to use GetEM"
-msgstr ""
+msgstr "GetEMの使用方法"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:125
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:125
@@ -94,6 +114,8 @@ msgid ""
 "problems. See `this page <http://getfem.org/tutorial/basic_usage.html>`__ "
 "for more information on using GetFEM."
 msgstr ""
+"有限要素問題を解くためにGetFEMを使用する場合、次の手順を実行します。GetFEMの使用の詳細については、 `このページ "
+"<http://getfem.org/tutorial/basic_usage.html>`__ を参照してください。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:127
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:127
@@ -101,53 +123,54 @@ msgid ""
 "define a `MesherObject "
 "<http://getfem.org/python/cmdref_MesherObject.html>`__"
 msgstr ""
+"`MesherObject <http://getfem.org/python/cmdref_MesherObject.html>`__ を定義する"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:128
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:128
 msgid "define a `Mesh <http://getfem.org/python/cmdref_Mesh.html>`__"
-msgstr ""
+msgstr "`Mesh <http://getfem.org/python/cmdref_Mesh.html>`__ を定義する"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:129
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:129
 msgid "define a `MeshFem <http://getfem.org/python/cmdref_MeshFem.html>`__"
-msgstr ""
+msgstr "`MeshFem <http://getfem.org/python/cmdref_MeshFem.html>`__ を定義する"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:130
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:130
 msgid "define a `MeshIm <http://getfem.org/python/cmdref_MeshIm.html>`__"
-msgstr ""
+msgstr "`MeshIm <http://getfem.org/python/cmdref_MeshIm.html>`__ を定義する"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:131
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:131
 msgid ""
 "define a `Model <http://getfem.org/python/cmdref_Model.html>`__ and set it "
 "up"
-msgstr ""
+msgstr "`Model <http://getfem.org/python/cmdref_Model.html>`__ を定義して設定する"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:132
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:132
 msgid "solve Model object"
-msgstr ""
+msgstr "Modelオブジェクトを解く"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:133
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:133
 msgid "get value from Model object"
-msgstr ""
+msgstr "Modelオブジェクトから値を取得する"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:145
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:145
 msgid "Initialization"
-msgstr ""
+msgstr "初期化"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:147
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:147
 msgid "GetFEM can be imported following (numpy has also to be imported)."
-msgstr ""
+msgstr "GetFEMは以下の方法でインポートできます(numpyもインポートしなければなりません)。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:170
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:170
 msgid "Mesh generation"
-msgstr ""
+msgstr "メッシュ生成"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:181
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:181
@@ -159,6 +182,10 @@ msgid ""
 "GetFEM. We can represents a ball of corresponding center and radius by using"
 " \"ball\"."
 msgstr ""
+"GetFEMの `MesherObject "
+"<http://getfem.org/python/cmdref_MesherObject.html#>`__ "
+"を使用して、解析するジオメトリ情報からメッシュを作成します。このオブジェクトは、GetFEMの実験的なメッシュ手順でメッシングされるジオメトリオブジェクトを表します。"
+" \"ball\" を使用して、対応する中心と半径の球を表すことができます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:205
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:205
@@ -166,23 +193,24 @@ msgid ""
 "We can make mesh object ``mesh`` by calling the experimental mesher of "
 "GetFEM on the geometry represented by ``mo``."
 msgstr ""
+"``mo`` で表される幾何形状に対してGetFEMの実験メッシャを呼び出すことによりメッシュオブジェクト ``mesh`` を作成することができます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:228
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:228
 msgid "Boundary selection"
-msgstr ""
+msgstr "境界の選択"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:239
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:239
 msgid ""
 "To define a boundary condition, we set a boundary number on the outer "
 "circumference of the circle."
-msgstr ""
+msgstr "境界条件を定義するために、円の外周に境界番号を設定します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:263
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:263
 msgid "Mesh draw"
-msgstr ""
+msgstr "メッシュ描画"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:274
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:274
@@ -192,11 +220,12 @@ msgid ""
 "output triangles. Therefore, we convert mesh to triangles on the slice "
 "object."
 msgstr ""
+"作成したメッシュを視覚化して品質をチェックします。Sliceオブジェクトを作成して、メッシュスライスを作成します。メッシュオブジェクトは出力できますが、matplotlibは三角形のみを出力できます。したがって、メッシュをsliceオブジェクト上の三角形に変換します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:295
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:295
 msgid "We can export a slice to VTK file by using export\\_to\\_vtk method."
-msgstr ""
+msgstr "export\\_to\\_vtkメソッドを使用すると、sliceをVTKファイルにエクスポートできます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:316
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:316
@@ -204,18 +233,20 @@ msgid ""
 "We can rendere VTK files using Paraview or mayavi2. In order to display in "
 "the jupyter notebook this time, we read in meshio and draw in matplotlib."
 msgstr ""
+"VTKファイルはParaviewまたはmayavi 2を使用してレンダリングできます。今回はjupyter "
+"notebookに表示するために、meshioを読み込んでmatplotlibで描画します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:388
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:388
 msgid "Definition of finite element methods and integration method"
-msgstr ""
+msgstr "有限要素法及び積分法の定義"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:390
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:390
 msgid ""
 "We define the finite element and integration methods to use. We define a "
 "MeshFem that defines the degree of freedom of the mesh in the first order."
-msgstr ""
+msgstr "使用する有限要素法と積分法を定義します。メッシュの自由度が1次で定義されているMeshFemを定義します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:411
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:411
@@ -224,6 +255,9 @@ msgid ""
 "continuous Lagrange element and remember that elements\\_degree has been set"
 " to 2 which means that we will use quadratic (isoparametric) elements."
 msgstr ""
+"次に、使用する有限要素を設定します。``classical_finite_element`` は連続したLagrange要素を意味し、 "
+"elements\\_degree が2に設定されていることを覚えておいてください。これは2次 の(isoparametric) "
+"要素を使用することを意味します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:433
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:433
@@ -234,11 +268,13 @@ msgid ""
 "sufficient to make a convenient integration of the selected finite element "
 "method. Here, the square of ``elements_degree`` is sufficient."
 msgstr ""
+"最後に定義するのは、積分法mimです。GetFEMにはデフォルトの積分方法がないため、積分方法を定義するにはこれが必須です。もちろん、積分法の次数は、選択された有限要素法の便利な積分を行うのに十分なものを選択しなければなりません。ここでは、"
+" ``elements_degree`` の2乗で十分です。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:455
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:455
 msgid "Model definition"
-msgstr ""
+msgstr "モデル定義"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:457
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:457
@@ -249,16 +285,18 @@ msgid ""
 "variable or linking several variables. They are used to make the assembly of"
 " the (tangent) linear system (see The model object for more details)."
 msgstr ""
+"GetFEMのmodelオブジェクトは、モデル(未知数)、データ、およびモデルブリックと呼ばれるものの変数を収集します。モデルブリックは、1つの変数に適用された、または複数の変数をリンクした、モデルの一部(線形項または非線形項)です。これらは、"
+" (接線) 線形システムのアセンブリを作成するために使用されます(詳細については、modelオブジェクトを参照してください)。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:459
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:459
 msgid "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
-msgstr ""
+msgstr "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:482
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:482
 msgid "Poisson's equation"
-msgstr ""
+msgstr "Poisson方程式"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:484
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:484
@@ -267,79 +305,81 @@ msgid ""
 "source term. We can add Laplacian term (which called brick in GetFEM) by "
 "using ``add_Laplacian_brick``."
 msgstr ""
+"Poisson方程式を定義するために、 Laplacian項とRHSソース項を定義しなければなりません。 ``add_Laplacian_brick``"
+" を用いて、Laplacian項(GetFEMではブリックと呼ばれています)を加えることができます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:525
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:525
 msgid ""
 "If you want to define constants in GetFEM, we use ``add_fem_data`` method."
-msgstr ""
+msgstr "GetFEMで定数を定義する場合は、  ``add_fem_data`` メソッドを使用します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:547
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:547
 msgid "We can set constant values with the ``set_variable`` method."
-msgstr ""
+msgstr "定数値は ``set_variable`` メソッドで設定できます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:568
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:568
 msgid ""
 "We define the term RHS using the constant F defined. We use the "
 "``add_source_term_brick`` method for the definition."
-msgstr ""
+msgstr "定義した定数Fを用いてRHSという項を定義します。定義には ``add_source_term_brick`` メソッドを使用します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:609
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:609
 msgid "Finally, we set the Dirichlet condition at the boundary."
-msgstr ""
+msgstr "最後に、境界にDirichlet条件を設定します。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:651
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:651
 msgid "Model solve"
-msgstr ""
+msgstr "モデルを解く"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:653
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:653
 msgid "Once the model is correctly defined, we can simply solve it by:"
-msgstr ""
+msgstr "モデルが正しく定義されると、次のようにして問題を簡単に解くことができます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:695
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:695
 msgid "Export/visualization of the solution"
-msgstr ""
+msgstr "解のエクスポート/可視化"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:697
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:697
 msgid ""
 "The finite element problem is now solved. We can get the solution :math:`u` "
 "by using ``variable`` method."
-msgstr ""
+msgstr "有限要素の問題が解かれました。 ``variable`` メソッドを使うと、 :math:`u` という解を得ることができます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:718
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:718
 msgid "We can output the computed u with the mesh of the Slice object."
-msgstr ""
+msgstr "Sliceオブジェクトのメッシュを使用して、計算された u を出力できます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:791
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:791
 msgid "Exact solution"
-msgstr ""
+msgstr "理論解"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:793
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:793
 msgid "The exact solution to this problem is given by the following equation:"
-msgstr ""
+msgstr "この問題の理論解は、次の式で与えられます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:795
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:795
 msgid "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
-msgstr ""
+msgstr "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:816
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:816
 msgid ""
 "We can calculate the error for the L2 and H1 norms by using ``compute``:"
-msgstr ""
+msgstr "L 2ノルムとH 1ノルムの誤差は、  ``compute`` を使用して計算できます。"
 
 #: .doctrees/nbsphinx/demo_unit_disk.ipynb:861
 #: .doctrees/nbsphinx/locale/pot/.doctrees/nbsphinx/demo_unit_disk.ipynb:861
 msgid "As you can see, the size of the error is within the acceptable range."
-msgstr ""
+msgstr "このように、エラーのサイズは許容範囲内です。"

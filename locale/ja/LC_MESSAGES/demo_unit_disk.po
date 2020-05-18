@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem-binder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-17 05:10+0000\n"
+"POT-Creation-Date: 2020-05-18 00:01+0000\n"
 "PO-Revision-Date: 2020-05-17 04:07+0000\n"
 "Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
@@ -53,10 +53,8 @@ msgstr "インストール"
 #: ../../doc/demo_unit_disk.ipynb:68
 msgid ""
 "GetFEM including its python interface can be installed from a terminal by "
-"executing aptitude update and aptitude install python-getfem++."
+"executing aptitude update and aptitude install python3-getfem++."
 msgstr ""
-"Pythonインターフェースを含むGetFEMは aptitude update と aptitude install python-getfem++ "
-"を実行することで端末からインストールできます。"
 
 #: ../../doc/demo_unit_disk.ipynb:91
 msgid ""
@@ -188,12 +186,11 @@ msgstr "メッシュ描画"
 
 #: ../../doc/demo_unit_disk.ipynb:274
 msgid ""
-"We visualize the created mesh to check its quality. We make Slice of ject to"
-" create a mesh slice.We can output mesh objects, but matplotlib can only "
+"We visualize the created mesh to check its quality. We make Slice object to "
+"create a mesh slice. We can output mesh objects, but matplotlib can only "
 "output triangles. Therefore, we convert mesh to triangles on the slice "
 "object."
 msgstr ""
-"作成したメッシュを視覚化して品質をチェックします。Sliceオブジェクトを作成して、メッシュスライスを作成します。メッシュオブジェクトは出力できますが、matplotlibは三角形のみを出力できます。したがって、メッシュをsliceオブジェクト上の三角形に変換します。"
 
 #: ../../doc/demo_unit_disk.ipynb:295
 msgid "We can export a slice to VTK file by using export\\_to\\_vtk method."
@@ -326,8 +323,8 @@ msgstr "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
 #: ../../doc/demo_unit_disk.ipynb:816
 msgid ""
 "We can calculate the error for the L2 and H1 norms by using ``compute``:"
-msgstr ""
+msgstr "L 2ノルムとH 1ノルムの誤差は、  ``compute`` を使用して計算できます。"
 
 #: ../../doc/demo_unit_disk.ipynb:861
 msgid "As you can see, the size of the error is within the acceptable range."
-msgstr ""
+msgstr "このように、エラーのサイズは許容範囲内です。"
