@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem-binder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-18 00:01+0000\n"
+"POT-Creation-Date: 2020-05-25 00:01+0000\n"
 "PO-Revision-Date: 2020-05-17 04:07+0000\n"
 "Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
@@ -26,6 +26,10 @@ msgid "Introduction to FEM Analysis with Python"
 msgstr "Pythonを使用したFEM解析の概要"
 
 #: ../../doc/demo_unit_disk.ipynb:11
+msgid "|Binder|"
+msgstr ""
+
+#: ../../doc/demo_unit_disk.ipynb:13
 msgid ""
 "This tutorial aims to show using Python to pre-processing, solve, and post-"
 "processing of Finite Element Method analysis. It uses a finite element "
@@ -46,17 +50,19 @@ msgstr ""
 "で使われました。以下のYouTubeでトークを見ることができます。このチュートリアルは、次の `official GetFEM page "
 "tutorial <http://getfem.org/tutorial/thermo_coupling.html>`__ に基づいています。"
 
-#: ../../doc/demo_unit_disk.ipynb:66
+#: ../../doc/demo_unit_disk.ipynb:71
 msgid "Installation"
 msgstr "インストール"
 
-#: ../../doc/demo_unit_disk.ipynb:68
+#: ../../doc/demo_unit_disk.ipynb:73
 msgid ""
 "GetFEM including its python interface can be installed from a terminal by "
 "executing aptitude update and aptitude install python3-getfem++."
 msgstr ""
+"Pythonインターフェースを含むGetFEMは aptitude update と aptitude install python3-getfem++"
+" を実行することで端末からインストールできます。"
 
-#: ../../doc/demo_unit_disk.ipynb:91
+#: ../../doc/demo_unit_disk.ipynb:96
 msgid ""
 "The additional packages in `requirements.txt <https://github.com/getfem-doc"
 "/getfem-binder/blob/master/requirements.txt>`__ are required for this "
@@ -69,11 +75,11 @@ msgstr ""
 " <https://github.com/getfem-doc/getfem-binder/blob/master/Dockerfile>`__ "
 "で設定されているため、構築する必要はありません。"
 
-#: ../../doc/demo_unit_disk.ipynb:103
+#: ../../doc/demo_unit_disk.ipynb:108
 msgid "The problem setting"
 msgstr "問題の設定"
 
-#: ../../doc/demo_unit_disk.ipynb:105
+#: ../../doc/demo_unit_disk.ipynb:110
 msgid ""
 "The problem refers to `\"Poisson's Equation on Unit Disk\" "
 "<https://mathworks.com/help/pde/ug/solve-poissons-equation-on-a-unit-"
@@ -83,19 +89,19 @@ msgstr ""
 "<https://mathworks.com/help/pde/ug/solve-poissons-equation-on-a-unit-"
 "disk.html>`__ を参照しています。"
 
-#: ../../doc/demo_unit_disk.ipynb:107
+#: ../../doc/demo_unit_disk.ipynb:112
 msgid "−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega"
 msgstr "−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega"
 
-#: ../../doc/demo_unit_disk.ipynb:109
+#: ../../doc/demo_unit_disk.ipynb:114
 msgid "|pdedemo1\\_01|"
 msgstr "|pdedemo1\\_01|"
 
-#: ../../doc/demo_unit_disk.ipynb:123
+#: ../../doc/demo_unit_disk.ipynb:128
 msgid "How to use GetEM"
 msgstr "GetEMの使用方法"
 
-#: ../../doc/demo_unit_disk.ipynb:125
+#: ../../doc/demo_unit_disk.ipynb:130
 msgid ""
 "We take the following steps when using GetFEM to solve finite element "
 "problems. See `this page <http://getfem.org/tutorial/basic_usage.html>`__ "
@@ -104,52 +110,52 @@ msgstr ""
 "有限要素問題を解くためにGetFEMを使用する場合、次の手順を実行します。GetFEMの使用の詳細については、 `このページ "
 "<http://getfem.org/tutorial/basic_usage.html>`__ を参照してください。"
 
-#: ../../doc/demo_unit_disk.ipynb:127
+#: ../../doc/demo_unit_disk.ipynb:132
 msgid ""
 "define a `MesherObject "
 "<http://getfem.org/python/cmdref_MesherObject.html>`__"
 msgstr ""
 "`MesherObject <http://getfem.org/python/cmdref_MesherObject.html>`__ を定義する"
 
-#: ../../doc/demo_unit_disk.ipynb:128
+#: ../../doc/demo_unit_disk.ipynb:133
 msgid "define a `Mesh <http://getfem.org/python/cmdref_Mesh.html>`__"
 msgstr "`Mesh <http://getfem.org/python/cmdref_Mesh.html>`__ を定義する"
 
-#: ../../doc/demo_unit_disk.ipynb:129
+#: ../../doc/demo_unit_disk.ipynb:134
 msgid "define a `MeshFem <http://getfem.org/python/cmdref_MeshFem.html>`__"
 msgstr "`MeshFem <http://getfem.org/python/cmdref_MeshFem.html>`__ を定義する"
 
-#: ../../doc/demo_unit_disk.ipynb:130
+#: ../../doc/demo_unit_disk.ipynb:135
 msgid "define a `MeshIm <http://getfem.org/python/cmdref_MeshIm.html>`__"
 msgstr "`MeshIm <http://getfem.org/python/cmdref_MeshIm.html>`__ を定義する"
 
-#: ../../doc/demo_unit_disk.ipynb:131
+#: ../../doc/demo_unit_disk.ipynb:136
 msgid ""
 "define a `Model <http://getfem.org/python/cmdref_Model.html>`__ and set it "
 "up"
 msgstr "`Model <http://getfem.org/python/cmdref_Model.html>`__ を定義して設定する"
 
-#: ../../doc/demo_unit_disk.ipynb:132
+#: ../../doc/demo_unit_disk.ipynb:137
 msgid "solve Model object"
 msgstr "Modelオブジェクトを解く"
 
-#: ../../doc/demo_unit_disk.ipynb:133
+#: ../../doc/demo_unit_disk.ipynb:138
 msgid "get value from Model object"
 msgstr "Modelオブジェクトから値を取得する"
 
-#: ../../doc/demo_unit_disk.ipynb:145
+#: ../../doc/demo_unit_disk.ipynb:150
 msgid "Initialization"
 msgstr "初期化"
 
-#: ../../doc/demo_unit_disk.ipynb:147
+#: ../../doc/demo_unit_disk.ipynb:152
 msgid "GetFEM can be imported following (numpy has also to be imported)."
 msgstr "GetFEMは以下の方法でインポートできます(numpyもインポートしなければなりません)。"
 
-#: ../../doc/demo_unit_disk.ipynb:170
+#: ../../doc/demo_unit_disk.ipynb:175
 msgid "Mesh generation"
 msgstr "メッシュ生成"
 
-#: ../../doc/demo_unit_disk.ipynb:181
+#: ../../doc/demo_unit_disk.ipynb:186
 msgid ""
 "We use GetFEM's `MesherObject "
 "<http://getfem.org/python/cmdref_MesherObject.html#>`__ to create a mesh "
@@ -163,40 +169,41 @@ msgstr ""
 "を使用して、解析するジオメトリ情報からメッシュを作成します。このオブジェクトは、GetFEMの実験的なメッシュ手順でメッシングされるジオメトリオブジェクトを表します。"
 " \"ball\" を使用して、対応する中心と半径の球を表すことができます。"
 
-#: ../../doc/demo_unit_disk.ipynb:205
+#: ../../doc/demo_unit_disk.ipynb:210
 msgid ""
 "We can make mesh object ``mesh`` by calling the experimental mesher of "
 "GetFEM on the geometry represented by ``mo``."
 msgstr ""
 "``mo`` で表される幾何形状に対してGetFEMの実験メッシャを呼び出すことによりメッシュオブジェクト ``mesh`` を作成することができます。"
 
-#: ../../doc/demo_unit_disk.ipynb:228
+#: ../../doc/demo_unit_disk.ipynb:233
 msgid "Boundary selection"
 msgstr "境界の選択"
 
-#: ../../doc/demo_unit_disk.ipynb:239
+#: ../../doc/demo_unit_disk.ipynb:244
 msgid ""
 "To define a boundary condition, we set a boundary number on the outer "
 "circumference of the circle."
 msgstr "境界条件を定義するために、円の外周に境界番号を設定します。"
 
-#: ../../doc/demo_unit_disk.ipynb:263
+#: ../../doc/demo_unit_disk.ipynb:268
 msgid "Mesh draw"
 msgstr "メッシュ描画"
 
-#: ../../doc/demo_unit_disk.ipynb:274
+#: ../../doc/demo_unit_disk.ipynb:279
 msgid ""
 "We visualize the created mesh to check its quality. We make Slice object to "
 "create a mesh slice. We can output mesh objects, but matplotlib can only "
 "output triangles. Therefore, we convert mesh to triangles on the slice "
 "object."
 msgstr ""
+"作成したメッシュを視覚化して品質をチェックします。Sliceオブジェクトを作成して、メッシュスライスを作成します。メッシュオブジェクトは出力できますが、matplotlibは三角形のみを出力できます。したがって、メッシュをsliceオブジェクト上の三角形に変換します。"
 
-#: ../../doc/demo_unit_disk.ipynb:295
+#: ../../doc/demo_unit_disk.ipynb:300
 msgid "We can export a slice to VTK file by using export\\_to\\_vtk method."
 msgstr "export\\_to\\_vtkメソッドを使用すると、sliceをVTKファイルにエクスポートできます。"
 
-#: ../../doc/demo_unit_disk.ipynb:316
+#: ../../doc/demo_unit_disk.ipynb:321
 msgid ""
 "We can rendere VTK files using Paraview or mayavi2. In order to display in "
 "the jupyter notebook this time, we read in meshio and draw in matplotlib."
@@ -204,17 +211,17 @@ msgstr ""
 "VTKファイルはParaviewまたはmayavi 2を使用してレンダリングできます。今回はjupyter "
 "notebookに表示するために、meshioを読み込んでmatplotlibで描画します。"
 
-#: ../../doc/demo_unit_disk.ipynb:388
+#: ../../doc/demo_unit_disk.ipynb:393
 msgid "Definition of finite element methods and integration method"
 msgstr "有限要素法及び積分法の定義"
 
-#: ../../doc/demo_unit_disk.ipynb:390
+#: ../../doc/demo_unit_disk.ipynb:395
 msgid ""
 "We define the finite element and integration methods to use. We define a "
 "MeshFem that defines the degree of freedom of the mesh in the first order."
 msgstr "使用する有限要素法と積分法を定義します。メッシュの自由度が1次で定義されているMeshFemを定義します。"
 
-#: ../../doc/demo_unit_disk.ipynb:411
+#: ../../doc/demo_unit_disk.ipynb:416
 msgid ""
 "Next we set the finite element used. ``classical_finite_element`` means a "
 "continuous Lagrange element and remember that elements\\_degree has been set"
@@ -224,7 +231,7 @@ msgstr ""
 "elements\\_degree が2に設定されていることを覚えておいてください。これは2次 の(isoparametric) "
 "要素を使用することを意味します。"
 
-#: ../../doc/demo_unit_disk.ipynb:433
+#: ../../doc/demo_unit_disk.ipynb:438
 msgid ""
 "The last thing to define is an integration method mim. There is no default "
 "integration method in GetFEM so this is mandatory to define an integration "
@@ -235,11 +242,11 @@ msgstr ""
 "最後に定義するのは、積分法mimです。GetFEMにはデフォルトの積分方法がないため、積分方法を定義するにはこれが必須です。もちろん、積分法の次数は、選択された有限要素法の便利な積分を行うのに十分なものを選択しなければなりません。ここでは、"
 " ``elements_degree`` の2乗で十分です。"
 
-#: ../../doc/demo_unit_disk.ipynb:455
+#: ../../doc/demo_unit_disk.ipynb:460
 msgid "Model definition"
 msgstr "モデル定義"
 
-#: ../../doc/demo_unit_disk.ipynb:457
+#: ../../doc/demo_unit_disk.ipynb:462
 msgid ""
 "The model object in GetFEM gather the variables of the models (the "
 "unknowns), the data and what is called the model bricks. The model bricks "
@@ -250,15 +257,15 @@ msgstr ""
 "GetFEMのmodelオブジェクトは、モデル(未知数)、データ、およびモデルブリックと呼ばれるものの変数を収集します。モデルブリックは、1つの変数に適用された、または複数の変数をリンクした、モデルの一部(線形項または非線形項)です。これらは、"
 " (接線) 線形システムのアセンブリを作成するために使用されます(詳細については、modelオブジェクトを参照してください)。"
 
-#: ../../doc/demo_unit_disk.ipynb:459
+#: ../../doc/demo_unit_disk.ipynb:464
 msgid "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
 msgstr "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
 
-#: ../../doc/demo_unit_disk.ipynb:482
+#: ../../doc/demo_unit_disk.ipynb:487
 msgid "Poisson's equation"
 msgstr "Poisson方程式"
 
-#: ../../doc/demo_unit_disk.ipynb:484
+#: ../../doc/demo_unit_disk.ipynb:489
 msgid ""
 "To define poisson's equation, we have to deifine Laplacian term and RHS "
 "source term. We can add Laplacian term (which called brick in GetFEM) by "
@@ -267,64 +274,64 @@ msgstr ""
 "Poisson方程式を定義するために、 Laplacian項とRHSソース項を定義しなければなりません。 ``add_Laplacian_brick``"
 " を用いて、Laplacian項(GetFEMではブリックと呼ばれています)を加えることができます。"
 
-#: ../../doc/demo_unit_disk.ipynb:525
+#: ../../doc/demo_unit_disk.ipynb:530
 msgid ""
 "If you want to define constants in GetFEM, we use ``add_fem_data`` method."
 msgstr "GetFEMで定数を定義する場合は、  ``add_fem_data`` メソッドを使用します。"
 
-#: ../../doc/demo_unit_disk.ipynb:547
+#: ../../doc/demo_unit_disk.ipynb:552
 msgid "We can set constant values with the ``set_variable`` method."
 msgstr "定数値は ``set_variable`` メソッドで設定できます。"
 
-#: ../../doc/demo_unit_disk.ipynb:568
+#: ../../doc/demo_unit_disk.ipynb:573
 msgid ""
 "We define the term RHS using the constant F defined. We use the "
 "``add_source_term_brick`` method for the definition."
 msgstr "定義した定数Fを用いてRHSという項を定義します。定義には ``add_source_term_brick`` メソッドを使用します。"
 
-#: ../../doc/demo_unit_disk.ipynb:609
+#: ../../doc/demo_unit_disk.ipynb:614
 msgid "Finally, we set the Dirichlet condition at the boundary."
 msgstr "最後に、境界にDirichlet条件を設定します。"
 
-#: ../../doc/demo_unit_disk.ipynb:651
+#: ../../doc/demo_unit_disk.ipynb:656
 msgid "Model solve"
 msgstr "モデルを解く"
 
-#: ../../doc/demo_unit_disk.ipynb:653
+#: ../../doc/demo_unit_disk.ipynb:658
 msgid "Once the model is correctly defined, we can simply solve it by:"
 msgstr "モデルが正しく定義されると、次のようにして問題を簡単に解くことができます。"
 
-#: ../../doc/demo_unit_disk.ipynb:695
+#: ../../doc/demo_unit_disk.ipynb:700
 msgid "Export/visualization of the solution"
 msgstr "解のエクスポート/可視化"
 
-#: ../../doc/demo_unit_disk.ipynb:697
+#: ../../doc/demo_unit_disk.ipynb:702
 msgid ""
 "The finite element problem is now solved. We can get the solution :math:`u` "
 "by using ``variable`` method."
 msgstr "有限要素の問題が解かれました。 ``variable`` メソッドを使うと、 :math:`u` という解を得ることができます。"
 
-#: ../../doc/demo_unit_disk.ipynb:718
+#: ../../doc/demo_unit_disk.ipynb:723
 msgid "We can output the computed u with the mesh of the Slice object."
 msgstr "Sliceオブジェクトのメッシュを使用して、計算された u を出力できます。"
 
-#: ../../doc/demo_unit_disk.ipynb:791
+#: ../../doc/demo_unit_disk.ipynb:796
 msgid "Exact solution"
 msgstr "理論解"
 
-#: ../../doc/demo_unit_disk.ipynb:793
+#: ../../doc/demo_unit_disk.ipynb:798
 msgid "The exact solution to this problem is given by the following equation:"
 msgstr "この問題の理論解は、次の式で与えられます。"
 
-#: ../../doc/demo_unit_disk.ipynb:795
+#: ../../doc/demo_unit_disk.ipynb:800
 msgid "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
 msgstr "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
 
-#: ../../doc/demo_unit_disk.ipynb:816
+#: ../../doc/demo_unit_disk.ipynb:821
 msgid ""
 "We can calculate the error for the L2 and H1 norms by using ``compute``:"
 msgstr "L 2ノルムとH 1ノルムの誤差は、  ``compute`` を使用して計算できます。"
 
-#: ../../doc/demo_unit_disk.ipynb:861
+#: ../../doc/demo_unit_disk.ipynb:866
 msgid "As you can see, the size of the error is within the acceptable range."
 msgstr "このように、エラーのサイズは許容範囲内です。"
