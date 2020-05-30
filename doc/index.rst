@@ -26,3 +26,4 @@ Tutorial
    :glob:
 
    demo_unit_disk.ipynb
+   cantilever.ipynb
