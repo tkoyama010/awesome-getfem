@@ -1,0 +1,260 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Tetsuo Koyama
+# This file is distributed under the same license as the getfem-binder package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: getfem-binder\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-31 00:01+0000\n"
+"PO-Revision-Date: 2020-05-31 00:01+0000\n"
+"Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../doc/cantilever.ipynb:9
+msgid "study of cantilever beam"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:11
+msgid ""
+"Consider a cantilever beam using the Finite Element Method library GetFEM++."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:23
+msgid "Install Libraries"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:25
+msgid "First, install GetFEM++."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:72
+msgid "Next, install the visualization software Mayavi2."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:1625
+msgid ""
+"Since there is no display on colab, we set up a virtual display for Mayavi2."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:1737
+msgid "Creating a Model"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:1748
+msgid "Now we are ready, import the library."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:1772
+msgid ""
+"The review cases are as follows. GetFEM++ uses FEM\\_PRODUCT and "
+"IM\\_PRODUCT to two-dimensional the finite element method and the "
+"integration method, respectively. For quadratic elements, the Gaussian "
+"integration point is 3. IM\\_GAUSS1D(K) represents the integration point of "
+":math:`K/2+1` points. The element uses plane strain elements. Set up these "
+"meshes, the finite element method and the integration method."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2133
+msgid "Mesh"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2135
+msgid ""
+"The overall size of the model is L = 10 mm in length, h = 1 mm in height, "
+"and b = 1 mm in depth. In general, a slender ratio of 1: 10 is considered a "
+"beam element."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2167
+msgid "Outputs an image of each mesh."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2321
+msgid "Region"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2323
+msgid ""
+"Sets the area on the left side of the mesh where the Dirichlet condition is "
+"set. The right side sets the area for setting the Neumann condition."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2358
+msgid "Finite Element Method"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2360
+msgid ""
+"Create a MeshFem object and associate the mesh with the finite element "
+"method."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2398
+msgid "Integral method"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2400
+msgid "Associate the integration method with the mesh."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2437
+msgid "Variable"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2439
+msgid "Define the model object and set the variable \"u\"."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2465
+msgid "Properties"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2467
+msgid ""
+"Define properties as constants for the model object. The Young's modulus of "
+"steel is :math:`E = 205000\\times 10^6N/m^2`. Also set Poisson's ratio "
+":math:`\\nu = 0.0` to ignore the Poisson effect."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2494
+msgid "Plane Strain Element"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2496
+msgid "Defines the plane strain element for variable 'u'."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2519
+msgid "Boundary Conditions"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2521
+msgid "Set the Dirichlet condition for the region on the left side."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2546
+msgid "Set the Neumann boundary condition on the right side."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2571
+msgid "Solve"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2573
+msgid ""
+"Solve the simultaneous equations of the model object to find the value of "
+"the variable 'u'."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2595
+msgid ""
+"After solving simultaneous equations, the right side rhs can be output. The "
+"sum of the right-hand terms equals :math:`F*b*h`."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2617
+msgid "The constraint on the left end has a displacement of 0.0."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2641
+msgid "Review results"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2643
+msgid "Output and visualize the results of each case to vtk files."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2707
+msgid "Computation of Theoretical Solutions"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2709
+msgid ""
+"Calculates the deflection at each coordinate for comparison with the "
+"theoretical solution. The theoretical solution for a cantilever beam "
+"subjected to a concentrated load is as follows."
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2711
+msgid ":math:`w\\left(x\\right)=\\dfrac{FL^3}{3EI}`"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2754
+msgid "deformation diagram of case11"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2786
+msgid "deformation diagram of case12"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2818
+msgid "deformation diagram of case13"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2850
+msgid "deformation diagram of case14"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2882
+msgid "deformation diagram of case21"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2914
+msgid "deformation diagram of case22"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2946
+msgid "deformation diagram of case23"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:2978
+msgid "deformation diagram of case24"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3010
+msgid "deformation diagram of case31"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3042
+msgid "deformation diagram of case32"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3074
+msgid "deformation diagram of case33"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3106
+msgid "deformation diagram of case34"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3138
+msgid "deformation diagram of case41"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3170
+msgid "deformation diagram of case42"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3202
+msgid "deformation diagram of case43"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3234
+msgid "deformation diagram of case44"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3266
+msgid "Comparison with Theoretical Solutions"
+msgstr ""
+
+#: ../../doc/cantilever.ipynb:3308
+msgid ""
+"Calculates the ratio of deformation to theoretical solution for each case."
+msgstr ""
