@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem-binder \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 00:01+0000\n"
+"POT-Creation-Date: 2020-06-08 00:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "GetFEM including its python interface can be installed from a terminal by
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:96
-msgid "The additional packages in `requirements.txt <https://github.com/getfem-doc/getfem-binder/blob/master/requirements.txt>`__ are required for this tutorial. You do not need to build these environments because they are already configured in the `Dockerfile <https://github.com/getfem-doc/getfem-binder/blob/master/Dockerfile>`__."
+msgid "The additional packages in `requirements.txt <https://github.com/getfem-doc/getfem-examples/blob/master/requirements.txt>`__ are required for this tutorial. You do not need to build these environments because they are already configured in the `Dockerfile <https://github.com/getfem-doc/getfem-examples/blob/master/Dockerfile>`__."
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:108
