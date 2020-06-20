@@ -13,6 +13,7 @@ ENV USER ${NB_USER}
 ENV HOME /home/${NB_USER}
 
 # pyvista setting
+RUN pip3 install pyvista
 RUN apt -y install libgl1-mesa-dev
 RUN apt -y install xvfb
 RUN set -x
