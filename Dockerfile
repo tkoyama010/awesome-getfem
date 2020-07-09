@@ -4,7 +4,7 @@ RUN apt update && apt -y install python3-pip
 
 # install the notebook package
 RUN pip3 install --no-cache --upgrade pip && \
-    pip3 install --no-cache notebook
+    pip3 install --no-cache jupyterlab
 
 # Install a JupyterLab extension for demonstration purposes
 RUN jupyter labextension install @jupyterlab/geojson-extension jupyterlab-drawio
