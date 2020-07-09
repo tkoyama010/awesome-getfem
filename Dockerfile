@@ -6,6 +6,9 @@ RUN apt update && apt -y install python3-pip
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache notebook
 
+# Install a JupyterLab extension for demonstration purposes
+RUN jupyter labextension install @jupyterlab/geojson-extension jupyterlab-drawio
+
 # create user with a home directory
 ARG NB_USER
 ARG NB_UID
