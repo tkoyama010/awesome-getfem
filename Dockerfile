@@ -49,13 +49,5 @@ RUN pip3 install vtk && \
     pip3 install scipy && \
     pip3 install xvfbwrapper
 
-# Install Jupyter notebook extensions
-RUN pip3 install RISE && \
-    jupyter nbextension install rise --py --sys-prefix && \
-    jupyter nbextension enable rise --py --sys-prefix && \
-    jupyter nbextension install mayavi --py --sys-prefix && \
-    jupyter nbextension enable mayavi --py --sys-prefix && \
-    npm cache clean --force
-
 # Add an x-server to the entrypoint. This is needed by Mayavi
 ENTRYPOINT ["tini", "-g", "--", "xvfb-run"]
