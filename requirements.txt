@@ -7,3 +7,9 @@ transifex-client
 jupyter_client
 requests<3.0.0,>=2.19.1
 pyvirtualdisplay
+traitlets>=4.3.1
+ipython
+pandas
+vdom
+jupyterlab_launcher>=0.5.0
+jupyterlab

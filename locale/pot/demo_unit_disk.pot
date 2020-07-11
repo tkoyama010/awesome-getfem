@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2020, Tetsuo Koyama
-# This file is distributed under the same license as the getfem-binder package.
+# This file is distributed under the same license as the getfem examples package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: getfem-binder \n"
+"Project-Id-Version: getfem examples \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 00:01+0000\n"
+"POT-Creation-Date: 2020-06-13 00:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgid "GetFEM including its python interface can be installed from a terminal by
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:96
-msgid "The additional packages in `requirements.txt <https://github.com/getfem-doc/getfem-binder/blob/master/requirements.txt>`__ are required for this tutorial. You do not need to build these environments because they are already configured in the `Dockerfile <https://github.com/getfem-doc/getfem-binder/blob/master/Dockerfile>`__."
+msgid "The additional packages in `requirements.txt <https://github.com/getfem-doc/getfem-examples/blob/master/requirements.txt>`__ are required for this tutorial. You do not need to build these environments because they are already configured in the `Dockerfile <https://github.com/getfem-doc/getfem-examples/blob/master/Dockerfile>`__."
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:108

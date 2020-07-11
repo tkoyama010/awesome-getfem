@@ -19,7 +19,7 @@ locale_dirs = ["../locale/"]
 
 # -- Project information -----------------------------------------------------
 
-project = "getfem-binder"
+project = "getfem examples"
 copyright = "2020, Tetsuo Koyama"
 author = "Tetsuo Koyama"
 
