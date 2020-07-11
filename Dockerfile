@@ -8,6 +8,7 @@ RUN apt-get install -yq --no-install-recommends \
     x11-utils \
     libx11-dev \
     qt5-default \
+    mayavi2 \
     && apt-get clean
 
 ENV DISPLAY=:99
@@ -40,7 +41,6 @@ RUN pip3 install vtk && \
     pip3 install nose && \
     pip3 install ipyevents && \
     pip3 install ipywidgets && \
-    pip3 install mayavi && \
     pip3 install nibabel && \
     pip3 install numpy && \
     pip3 install PIL && \
