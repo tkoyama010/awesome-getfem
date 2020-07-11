@@ -10,6 +10,6 @@ $LOCAL_PYTHON_PATH/sphinx-build -T -b gettext ../doc pot
 $LOCAL_PYTHON_PATH/sphinx-intl update-txconfig-resources -p pot -d .
 cat .tx/config
 $LOCAL_PYTHON_PATH/tx push -s --skip
-rm -Rf ja
-$LOCAL_PYTHON_PATH/tx pull -l ja
+rm -Rf ja pt_BR
+$LOCAL_PYTHON_PATH/tx pull -l ja,pt_BR
 git checkout .tx/config
