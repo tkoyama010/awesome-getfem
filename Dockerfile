@@ -43,7 +43,6 @@ RUN pip3 install vtk && \
     pip3 install ipywidgets && \
     pip3 install nibabel && \
     pip3 install numpy && \
-    pip3 install PIL && \
     pip3 install pillow && \
     pip3 install pyqt5 && \
     pip3 install scikit-learn && \
