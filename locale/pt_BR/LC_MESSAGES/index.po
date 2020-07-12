@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Tetsuo Koyama
+# This file is distributed under the same license as the getfem examples package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: getfem examples\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-13 00:02+0000\n"
+"PO-Revision-Date: 2020-05-17 04:07+0000\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/getfem-doc/teams/110067/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../doc/index.rst:9
+msgid "Contents:"
+msgstr ""
+
+#: ../../doc/index.rst:7
+msgid "Welcome to getfem-binder's documentation!"
+msgstr ""
+
+#: ../../doc/index.rst:16
+msgid "Indices and tables"
+msgstr ""
+
+#: ../../doc/index.rst:18
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../doc/index.rst:19
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../doc/index.rst:20
+msgid ":ref:`search`"
+msgstr ""
+
+#: ../../doc/index.rst:23
+msgid "Tutorial"
+msgstr ""

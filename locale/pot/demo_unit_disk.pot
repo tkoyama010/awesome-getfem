@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 00:02+0000\n"
+"POT-Creation-Date: 2020-07-12 00:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,67 +97,67 @@ msgid "Initialization"
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:152
-msgid "GetFEM can be imported following (numpy has also to be imported)."
+msgid "GetFEM can be imported as follows (numpy has also to be imported)."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:175
+#: ../../doc/demo_unit_disk.ipynb:174
 msgid "Mesh generation"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:186
-msgid "We use GetFEM's `MesherObject <http://getfem.org/python/cmdref_MesherObject.html#>`__ to create a mesh from the geometric information to be analyzed. This object represents a geometric object to be meshed by the experimental meshing procedure of GetFEM. We can represents a ball of corresponding center and radius by using \"ball\"."
+#: ../../doc/demo_unit_disk.ipynb:185
+msgid "We use GetFEM's `MesherObject <http://getfem.org/python/cmdref_MesherObject.html#>`__ to create a mesh from the geometric information to be analyzed. This object represent a geometric object to be meshed by the experimental meshing procedure of GetFEM. We can represent a disk by specifying a radius, a 2D center, and using \"ball\" geometry."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:210
-msgid "We can make mesh object ``mesh`` by calling the experimental mesher of GetFEM on the geometry represented by ``mo``."
+#: ../../doc/demo_unit_disk.ipynb:209
+msgid "We can make mesh object ``mesh`` by calling the experimental mesher of GetFEM on the geometry represented by ``mo``. The approximate element diameter is given by ``h`` and the degree of the mesh is ``K`` (:math:`K > 1` for curved boundaries)."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:233
+#: ../../doc/demo_unit_disk.ipynb:232
 msgid "Boundary selection"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:244
+#: ../../doc/demo_unit_disk.ipynb:243
 msgid "To define a boundary condition, we set a boundary number on the outer circumference of the circle."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:268
+#: ../../doc/demo_unit_disk.ipynb:267
 msgid "Mesh draw"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:279
-msgid "We visualize the created mesh to check its quality. We make Slice object to create a mesh slice. We can output mesh objects, but matplotlib can only output triangles. Therefore, we convert mesh to triangles on the slice object."
+#: ../../doc/demo_unit_disk.ipynb:278
+msgid "We visualize the created mesh to check its quality. We can output mesh objects, but matplotlib can only display triangles. Therefore, we make a ``Slice`` object with a slice operation of ``(\"none\",)``, which does not cut the mesh. With a refinement of 1, this serves to convert the mesh to triangles."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:300
+#: ../../doc/demo_unit_disk.ipynb:299
 msgid "We can export a slice to VTK file by using export\\_to\\_vtk method."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:321
-msgid "We can rendere VTK files using Paraview or mayavi2. In order to display in the jupyter notebook this time, we read in meshio and draw in matplotlib."
+#: ../../doc/demo_unit_disk.ipynb:320
+msgid "We can render VTK files using Paraview or mayavi2. In order to display in the jupyter notebook this time, we read in meshio and draw in matplotlib."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:393
+#: ../../doc/demo_unit_disk.ipynb:392
 msgid "Definition of finite element methods and integration method"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:395
-msgid "We define the finite element and integration methods to use. We define a MeshFem that defines the degree of freedom of the mesh in the first order."
+#: ../../doc/demo_unit_disk.ipynb:394
+msgid "We define the finite element and integration methods to use. We create a ``MeshFem`` that defines the degree of freedom of the mesh as rank 1 (scalar)."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:416
-msgid "Next we set the finite element used. ``classical_finite_element`` means a continuous Lagrange element and remember that elements\\_degree has been set to 2 which means that we will use quadratic (isoparametric) elements."
+#: ../../doc/demo_unit_disk.ipynb:415
+msgid "Next we set the finite element used. Classical finite element means a continuous Lagrange element. Setting ``elements_degree`` to 2 means that we will use quadratic (isoparametric) elements."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:438
-msgid "The last thing to define is an integration method mim. There is no default integration method in GetFEM so this is mandatory to define an integration method. Of course, the order of the integration method have to be chosen sufficient to make a convenient integration of the selected finite element method. Here, the square of ``elements_degree`` is sufficient."
+#: ../../doc/demo_unit_disk.ipynb:437
+msgid "The last thing to define is an integration method ``mim``. There is no default integration method in GetFEM so it is mandatory to define an integration method. Of course, the order of the integration method has to be chosen sufficient to make a convenient integration of the selected finite element method. Here, the square of ``elements_degree`` is sufficient."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:460
+#: ../../doc/demo_unit_disk.ipynb:459
 msgid "Model definition"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:462
-msgid "The model object in GetFEM gather the variables of the models (the unknowns), the data and what is called the model bricks. The model bricks are some parts of the model (linear or nonlinear terms) applied on a single variable or linking several variables. They are used to make the assembly of the (tangent) linear system (see The model object for more details)."
+#: ../../doc/demo_unit_disk.ipynb:461
+msgid "The model object in GetFEM gathers the variables of the models (the unknowns), the data and what are called the model bricks. The model bricks are some parts of the model (linear or nonlinear terms) applied on a single variable or linking several variables. A model brick is an object that is supposed to represent a part of a model. It aims to represent some integral terms in a weak formulation of a PDE model. They are used to make the assembly of the (tangent) linear system (see `The model object <http://getfem.org/userdoc/model_object.html>`__ for more details)."
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:464
@@ -169,19 +169,19 @@ msgid "Poisson's equation"
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:489
-msgid "To define poisson's equation, we have to deifine Laplacian term and RHS source term. We can add Laplacian term (which called brick in GetFEM) by using ``add_Laplacian_brick``."
+msgid "To define Poisson's equation, we have to define a Laplacian term and RHS source term. We can add the Laplacian term (which is called a brick in GetFEM) by using ``add_Laplacian_brick()``."
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:530
-msgid "If you want to define constants in GetFEM, we use ``add_fem_data`` method."
+msgid "If you want to define constants in GetFEM, we use the ``add_fem_data()`` method."
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:552
-msgid "We can set constant values with the ``set_variable`` method."
+msgid "We can set constant values with the ``set_variable()`` method. Here we pass a vector (``ndarray``) the size of the degrees of freedom."
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:573
-msgid "We define the term RHS using the constant F defined. We use the ``add_source_term_brick`` method for the definition."
+msgid "We define the term RHS with the ``add_source_term_brick()`` method, using the constant ``F`` just defined."
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:614
