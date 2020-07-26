@@ -9,6 +9,8 @@ RUN pip3 install --no-cache --upgrade pip && \
 # install pyvista
 RUN apt update && apt -y install git
 RUN pip3 install --no-cache git+git://github.com/pyvista/pyvista@master
+RUN pip3 install --no-cache matplotlib
+RUN pip3 install --no-cache pyct
 RUN apt-get -y install libgl1-mesa-dev
 RUN apt-get -y install xvfb
 RUN set -x
