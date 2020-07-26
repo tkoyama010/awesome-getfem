@@ -9,12 +9,6 @@ RUN pip3 install --no-cache --upgrade pip && \
 # install pyvista
 RUN apt update && apt -y install git
 RUN pip3 install --no-cache git+git://github.com/pyvista/pyvista@master
-RUN pip3 install --no-cache pyct
-RUN pip3 install --no-cache pyviz
-RUN pip3 install --no-cache bokeh
-RUN pip3 install --no-cache pyviz-comms
-RUN pip3 install --no-cache panel
-RUN pip3 install --no-cache lxml
 RUN apt-get -y install libgl1-mesa-dev
 RUN apt-get -y install xvfb
 RUN set -x
