@@ -19,7 +19,6 @@ RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 RUN sleep 3
 RUN set +x
 RUN exec "$@"
-RUN pip3 install --no-cache pyvista
 
 # create user with a home directory
 ARG NB_USER
