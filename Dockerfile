@@ -5,9 +5,10 @@ RUN apt update && apt -y install python3-pip
 # install the notebook package
 RUN apt -y install libgl1-mesa-dev
 RUN apt -y install xvfb
+RUN apt -y install git
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
-    pip3 install --no-cache git+git://github.com/pyvista/pyvista@master && \
+    pip3 install --no-cache git+git://github.com/pyvista/pyvista@master
 
 # create user with a home directory
 ARG NB_USER
