@@ -7,7 +7,7 @@ RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab
 
 # install pyvista
-RUN libgl1-mesa-dev
+RUN apt-get -y install libgl1-mesa-dev
 RUN apt-get -y install xvfb
 RUN set -x
 ENV DISPLAY :99.0
