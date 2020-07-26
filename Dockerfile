@@ -9,7 +9,6 @@ RUN pip3 install --no-cache --upgrade pip && \
 # install pyvista
 RUN apt update && apt -y install git
 RUN pip3 install --no-cache git+git://github.com/pyvista/pyvista@master
-RUN pip3 install --no-cache matplotlib
 RUN pip3 install --no-cache pyct
 RUN pip3 install --no-cache pyviz
 RUN pip3 install --no-cache bokeh
