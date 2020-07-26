@@ -7,6 +7,7 @@ RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab
 
 # install pyvista
+RUN apt update && apt -y install git
 RUN pip3 install --no-cache git+git://github.com/pyvista/pyvista@master
 RUN apt-get -y install libgl1-mesa-dev
 RUN apt-get -y install xvfb
