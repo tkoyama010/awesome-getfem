@@ -31,4 +31,3 @@ COPY . ${HOME}
 RUN pip3 install -r requirements.txt
 RUN chown -R ${NB_USER} ${HOME}
 USER ${USER}
-RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
