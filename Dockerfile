@@ -12,7 +12,6 @@ RUN git clone https://github.com/enthought/mayavi.git; \
     python3 setup.py install
 RUN apt-get -y install libgl1-mesa-dev
 RUN apt-get -y install xvfb
-RUN apt -y install git
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
     pip3 install --no-cache git+git://github.com/tkyama010/pyvista@patch-3
