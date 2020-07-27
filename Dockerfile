@@ -4,6 +4,7 @@ RUN apt update && apt -y install python3-pip
 
 # install the notebook package
 RUN apt -y install git
+RUN apt-get -y install libgl1-mesa-dev
 RUN git clone https://github.com/enthought/mayavi.git; \
     cd mayavi;\
     pip3 install -r requirements.txt;\
