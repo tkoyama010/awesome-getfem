@@ -3,8 +3,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt -y install python3-pip
 
 # install the notebook package
-RUN apt -y install libgl1-mesa-dev
-RUN apt -y install xvfb
+RUN apt-get install python-qt4 libgl1-mesa-glx
+RUN apt-get install -y xvfb
 RUN apt -y install git
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
