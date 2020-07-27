@@ -3,6 +3,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt -y install python3-pip
 
 # install the notebook package
+RUN apt -y install git
 RUN git clone https://github.com/enthought/mayavi.git; \
     cd mayavi;\
     pip3 install -r requirements.txt;\
