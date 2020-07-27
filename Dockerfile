@@ -1,6 +1,8 @@
 FROM getfemdoc/getfem:stable
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update && apt -y install python3-pip
+RUN apt update
+RUN apt-get -y -f install
+RUN apt -y install python3-pip
 
 # install the notebook package
 RUN apt -y install git
