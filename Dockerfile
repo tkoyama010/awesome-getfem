@@ -8,7 +8,7 @@ RUN apt -y install xvfb
 RUN apt -y install git
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
-    pip3 install --no-cache git+git://github.com/pyvista/pyvista@master
+    pip3 install --no-cache git+git://github.com/tkyama010/pyvista@patch-3
 
 # create user with a home directory
 ARG NB_USER
