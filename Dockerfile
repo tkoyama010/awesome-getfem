@@ -7,12 +7,7 @@ RUN apt -y install python3-pip
 # install the notebook package
 RUN apt -y install git
 RUN apt-get -y install libgl1-mesa-dev
-RUN git clone https://github.com/enthought/mayavi.git; \
-    cd mayavi;\
-    pip3 install -r requirements.txt;\
-    pip3 install PyQt5;\
-    python3 setup.py install
-RUN apt-get -y install libgl1-mesa-dev
+RUN pip3 install PyQt5
 RUN apt-get -y install xvfb
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
