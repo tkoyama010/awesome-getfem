@@ -27,3 +27,4 @@ Tutorial
 
    demo_unit_disk.ipynb
    cantilever.ipynb
+   stress_analysis_of_perforated_plate.ipynb
