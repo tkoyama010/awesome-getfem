@@ -11,6 +11,13 @@ RUN pip3 install PyQt5
 RUN apt-get -y install xvfb
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
+    pip3 install --no-cache pyviz && \
+    pip3 install --no-cache bokeh && \
+    pip3 install --no-cache pyviz_comms && \
+    pip3 install --no-cache panel && \
+    pip3 install --no-cache lxml && \
+    pip3 install --no-cache matplotlib && \
+    pip3 install --no-cache pyct && \
     pip3 install --no-cache git+git://github.com/tkoyama010/pyvista@patch-3
 
 # create user with a home directory
