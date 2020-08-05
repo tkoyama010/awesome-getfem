@@ -19,7 +19,7 @@ ARG NB_UID
 ENV USER ${NB_USER}
 ENV HOME /home/${NB_USER}
 ENV PYVISTA_VIRTUAL_DISPLAY false
-Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+RUN Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 ENV PYVISTA_OFF_SCREEN true
 ENV PYVISTA_USE_PANEL true
 ENV PYVISTA_PLOT_THEME document
