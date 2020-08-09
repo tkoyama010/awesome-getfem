@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-12 00:01+0000\n"
+"POT-Creation-Date: 2020-08-09 00:02+0000\n"
 "PO-Revision-Date: 2020-05-17 04:07+0000\n"
 "Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
@@ -86,8 +86,10 @@ msgstr ""
 "disk.html>`__ を参照しています。"
 
 #: ../../doc/demo_unit_disk.ipynb:112
-msgid "−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega"
-msgstr "−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega"
+msgid ""
+"−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega\n"
+"\n"
+msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:114
 msgid "|pdedemo1\\_01|"
@@ -246,8 +248,10 @@ msgid ""
 msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:464
-msgid "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
-msgstr "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}"
+msgid ""
+"[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}\n"
+"\n"
+msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:487
 msgid "Poisson's equation"
@@ -313,8 +317,10 @@ msgid "The exact solution to this problem is given by the following equation:"
 msgstr "この問題の理論解は、次の式で与えられます。"
 
 #: ../../doc/demo_unit_disk.ipynb:800
-msgid "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
-msgstr "u(x, y) = \\dfrac{1-x^2-y^2}{4}"
+msgid ""
+"u(x, y) = \\dfrac{1-x^2-y^2}{4}\n"
+"\n"
+msgstr ""
 
 #: ../../doc/demo_unit_disk.ipynb:821
 msgid ""
