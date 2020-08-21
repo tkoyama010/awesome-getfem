@@ -15,3 +15,4 @@ jupyterlab
 pyvirtualdisplay
 tabulate
 sphinx-rtd-theme
+git+https://github.com/rougier/matplotlib-3d
