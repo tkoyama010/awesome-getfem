@@ -25,5 +25,6 @@ Tutorial
 .. toctree::
    :glob:
 
+   bunny.ipynb
    demo_unit_disk.ipynb
    cantilever.ipynb
