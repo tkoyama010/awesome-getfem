@@ -27,7 +27,7 @@ msgstr "Pythonを使用したFEM解析の概要"
 
 #: ../../doc/demo_unit_disk.ipynb:11
 msgid "|Binder|"
-msgstr ""
+msgstr "|Binder|"
 
 #: ../../doc/demo_unit_disk.ipynb:13
 msgid ""
@@ -70,6 +70,10 @@ msgid ""
 "already configured in the `Dockerfile <https://github.com/getfem-doc/getfem-"
 "examples/blob/master/Dockerfile>`__."
 msgstr ""
+"このチュートリアルには、 `requirements.txt <https://github.com/getfem-doc/getfem-"
+"examples/blob/master/requirements.txt>`__ の追加パッケージが必要です。これらの環境はすでに "
+"`Dockerfile <https://github.com/getfem-doc/getfem-"
+"examples/blob/master/Dockerfile>`__ で設定されているため、構築する必要はありません。"
 
 #: ../../doc/demo_unit_disk.ipynb:108
 msgid "The problem setting"
@@ -90,6 +94,8 @@ msgid ""
 "−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega\n"
 "\n"
 msgstr ""
+"−\\Delta u=1 \\ {\\rm on}\\  \\Omega, u=0 \\ {\\rm on}\\  \\delta \\Omega\n"
+"\n"
 
 #: ../../doc/demo_unit_disk.ipynb:114
 msgid "|pdedemo1\\_01|"
@@ -147,7 +153,7 @@ msgstr "初期化"
 
 #: ../../doc/demo_unit_disk.ipynb:152
 msgid "GetFEM can be imported as follows (numpy has also to be imported)."
-msgstr ""
+msgstr "GetFEMは次のようにインポートできます(numpyもインポートしなければなりません)。"
 
 #: ../../doc/demo_unit_disk.ipynb:174
 msgid "Mesh generation"
@@ -230,6 +236,9 @@ msgid ""
 " chosen sufficient to make a convenient integration of the selected finite "
 "element method. Here, the square of ``elements_degree`` is sufficient."
 msgstr ""
+"最後に定義するのは、積分法 ``mim`` "
+"です。GetFEMにはデフォルトの積分方法がないため、積分方法を定義するにはこれが必須です。もちろん、積分法の次数は、選択された有限要素法の便利な積分を行うのに十分なものを選択しなければなりません。ここでは、"
+" ``elements_degree`` の2乗で十分です。"
 
 #: ../../doc/demo_unit_disk.ipynb:459
 msgid "Model definition"
@@ -252,6 +261,8 @@ msgid ""
 "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}\n"
 "\n"
 msgstr ""
+"[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}\n"
+"\n"
 
 #: ../../doc/demo_unit_disk.ipynb:487
 msgid "Poisson's equation"
@@ -263,24 +274,27 @@ msgid ""
 "source term. We can add the Laplacian term (which is called a brick in "
 "GetFEM) by using ``add_Laplacian_brick()``."
 msgstr ""
+"Poisson方程式を定義するために、 Laplacian項とRHSソース項を定義しなければなりません。 "
+"``add_Laplacian_brick()`` を用いて、Laplacian項(GetFEMではブリックと呼ばれています)を加えることができます。"
 
 #: ../../doc/demo_unit_disk.ipynb:530
 msgid ""
 "If you want to define constants in GetFEM, we use the ``add_fem_data()`` "
 "method."
-msgstr ""
+msgstr "GetFEMで定数を定義する場合は、  ``add_fem_data()`` メソッドを使用します。"
 
 #: ../../doc/demo_unit_disk.ipynb:552
 msgid ""
 "We can set constant values with the ``set_variable()`` method. Here we pass "
 "a vector (``ndarray``) the size of the degrees of freedom."
 msgstr ""
+"定数値は ``set_variable()`` メソッドで設定できます。ここでは、自由度の大きさのベクトル (``ndarray``) を渡します。"
 
 #: ../../doc/demo_unit_disk.ipynb:573
 msgid ""
 "We define the term RHS with the ``add_source_term_brick()`` method, using "
 "the constant ``F`` just defined."
-msgstr ""
+msgstr "先に定義した定数 ``F`` を用いて ``add_source_term_brick()`` メソットでRHSという項を定義しました。"
 
 #: ../../doc/demo_unit_disk.ipynb:614
 msgid "Finally, we set the Dirichlet condition at the boundary."
