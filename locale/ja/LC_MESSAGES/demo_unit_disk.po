@@ -176,6 +176,9 @@ msgid ""
 "diameter is given by ``h`` and the degree of the mesh is ``K`` (:math:`K > "
 "1` for curved boundaries)."
 msgstr ""
+"``mo`` で表される幾何形状に対してGetFEMの実験メッシャを呼び出すことによりメッシュオブジェクト ``mesh`` "
+"を作成することができます。要素のおおよその直径は ``h`` で与えられ、メッシュの次数は ``K``  (曲線境界の :math:`K > 1` "
+")です。"
 
 #: ../../doc/demo_unit_disk.ipynb:232
 msgid "Boundary selection"
