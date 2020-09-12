@@ -28,3 +28,4 @@ Tutorial
    bunny.ipynb
    demo_unit_disk.ipynb
    cantilever.ipynb
+   ball_eigen.ipynb
