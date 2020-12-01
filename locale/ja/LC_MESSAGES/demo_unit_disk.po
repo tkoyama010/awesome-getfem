@@ -212,6 +212,8 @@ msgid ""
 "We can render VTK files using Paraview or mayavi2. In order to display in "
 "the jupyter notebook this time, we read in meshio and draw in matplotlib."
 msgstr ""
+"VTKファイルはParaviewまたはmayavi 2を使用してレンダリングできます。今回はjupyter "
+"notebookに表示するために、meshioを読み込んでmatplotlibで描画します。"
 
 #: ../../doc/demo_unit_disk.ipynb:392
 msgid "Definition of finite element methods and integration method"
@@ -338,6 +340,8 @@ msgid ""
 "u(x, y) = \\dfrac{1-x^2-y^2}{4}\n"
 "\n"
 msgstr ""
+"u(x, y) = \\dfrac{1-x^2-y^2}{4}\n"
+"\n"
 
 #: ../../doc/demo_unit_disk.ipynb:821
 msgid ""
