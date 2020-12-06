@@ -11,14 +11,14 @@ RUN pip3 install PyQt5
 RUN apt-get -y install xvfb
 RUN pip3 install --no-cache --upgrade pip && \
     pip3 install --no-cache jupyterlab && \
-    pip3 install --no-cache git+git://github.com/tkoyama010/pyvista@patch-3
+    pip3 install --no-cache pyvista && \
+    pip3 install --no-cache pyvirtualdisplay
 
 # create user with a home directory
 ARG NB_USER
 ARG NB_UID
 ENV USER ${NB_USER}
 ENV HOME /home/${NB_USER}
-ENV PYVISTA_VIRTUAL_DISPLAY true
 ENV PYVISTA_OFF_SCREEN true
 ENV PYVISTA_USE_PANEL true
 ENV PYVISTA_PLOT_THEME document
