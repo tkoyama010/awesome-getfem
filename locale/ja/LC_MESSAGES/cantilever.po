@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 00:02+0000\n"
+"POT-Creation-Date: 2020-12-07 00:01+0000\n"
 "PO-Revision-Date: 2020-05-31 00:01+0000\n"
 "Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
@@ -42,7 +42,7 @@ msgstr "モデルの作成"
 msgid "Now we are ready, import the library."
 msgstr "これで準備ができました。ライブラリをインポートします。"
 
-#: ../../doc/cantilever.ipynb:65
+#: ../../doc/cantilever.ipynb:90
 msgid ""
 "The review cases are as follows. GetFEM++ uses FEM\\_PRODUCT and "
 "IM\\_PRODUCT to two-dimensional the finite element method and the "
@@ -52,403 +52,403 @@ msgid ""
 "meshes, the finite element method and the integration method."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:219
+#: ../../doc/cantilever.ipynb:244
 msgid "Case Name"
 msgstr "ケース名"
 
-#: ../../doc/cantilever.ipynb:219 ../../doc/cantilever.ipynb:264
+#: ../../doc/cantilever.ipynb:244 ../../doc/cantilever.ipynb:289
 msgid "Mesh"
 msgstr "メッシュ"
 
-#: ../../doc/cantilever.ipynb:219 ../../doc/cantilever.ipynb:372
+#: ../../doc/cantilever.ipynb:244 ../../doc/cantilever.ipynb:422
 msgid "Finite Element Method"
 msgstr "有限要素法"
 
-#: ../../doc/cantilever.ipynb:219
+#: ../../doc/cantilever.ipynb:244
 msgid "Integration Method"
 msgstr "積分法"
 
-#: ../../doc/cantilever.ipynb:221 ../../doc/cantilever.ipynb:833
+#: ../../doc/cantilever.ipynb:246 ../../doc/cantilever.ipynb:908
 msgid "0"
 msgstr "0"
 
-#: ../../doc/cantilever.ipynb:221 ../../doc/cantilever.ipynb:833
+#: ../../doc/cantilever.ipynb:246 ../../doc/cantilever.ipynb:908
 msgid "case11"
 msgstr "case11"
 
-#: ../../doc/cantilever.ipynb:221 ../../doc/cantilever.ipynb:229
-#: ../../doc/cantilever.ipynb:237 ../../doc/cantilever.ipynb:245
-#: ../../doc/cantilever.ipynb:833 ../../doc/cantilever.ipynb:841
-#: ../../doc/cantilever.ipynb:849 ../../doc/cantilever.ipynb:857
+#: ../../doc/cantilever.ipynb:246 ../../doc/cantilever.ipynb:254
+#: ../../doc/cantilever.ipynb:262 ../../doc/cantilever.ipynb:270
+#: ../../doc/cantilever.ipynb:908 ../../doc/cantilever.ipynb:916
+#: ../../doc/cantilever.ipynb:924 ../../doc/cantilever.ipynb:932
 msgid "4x1"
 msgstr "4x1"
 
-#: ../../doc/cantilever.ipynb:221 ../../doc/cantilever.ipynb:223
-#: ../../doc/cantilever.ipynb:225 ../../doc/cantilever.ipynb:227
-#: ../../doc/cantilever.ipynb:833 ../../doc/cantilever.ipynb:835
-#: ../../doc/cantilever.ipynb:837 ../../doc/cantilever.ipynb:839
+#: ../../doc/cantilever.ipynb:246 ../../doc/cantilever.ipynb:248
+#: ../../doc/cantilever.ipynb:250 ../../doc/cantilever.ipynb:252
+#: ../../doc/cantilever.ipynb:908 ../../doc/cantilever.ipynb:910
+#: ../../doc/cantilever.ipynb:912 ../../doc/cantilever.ipynb:914
 msgid "FEM\\_PK(1, 2)"
 msgstr "FEM\\_PK(1, 2)"
 
-#: ../../doc/cantilever.ipynb:221 ../../doc/cantilever.ipynb:223
-#: ../../doc/cantilever.ipynb:225 ../../doc/cantilever.ipynb:227
-#: ../../doc/cantilever.ipynb:245 ../../doc/cantilever.ipynb:247
-#: ../../doc/cantilever.ipynb:249 ../../doc/cantilever.ipynb:251
-#: ../../doc/cantilever.ipynb:833 ../../doc/cantilever.ipynb:835
-#: ../../doc/cantilever.ipynb:837 ../../doc/cantilever.ipynb:839
-#: ../../doc/cantilever.ipynb:857 ../../doc/cantilever.ipynb:859
-#: ../../doc/cantilever.ipynb:861 ../../doc/cantilever.ipynb:863
+#: ../../doc/cantilever.ipynb:246 ../../doc/cantilever.ipynb:248
+#: ../../doc/cantilever.ipynb:250 ../../doc/cantilever.ipynb:252
+#: ../../doc/cantilever.ipynb:270 ../../doc/cantilever.ipynb:272
+#: ../../doc/cantilever.ipynb:274 ../../doc/cantilever.ipynb:276
+#: ../../doc/cantilever.ipynb:908 ../../doc/cantilever.ipynb:910
+#: ../../doc/cantilever.ipynb:912 ../../doc/cantilever.ipynb:914
+#: ../../doc/cantilever.ipynb:932 ../../doc/cantilever.ipynb:934
+#: ../../doc/cantilever.ipynb:936 ../../doc/cantilever.ipynb:938
 msgid "IM\\_GAUSS1D(4)"
 msgstr "IM\\_GAUSS1D(4)"
 
-#: ../../doc/cantilever.ipynb:223 ../../doc/cantilever.ipynb:835
-#: ../../doc/cantilever.ipynb:835 ../../doc/cantilever.ipynb:837
-#: ../../doc/cantilever.ipynb:859 ../../doc/cantilever.ipynb:861
+#: ../../doc/cantilever.ipynb:248 ../../doc/cantilever.ipynb:910
+#: ../../doc/cantilever.ipynb:910 ../../doc/cantilever.ipynb:912
+#: ../../doc/cantilever.ipynb:934 ../../doc/cantilever.ipynb:936
 msgid "1"
 msgstr "1"
 
-#: ../../doc/cantilever.ipynb:223 ../../doc/cantilever.ipynb:835
+#: ../../doc/cantilever.ipynb:248 ../../doc/cantilever.ipynb:910
 msgid "case12"
 msgstr "case12"
 
-#: ../../doc/cantilever.ipynb:223 ../../doc/cantilever.ipynb:231
-#: ../../doc/cantilever.ipynb:239 ../../doc/cantilever.ipynb:247
-#: ../../doc/cantilever.ipynb:835 ../../doc/cantilever.ipynb:843
-#: ../../doc/cantilever.ipynb:851 ../../doc/cantilever.ipynb:859
+#: ../../doc/cantilever.ipynb:248 ../../doc/cantilever.ipynb:256
+#: ../../doc/cantilever.ipynb:264 ../../doc/cantilever.ipynb:272
+#: ../../doc/cantilever.ipynb:910 ../../doc/cantilever.ipynb:918
+#: ../../doc/cantilever.ipynb:926 ../../doc/cantilever.ipynb:934
 msgid "4x2"
 msgstr "4x2"
 
-#: ../../doc/cantilever.ipynb:225 ../../doc/cantilever.ipynb:837
+#: ../../doc/cantilever.ipynb:250 ../../doc/cantilever.ipynb:912
 msgid "2"
 msgstr "2"
 
-#: ../../doc/cantilever.ipynb:225 ../../doc/cantilever.ipynb:837
+#: ../../doc/cantilever.ipynb:250 ../../doc/cantilever.ipynb:912
 msgid "case13"
 msgstr "case13"
 
-#: ../../doc/cantilever.ipynb:225 ../../doc/cantilever.ipynb:233
-#: ../../doc/cantilever.ipynb:241 ../../doc/cantilever.ipynb:249
-#: ../../doc/cantilever.ipynb:837 ../../doc/cantilever.ipynb:845
-#: ../../doc/cantilever.ipynb:853 ../../doc/cantilever.ipynb:861
+#: ../../doc/cantilever.ipynb:250 ../../doc/cantilever.ipynb:258
+#: ../../doc/cantilever.ipynb:266 ../../doc/cantilever.ipynb:274
+#: ../../doc/cantilever.ipynb:912 ../../doc/cantilever.ipynb:920
+#: ../../doc/cantilever.ipynb:928 ../../doc/cantilever.ipynb:936
 msgid "4x4"
 msgstr "4x4"
 
-#: ../../doc/cantilever.ipynb:227 ../../doc/cantilever.ipynb:839
+#: ../../doc/cantilever.ipynb:252 ../../doc/cantilever.ipynb:914
 msgid "3"
 msgstr "3"
 
-#: ../../doc/cantilever.ipynb:227 ../../doc/cantilever.ipynb:839
+#: ../../doc/cantilever.ipynb:252 ../../doc/cantilever.ipynb:914
 msgid "case14"
 msgstr "case14"
 
-#: ../../doc/cantilever.ipynb:227 ../../doc/cantilever.ipynb:235
-#: ../../doc/cantilever.ipynb:243 ../../doc/cantilever.ipynb:251
-#: ../../doc/cantilever.ipynb:839 ../../doc/cantilever.ipynb:847
-#: ../../doc/cantilever.ipynb:855 ../../doc/cantilever.ipynb:863
+#: ../../doc/cantilever.ipynb:252 ../../doc/cantilever.ipynb:260
+#: ../../doc/cantilever.ipynb:268 ../../doc/cantilever.ipynb:276
+#: ../../doc/cantilever.ipynb:914 ../../doc/cantilever.ipynb:922
+#: ../../doc/cantilever.ipynb:930 ../../doc/cantilever.ipynb:938
 msgid "16x8"
 msgstr "16x8"
 
-#: ../../doc/cantilever.ipynb:229 ../../doc/cantilever.ipynb:841
+#: ../../doc/cantilever.ipynb:254 ../../doc/cantilever.ipynb:916
 msgid "4"
 msgstr "4"
 
-#: ../../doc/cantilever.ipynb:229 ../../doc/cantilever.ipynb:841
+#: ../../doc/cantilever.ipynb:254 ../../doc/cantilever.ipynb:916
 msgid "case21"
 msgstr "case21"
 
-#: ../../doc/cantilever.ipynb:229 ../../doc/cantilever.ipynb:231
-#: ../../doc/cantilever.ipynb:233 ../../doc/cantilever.ipynb:235
-#: ../../doc/cantilever.ipynb:237 ../../doc/cantilever.ipynb:239
-#: ../../doc/cantilever.ipynb:241 ../../doc/cantilever.ipynb:243
-#: ../../doc/cantilever.ipynb:841 ../../doc/cantilever.ipynb:843
-#: ../../doc/cantilever.ipynb:845 ../../doc/cantilever.ipynb:847
-#: ../../doc/cantilever.ipynb:849 ../../doc/cantilever.ipynb:851
-#: ../../doc/cantilever.ipynb:853 ../../doc/cantilever.ipynb:855
+#: ../../doc/cantilever.ipynb:254 ../../doc/cantilever.ipynb:256
+#: ../../doc/cantilever.ipynb:258 ../../doc/cantilever.ipynb:260
+#: ../../doc/cantilever.ipynb:262 ../../doc/cantilever.ipynb:264
+#: ../../doc/cantilever.ipynb:266 ../../doc/cantilever.ipynb:268
+#: ../../doc/cantilever.ipynb:916 ../../doc/cantilever.ipynb:918
+#: ../../doc/cantilever.ipynb:920 ../../doc/cantilever.ipynb:922
+#: ../../doc/cantilever.ipynb:924 ../../doc/cantilever.ipynb:926
+#: ../../doc/cantilever.ipynb:928 ../../doc/cantilever.ipynb:930
 msgid "FEM\\_PK(1, 1)"
 msgstr "FEM\\_PK(1, 1)"
 
-#: ../../doc/cantilever.ipynb:229 ../../doc/cantilever.ipynb:231
-#: ../../doc/cantilever.ipynb:233 ../../doc/cantilever.ipynb:235
-#: ../../doc/cantilever.ipynb:841 ../../doc/cantilever.ipynb:843
-#: ../../doc/cantilever.ipynb:845 ../../doc/cantilever.ipynb:847
+#: ../../doc/cantilever.ipynb:254 ../../doc/cantilever.ipynb:256
+#: ../../doc/cantilever.ipynb:258 ../../doc/cantilever.ipynb:260
+#: ../../doc/cantilever.ipynb:916 ../../doc/cantilever.ipynb:918
+#: ../../doc/cantilever.ipynb:920 ../../doc/cantilever.ipynb:922
 msgid "IM\\_GAUSS1D(2)"
 msgstr "IM\\_GAUSS1D(2)"
 
-#: ../../doc/cantilever.ipynb:231 ../../doc/cantilever.ipynb:843
+#: ../../doc/cantilever.ipynb:256 ../../doc/cantilever.ipynb:918
 msgid "5"
 msgstr "5"
 
-#: ../../doc/cantilever.ipynb:231 ../../doc/cantilever.ipynb:843
+#: ../../doc/cantilever.ipynb:256 ../../doc/cantilever.ipynb:918
 msgid "case22"
 msgstr "case22"
 
-#: ../../doc/cantilever.ipynb:233 ../../doc/cantilever.ipynb:845
+#: ../../doc/cantilever.ipynb:258 ../../doc/cantilever.ipynb:920
 msgid "6"
 msgstr "6"
 
-#: ../../doc/cantilever.ipynb:233 ../../doc/cantilever.ipynb:845
+#: ../../doc/cantilever.ipynb:258 ../../doc/cantilever.ipynb:920
 msgid "case23"
 msgstr "case23"
 
-#: ../../doc/cantilever.ipynb:235 ../../doc/cantilever.ipynb:847
+#: ../../doc/cantilever.ipynb:260 ../../doc/cantilever.ipynb:922
 msgid "7"
 msgstr "7"
 
-#: ../../doc/cantilever.ipynb:235 ../../doc/cantilever.ipynb:847
+#: ../../doc/cantilever.ipynb:260 ../../doc/cantilever.ipynb:922
 msgid "case24"
 msgstr "case24"
 
-#: ../../doc/cantilever.ipynb:237 ../../doc/cantilever.ipynb:849
+#: ../../doc/cantilever.ipynb:262 ../../doc/cantilever.ipynb:924
 msgid "8"
 msgstr "8"
 
-#: ../../doc/cantilever.ipynb:237 ../../doc/cantilever.ipynb:849
+#: ../../doc/cantilever.ipynb:262 ../../doc/cantilever.ipynb:924
 msgid "case31"
 msgstr "case31"
 
-#: ../../doc/cantilever.ipynb:237 ../../doc/cantilever.ipynb:239
-#: ../../doc/cantilever.ipynb:241 ../../doc/cantilever.ipynb:243
-#: ../../doc/cantilever.ipynb:849 ../../doc/cantilever.ipynb:851
-#: ../../doc/cantilever.ipynb:853 ../../doc/cantilever.ipynb:855
+#: ../../doc/cantilever.ipynb:262 ../../doc/cantilever.ipynb:264
+#: ../../doc/cantilever.ipynb:266 ../../doc/cantilever.ipynb:268
+#: ../../doc/cantilever.ipynb:924 ../../doc/cantilever.ipynb:926
+#: ../../doc/cantilever.ipynb:928 ../../doc/cantilever.ipynb:930
 msgid "IM\\_GAUSS1D(0)"
 msgstr "IM\\_GAUSS1D(0)"
 
-#: ../../doc/cantilever.ipynb:239 ../../doc/cantilever.ipynb:851
+#: ../../doc/cantilever.ipynb:264 ../../doc/cantilever.ipynb:926
 msgid "9"
 msgstr "9"
 
-#: ../../doc/cantilever.ipynb:239 ../../doc/cantilever.ipynb:851
+#: ../../doc/cantilever.ipynb:264 ../../doc/cantilever.ipynb:926
 msgid "case32"
 msgstr "case32"
 
-#: ../../doc/cantilever.ipynb:241 ../../doc/cantilever.ipynb:853
+#: ../../doc/cantilever.ipynb:266 ../../doc/cantilever.ipynb:928
 msgid "10"
 msgstr "10"
 
-#: ../../doc/cantilever.ipynb:241 ../../doc/cantilever.ipynb:853
+#: ../../doc/cantilever.ipynb:266 ../../doc/cantilever.ipynb:928
 msgid "case33"
 msgstr "case33"
 
-#: ../../doc/cantilever.ipynb:243 ../../doc/cantilever.ipynb:855
+#: ../../doc/cantilever.ipynb:268 ../../doc/cantilever.ipynb:930
 msgid "11"
 msgstr "11"
 
-#: ../../doc/cantilever.ipynb:243 ../../doc/cantilever.ipynb:855
+#: ../../doc/cantilever.ipynb:268 ../../doc/cantilever.ipynb:930
 msgid "case34"
 msgstr "case34"
 
-#: ../../doc/cantilever.ipynb:245 ../../doc/cantilever.ipynb:857
+#: ../../doc/cantilever.ipynb:270 ../../doc/cantilever.ipynb:932
 msgid "12"
 msgstr "12"
 
-#: ../../doc/cantilever.ipynb:245 ../../doc/cantilever.ipynb:857
+#: ../../doc/cantilever.ipynb:270 ../../doc/cantilever.ipynb:932
 msgid "case41"
 msgstr "case41"
 
-#: ../../doc/cantilever.ipynb:245 ../../doc/cantilever.ipynb:247
-#: ../../doc/cantilever.ipynb:249 ../../doc/cantilever.ipynb:251
-#: ../../doc/cantilever.ipynb:857 ../../doc/cantilever.ipynb:859
-#: ../../doc/cantilever.ipynb:861 ../../doc/cantilever.ipynb:863
+#: ../../doc/cantilever.ipynb:270 ../../doc/cantilever.ipynb:272
+#: ../../doc/cantilever.ipynb:274 ../../doc/cantilever.ipynb:276
+#: ../../doc/cantilever.ipynb:932 ../../doc/cantilever.ipynb:934
+#: ../../doc/cantilever.ipynb:936 ../../doc/cantilever.ipynb:938
 msgid "FEM\\_PK\\_WITH\\_CUBIC\\_BUBBLE(1, 1)"
 msgstr "FEM\\_PK\\_WITH\\_CUBIC\\_BUBBLE(1, 1)"
 
-#: ../../doc/cantilever.ipynb:247 ../../doc/cantilever.ipynb:859
+#: ../../doc/cantilever.ipynb:272 ../../doc/cantilever.ipynb:934
 msgid "13"
 msgstr "13"
 
-#: ../../doc/cantilever.ipynb:247 ../../doc/cantilever.ipynb:859
+#: ../../doc/cantilever.ipynb:272 ../../doc/cantilever.ipynb:934
 msgid "case42"
 msgstr "case42"
 
-#: ../../doc/cantilever.ipynb:249 ../../doc/cantilever.ipynb:861
+#: ../../doc/cantilever.ipynb:274 ../../doc/cantilever.ipynb:936
 msgid "14"
 msgstr "14"
 
-#: ../../doc/cantilever.ipynb:249 ../../doc/cantilever.ipynb:861
+#: ../../doc/cantilever.ipynb:274 ../../doc/cantilever.ipynb:936
 msgid "case43"
 msgstr "case43"
 
-#: ../../doc/cantilever.ipynb:251 ../../doc/cantilever.ipynb:863
+#: ../../doc/cantilever.ipynb:276 ../../doc/cantilever.ipynb:938
 msgid "15"
 msgstr "15"
 
-#: ../../doc/cantilever.ipynb:251 ../../doc/cantilever.ipynb:863
+#: ../../doc/cantilever.ipynb:276 ../../doc/cantilever.ipynb:938
 msgid "case44"
 msgstr "case44"
 
-#: ../../doc/cantilever.ipynb:266
+#: ../../doc/cantilever.ipynb:291
 msgid ""
 "The overall size of the model is L = 10 mm in length, h = 1 mm in height, "
 "and b = 1 mm in depth. In general, a slender ratio of 1: 10 is considered a "
 "beam element."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:296
+#: ../../doc/cantilever.ipynb:321
 msgid "Outputs an image of each mesh."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:335
+#: ../../doc/cantilever.ipynb:385
 msgid "Region"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:337
+#: ../../doc/cantilever.ipynb:387
 msgid ""
 "Sets the area on the left side of the mesh where the Dirichlet condition is "
 "set. The right side sets the area for setting the Neumann condition."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:374
+#: ../../doc/cantilever.ipynb:424
 msgid ""
 "Create a MeshFem object and associate the mesh with the finite element "
 "method."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:412
+#: ../../doc/cantilever.ipynb:462
 msgid "Integral method"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:414
+#: ../../doc/cantilever.ipynb:464
 msgid "Associate the integration method with the mesh."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:451
+#: ../../doc/cantilever.ipynb:501
 msgid "Variable"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:453
+#: ../../doc/cantilever.ipynb:503
 msgid "Define the model object and set the variable \"u\"."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:479
+#: ../../doc/cantilever.ipynb:529
 msgid "Properties"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:481
+#: ../../doc/cantilever.ipynb:531
 msgid ""
 "Define properties as constants for the model object. The Young's modulus of "
 "steel is :math:`E = 205000\\times 10^6N/m^2`. Also set Poisson's ratio "
 ":math:`\\nu = 0.0` to ignore the Poisson effect."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:508
+#: ../../doc/cantilever.ipynb:558
 msgid "Plane Strain Element"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:510
+#: ../../doc/cantilever.ipynb:560
 msgid "Defines the plane strain element for variable 'u'."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:533
+#: ../../doc/cantilever.ipynb:583
 msgid "Boundary Conditions"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:535
+#: ../../doc/cantilever.ipynb:585
 msgid "Set the Dirichlet condition for the region on the left side."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:560
+#: ../../doc/cantilever.ipynb:610
 msgid "Set the Neumann boundary condition on the right side."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:585
+#: ../../doc/cantilever.ipynb:635
 msgid "Solve"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:587
+#: ../../doc/cantilever.ipynb:637
 msgid ""
 "Solve the simultaneous equations of the model object to find the value of "
 "the variable 'u'."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:609
+#: ../../doc/cantilever.ipynb:659
 msgid "The constraint on the left end has a displacement of 0.0."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:634
+#: ../../doc/cantilever.ipynb:684
 msgid "Review results"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:636
+#: ../../doc/cantilever.ipynb:686
 msgid "Output and visualize the results of each case to vtk files."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:660
+#: ../../doc/cantilever.ipynb:710
 msgid "Computation of Theoretical Solutions"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:662
+#: ../../doc/cantilever.ipynb:712
 msgid ""
 "Calculates the deflection at each coordinate for comparison with the "
 "theoretical solution. The theoretical solution for a cantilever beam "
 "subjected to a concentrated load is as follows."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:664
+#: ../../doc/cantilever.ipynb:714
 msgid ":math:`w\\left(x\\right)=\\dfrac{FL^3}{3EI}`"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:708
+#: ../../doc/cantilever.ipynb:758
 msgid "deformation diagram of case11"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:747
+#: ../../doc/cantilever.ipynb:822
 msgid "Comparison with Theoretical Solutions"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:791
+#: ../../doc/cantilever.ipynb:866
 msgid ""
 "Calculates the ratio of deformation to theoretical solution for each case."
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:831
+#: ../../doc/cantilever.ipynb:906
 msgid "case name"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:831
+#: ../../doc/cantilever.ipynb:906
 msgid "mesh"
 msgstr "メッシュ"
 
-#: ../../doc/cantilever.ipynb:831
+#: ../../doc/cantilever.ipynb:906
 msgid "finite element method"
 msgstr "有限要素法"
 
-#: ../../doc/cantilever.ipynb:831
+#: ../../doc/cantilever.ipynb:906
 msgid "integration method"
 msgstr "積分法"
 
-#: ../../doc/cantilever.ipynb:831
+#: ../../doc/cantilever.ipynb:906
 msgid "ratio with theory"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:833 ../../doc/cantilever.ipynb:857
+#: ../../doc/cantilever.ipynb:908 ../../doc/cantilever.ipynb:932
 msgid "0.999"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:839 ../../doc/cantilever.ipynb:863
+#: ../../doc/cantilever.ipynb:914 ../../doc/cantilever.ipynb:938
 msgid "1.006"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:841 ../../doc/cantilever.ipynb:843
-#: ../../doc/cantilever.ipynb:845
+#: ../../doc/cantilever.ipynb:916 ../../doc/cantilever.ipynb:918
+#: ../../doc/cantilever.ipynb:920
 msgid "0.244"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:847
+#: ../../doc/cantilever.ipynb:922
 msgid "0.841"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:849
-msgid "7.51685e+11"
-msgstr "7.51685e+11"
+#: ../../doc/cantilever.ipynb:924
+msgid "6.52355e+10"
+msgstr ""
 
-#: ../../doc/cantilever.ipynb:851
+#: ../../doc/cantilever.ipynb:926
 msgid "1.317"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:853
+#: ../../doc/cantilever.ipynb:928
 msgid "1.056"
 msgstr ""
 
-#: ../../doc/cantilever.ipynb:855
+#: ../../doc/cantilever.ipynb:930
 msgid "1.021"
 msgstr ""

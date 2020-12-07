@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 00:02+0000\n"
+"POT-Creation-Date: 2020-12-07 00:01+0000\n"
 "PO-Revision-Date: 2020-12-01 00:02+0000\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/getfem-doc/teams/110067/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Let us begin by loading Getfem and pyvista."
 msgstr ""
 
-#: ../../doc/ball_eigen.ipynb:37
+#: ../../doc/ball_eigen.ipynb:42
 msgid "Mesh generation"
 msgstr ""
 
-#: ../../doc/ball_eigen.ipynb:39
+#: ../../doc/ball_eigen.ipynb:44
 msgid ""
 "When you want to build mesh from empty situation, you can use \"empty\" "
 "command in Mesh object."
