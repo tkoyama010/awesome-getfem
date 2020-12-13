@@ -1,5 +1,11 @@
 name: getfem-binder-auto-update
 on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
   schedule:
     - cron:  '0 0 * * *'
 jobs:
@@ -40,6 +46,7 @@ jobs:
         git config --global user.email $GITHUB_REPOSITORY
         git config --global user.name $GITHUB_REPOSITORY
     - name: commit
+      if: contains(github.event.head_commit.message, '[ci skip]') == false && contains(github.ref, 'master')
       env:
         JOB_ID: ${{ steps.jobs.outputs.job_id }}
         HTML_URL: ${{ steps.jobs.outputs.html_url }}
@@ -47,6 +54,6 @@ jobs:
         git fetch origin -p
         git checkout master
         git add .
-        git commit --allow-empty -m ":green_heart: $JOB_ID
+        git commit --allow-empty -m "[ci skip] $JOB_ID
         $HTML_URL"
         git push origin master
