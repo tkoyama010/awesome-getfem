@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-13 05:19+0000\n"
+"POT-Creation-Date: 2020-12-13 08:49+0000\n"
 "PO-Revision-Date: 2020-12-13 05:16+0000\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -106,7 +106,7 @@ msgid ""
 "in Python by"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:517
+#: ../../doc/dynamic_analysis.ipynb:564
 msgid ""
 "where the 1 stands for the dimension of the vector field. The second line "
 "sets the finite element used. ``classical_fem`` means a continuous Lagrange "
@@ -114,7 +114,7 @@ msgid ""
 "that we will use quadratic (isoparametric) elements."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:528
+#: ../../doc/dynamic_analysis.ipynb:575
 msgid ""
 "The last thing to define is an integration method ``mim``. There is no "
 "default integration method in GetFEM so this is mandatory to define an "
@@ -123,11 +123,11 @@ msgid ""
 " element method. Here, the square of ``elements_degree`` is sufficient."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:550
+#: ../../doc/dynamic_analysis.ipynb:636
 msgid "Model definition"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:552
+#: ../../doc/dynamic_analysis.ipynb:638
 msgid ""
 "The model object in *GetFEM* gather the variables of the models (the "
 "unknowns), the data and what is called the model bricks. The model bricks "
@@ -138,7 +138,7 @@ msgid ""
 "object>`__ for more details)."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:563
+#: ../../doc/dynamic_analysis.ipynb:649
 msgid ""
 "followingThis is not strictly mandatory to use the model object since one "
 "may use directly the assembly procedures and build by it own the (tangent) "
@@ -151,7 +151,7 @@ msgid ""
 "object."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:575
+#: ../../doc/dynamic_analysis.ipynb:661
 msgid ""
 "There are two versions of the model: the real one and the complex one. "
 "Complex models have to be reserved for special applications (some "
@@ -159,37 +159,37 @@ msgid ""
 "complex linear system."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:586
+#: ../../doc/dynamic_analysis.ipynb:672
 msgid ""
 "Let us declare a real model with the one variables corresponding to the "
 "three fields to be computed:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:609
+#: ../../doc/dynamic_analysis.ipynb:695
 msgid "Truss deformation problem"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:620
+#: ../../doc/dynamic_analysis.ipynb:706
 msgid ""
 "Let us now begin by truss deformation problem. The equation on the "
 "deformation :math:`u` and boundary condition can be written as follows:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:622
+#: ../../doc/dynamic_analysis.ipynb:708
 msgid ""
 "  \\dfrac{d}{dx}\\left\\{EA\\dfrac{du}{dx}\\right\\} =F\n"
 "\n"
 "is expressed also:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:629
+#: ../../doc/dynamic_analysis.ipynb:715
 msgid ""
 "  \\nabla ( D\\nabla u) =F\n"
 "\n"
 "Where :math:`D = EA`."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:645
+#: ../../doc/dynamic_analysis.ipynb:731
 msgid ""
 "We use directly a GWFL term ``add_linear_term(md mim, "
 "“E*A*Grad_u.Grad_Test_u)”``. See Compute arbitrary terms - high-level "
@@ -197,23 +197,23 @@ msgid ""
 "details on GWFL."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:647
+#: ../../doc/dynamic_analysis.ipynb:733
 msgid ""
 "  \\int ^{L}_{0} EA\\dfrac{du( x)}{dx}\\dfrac{dv( x)}{dx} dx=\\int ^{L}_{0} F v( x)dx\n"
 "\n"
 ":math:`v` it the test function of :math:`u`."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:767
+#: ../../doc/dynamic_analysis.ipynb:853
 msgid "Returned integer of ``add_linear_term`` show the index of the brick."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:769 ../../doc/dynamic_analysis.ipynb:999
-#: ../../doc/dynamic_analysis.ipynb:1147 ../../doc/dynamic_analysis.ipynb:1490
+#: ../../doc/dynamic_analysis.ipynb:855 ../../doc/dynamic_analysis.ipynb:1085
+#: ../../doc/dynamic_analysis.ipynb:1233 ../../doc/dynamic_analysis.ipynb:1576
 msgid "The equation of Model object will be:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:771
+#: ../../doc/dynamic_analysis.ipynb:857
 msgid ""
 "  \\begin{bmatrix}\\dfrac{EA}{L} & -\\dfrac{EA}{L}\\\\\n"
 "  -\\dfrac{EA}{L} & \\dfrac{EA}{L}\n"
@@ -226,7 +226,7 @@ msgid ""
 "You can assemble equtaion using ``assembly`` method. After assembling, you can check stiffness tangent matrix and rhs of equation using ``tangent_matrix`` and ``rhs`` method."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:875
+#: ../../doc/dynamic_analysis.ipynb:961
 msgid ""
 "The following program allows to take into account the whole elastic "
 "deformation equation. Note the use of specific brick to prescribe the "
@@ -234,7 +234,7 @@ msgid ""
 "prescribe a Dirichlet condition (see Dirichlet condition brick)."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1001 ../../doc/dynamic_analysis.ipynb:1492
+#: ../../doc/dynamic_analysis.ipynb:1087 ../../doc/dynamic_analysis.ipynb:1578
 msgid ""
 "\\begin{bmatrix}1 & 0\\\\\n"
 "-\\dfrac{EA}{L} & \\dfrac{EA}{L}\n"
@@ -245,14 +245,14 @@ msgid ""
 "\\end{Bmatrix}"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1062
+#: ../../doc/dynamic_analysis.ipynb:1148
 msgid ""
 "The following program allows to take into account the rhs of source force. "
 "Note the use of specific brick to prescribe the source term brick on the rhs"
 " of equation."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1149
+#: ../../doc/dynamic_analysis.ipynb:1235
 msgid ""
 "\\begin{bmatrix}1 & 0\\\\\n"
 "-\\dfrac{EA}{L} & \\dfrac{EA}{L}\n"
@@ -263,49 +263,49 @@ msgid ""
 "\\end{Bmatrix}"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1210
+#: ../../doc/dynamic_analysis.ipynb:1296
 msgid ""
 "If you know the excplit rhs. You can add it using ``add_exclicit_rhs``:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1283
+#: ../../doc/dynamic_analysis.ipynb:1369
 msgid "Model solve"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1285
+#: ../../doc/dynamic_analysis.ipynb:1371
 msgid "Once the model is correctly defined, we can simply solve it by:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1327
+#: ../../doc/dynamic_analysis.ipynb:1413
 msgid "Export of the solution"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1338
+#: ../../doc/dynamic_analysis.ipynb:1424
 msgid ""
 "The finite element problem is now solved. We can get the value of "
 "displacement variable using ``variable`` method."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1379
+#: ../../doc/dynamic_analysis.ipynb:1465
 msgid "The model is simple enough to make sure the results are correct."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1421
+#: ../../doc/dynamic_analysis.ipynb:1507
 msgid "Delete of brick"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1432
+#: ../../doc/dynamic_analysis.ipynb:1518
 msgid ""
 "In the next section, we calculate a dynamic analysis, so we delete the "
 "static load brick. ``delete_brick`` method delete a variable or a data from "
 "the model."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1554
+#: ../../doc/dynamic_analysis.ipynb:1640
 msgid "The model tools for the integration of transient problems"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1565
+#: ../../doc/dynamic_analysis.ipynb:1651
 msgid ""
 "Although time integration scheme can be written directly using the model "
 "object by describing the problem to be solved at each iteration, the model "
@@ -313,14 +313,14 @@ msgid ""
 " For example you can add Newmark scheme using ``add_Newmark_scheme`` method:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1588
+#: ../../doc/dynamic_analysis.ipynb:1674
 msgid ""
 "We use average constant acceleration (:math:`\\beta = \\dfrac{1}{4}`, "
 ":math:`\\gamma = \\dfrac{1}{2}`) which is unconditonally stable in linear "
 "model."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1599
+#: ../../doc/dynamic_analysis.ipynb:1685
 msgid ""
 "Some intermediate variables are added to the model to represent the time "
 "derivative (and the second order time derivative for second order problem). "
@@ -334,7 +334,7 @@ msgid ""
 " the data ``Previous_Dot_u`` and possibly ``Previous_Dot2_u`` to the model."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1611
+#: ../../doc/dynamic_analysis.ipynb:1697
 msgid ""
 "Some data are added to the model to represent the state of the system at "
 "previous time steps. For classical one-step schemes (for the moment, only "
@@ -345,34 +345,34 @@ msgid ""
 ":math:`n-1`, :math:`n-2` and :math:`n-3`)."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1623
+#: ../../doc/dynamic_analysis.ipynb:1709
 msgid "Mass matrix"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1634
+#: ../../doc/dynamic_analysis.ipynb:1720
 msgid ""
 "The element consistent mass matrix is given by the following equation using "
 "the mass density and the test function of the element:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1636
+#: ../../doc/dynamic_analysis.ipynb:1722
 msgid ""
 "  M=\\int_{0}^{L}\\rho u\\cdot vdx\n"
 "\n"
 "Mass brick adds a mass matrix on the tangent linear system with respect to a certain variable. The function which adds this brick to a model is:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1714
+#: ../../doc/dynamic_analysis.ipynb:1800
 msgid ""
 "Of cource we can also add the mass matrix using Generic Weak-Form Language "
 "(GWFL)."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1756
+#: ../../doc/dynamic_analysis.ipynb:1842
 msgid "Excplict mass matrix is"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1758
+#: ../../doc/dynamic_analysis.ipynb:1844
 msgid ""
 "  M=\\dfrac{\\rho AL}{6}\\begin{bmatrix}2 & 1\\\\\n"
 "  1 & 2\n"
@@ -381,7 +381,7 @@ msgid ""
 "And the equation is"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1767
+#: ../../doc/dynamic_analysis.ipynb:1853
 msgid ""
 "\\begin{bmatrix}1 & 0\\\\\n"
 "\\dfrac{\\rho AL}{6} & \\dfrac{\\rho AL}{6}\n"
@@ -396,61 +396,61 @@ msgid ""
 "\\end{Bmatrix}"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1791
+#: ../../doc/dynamic_analysis.ipynb:1877
 msgid "Angular frequency without damping of this model is:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1793
+#: ../../doc/dynamic_analysis.ipynb:1879
 msgid "\\omega_{u}=\\sqrt{\\dfrac{k}{m}}"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1798
+#: ../../doc/dynamic_analysis.ipynb:1884
 msgid ""
 "  \\omega_{d}=\\dfrac{\\sqrt{4mk-c^{2}}}{2m}\n"
 "\n"
 "with"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1805
+#: ../../doc/dynamic_analysis.ipynb:1891
 msgid "m = \\dfrac{\\rho AL}{3}"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1810
+#: ../../doc/dynamic_analysis.ipynb:1896
 msgid "k = \\dfrac{EA}{L}"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1825
+#: ../../doc/dynamic_analysis.ipynb:1911
 msgid "Damping matrix"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1827
+#: ../../doc/dynamic_analysis.ipynb:1913
 msgid ""
 "The damping matrix is given by the following equation using the viscous "
 "damping :math:`\\mu` and the test function :math:`v`."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1829
+#: ../../doc/dynamic_analysis.ipynb:1915
 msgid ""
 "  C=\\int_{0}^{L}\\mu u\\cdot vdx\n"
 "\n"
 "However it is hard to compute the :math:`mu`, we usually use Rayleigh damping."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1836
+#: ../../doc/dynamic_analysis.ipynb:1922
 msgid "C=\\alpha \\cdot M + \\beta \\cdot K"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1918
+#: ../../doc/dynamic_analysis.ipynb:2004
 msgid ""
 "we can also add the matrix using Generic Weak-Form Language (GWFL) to "
 "``Dot_u``."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1963
+#: ../../doc/dynamic_analysis.ipynb:2049
 msgid "The equation is"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1965
+#: ../../doc/dynamic_analysis.ipynb:2051
 msgid ""
 "\\begin{bmatrix}1 & 0\\\\\n"
 "\\dfrac{\\rho AL}{6} & \\dfrac{\\rho AL}{3}\n"
@@ -471,62 +471,64 @@ msgid ""
 "\\end{Bmatrix}"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:1996
+#: ../../doc/dynamic_analysis.ipynb:2082
 msgid "The implicit Newmark scheme for second order problems"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2007
+#: ../../doc/dynamic_analysis.ipynb:2093
 msgid ""
 "The equation of Newmark theme is following (:math:`n` is the step of time):"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2009
+#: ../../doc/dynamic_analysis.ipynb:2095
 msgid ""
 "  \\left(K+\\dfrac{\\gamma}{\\beta\\Delta t}C+\\dfrac{1}{\\beta\\Delta t^{2}}M\\right)u_{n+1}=f_{n+1}+M\\left(\\left(\\dfrac{1}{2\\beta}-1\\right)\\dfrac{\\partial^{2}u_{n}}{\\partial t^{2}}+\\dfrac{1}{\\beta\\Delta t}\\dfrac{\\partial u_{n}}{\\partial t}+\\dfrac{1}{\\beta\\Delta t^{2}}u_{n}\\right)+C\\left(\\left(\\dfrac{\\gamma}{2\\beta}-1\\right)\\Delta t_{n}\\dfrac{\\partial^{2}u_{n}}{\\partial t^{2}}+\\left(\\dfrac{\\gamma}{\\beta}-1\\right)\\dfrac{\\partial u_{n}}{\\partial t}+\\dfrac{\\gamma}{\\beta\\Delta t}u_{n}\\right)\n"
 "\n"
 "We can set the time step :math:`dt` using ``set_time_step`` method."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2068
+#: ../../doc/dynamic_analysis.ipynb:2154
 msgid ""
 "It is generally recommended to use :math:`1/20` of the desired period for "
 "the time step. So we use 1/20 of the natural period of the model."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2091
+#: ../../doc/dynamic_analysis.ipynb:2177
 msgid ""
 "We consider the case where the left side is fully constrained and the right "
 "side is subjected to a prescribed displacement of 1 mm."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2117
+#: ../../doc/dynamic_analysis.ipynb:2203
 msgid ""
 "Typically, the solve on the different time steps will take the following "
 "form:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2144
+#: ../../doc/dynamic_analysis.ipynb:2230
 msgid "Note that the call of the method:"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2202
+#: ../../doc/dynamic_analysis.ipynb:2288
 msgid ""
 "is needed between two time step since it will copy the current value of the "
 "variables (``u`` and ``Dot_u`` for instance) to the previous ones "
 "(``Previous_u`` and ``Previous_Dot_u``)."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2213
+#: ../../doc/dynamic_analysis.ipynb:2299
 msgid ""
 "The comparison between the damping rate of the analytical solution and the "
 "FEM amplitude is plotted in the bottom figure. Both are in good agreement."
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2215
-msgid "u\\left(t+nT\\right)=\\exp\\left(-2\\pi nh\\dfrac{\\omega_{u}}{\\omega_{d}}\\right)"
+#: ../../doc/dynamic_analysis.ipynb:2301
+msgid ""
+"u\\left(t+nT\\right)=u\\left(t\\right)*\\exp\\left(-2\\pi "
+"nh\\dfrac{\\omega_{u}}{\\omega_{d}}\\right)"
 msgstr ""
 
-#: ../../doc/dynamic_analysis.ipynb:2283
+#: ../../doc/dynamic_analysis.ipynb:2369
 msgid ""
 "This is a small model example, but you can calculate the more complicated "
 "element in the same way."
