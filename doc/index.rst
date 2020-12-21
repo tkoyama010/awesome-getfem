@@ -30,3 +30,4 @@ Tutorial
    cantilever.ipynb
    ball_eigen.ipynb
    dynamic_analysis.ipynb
+   gasm_high.ipynb
