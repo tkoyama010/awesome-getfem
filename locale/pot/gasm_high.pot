@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, Tetsuo Koyama
+# This file is distributed under the same license as the getfem examples package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: getfem examples \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-23 14:22+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../doc/gasm_high.ipynb:9
+msgid "Compute arbitrary terms - high-level generic assembly procedures - Generic Weak-Form Language (GWFL)"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:36
+msgid "``mf`` is supposed to be an already declared ``gf.MeshFem`` object and ``mim`` a already declared ``gf.MeshIm`` object on the same mesh."
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:136
+msgid "As a first example, if one needs to perform the assembly of a Poisson problem"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:138
+msgid "-\\mathrm{div} \\nabla u=f,\\mathrm{in} \\Omega ,"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:143
+msgid "the stiffness matrix is given"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:145
+msgid "K_{i,j} =\\int _{\\Omega } \\nabla \\varphi _{i} \\cdot \\nabla \\varphi _{j} dx,"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:150
+msgid "and will be assembled by the following code:"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:201
+msgid "Note that the value of the variable do not really intervene because of the linearity of the problem. This allows to pass ``\"u\"`` as the value of the variable which will not be used. Note also that two other possible expressions for exactly the same result for the assembly string are ``\"Grad_Test2_u.Grad_Test_u\"`` (i.e. an order 2 expression) or ``\"Norm_sqr(Grad_u)/2\"`` (i.e. a potential). In fact other possible assembly string will give the same result such as ``\"Grad_u.Grad_u/2\"`` or ``\"[Grad_u(1), Grad_u(2)].[Grad_Test_u(1), Grad_Test_u(2)]\"`` for two-dimensional problems. However, the recommendation is preferably to give an order 1 expression (weak formulation) if there is no particular reason to prefer an order 0 or an order 2 expression."
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:269
+msgid "As a second example, let us consider a coupled problem, for instance the mixed problem of incompressible elasticity given by the equations"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:271
+msgid "-\\mathrm{div}\\left( \\mu \\left( \\nabla u+( \\nabla u)^{T}\\right) -pI_{d}\\right) =f,\\mathrm{in} \\thinspace \\Omega , \\\\\n"
+"-\\mathrm{div} \\thinspace u=0."
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:277
+msgid "where ``u`` is the vector valued displacement and ``p`` the pressure. The assembly of the matrix for the whole coupled system can be performed as follows:"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:344
+msgid "where, here, ``mf_u`` and ``mf_p`` are supposed to be some already declared ``getfem::mesh_fem`` objects defined on the same mesh, ``mim`` a already declared ``getfem::mesh_im`` object and mu is the Lame coefficient. It is also possible to perform the assembly of the sub-matrix of this system separately."
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:355
+#: ../../doc/gasm_high.ipynb:366
+msgid "Let us see now how to perform the assembly of a source term. The weak formulation of a volumic source term is"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:368
+msgid "\\int _{\\Omega } fvdx"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:373
+msgid "where :math:`f` is the source term and :math:`v` the test function. The corresponding assembly can be written:"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:421
+msgid "if the source term is describe on a finite element ``mf_data`` and the corresponding vector of degrees of freedom F. Explicit source terms are also possible. For instance:"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:469
+msgid "where ``region`` is the mesh region number."
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:480
+msgid "As another example, let us describe a simple nonlinear elasticity problem. Assume that we consider a Saint-Venant Kirchhoff constitutive law which means that we consider the following elastic energy on a body of reference configuration :math:`\\Omega`:"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:482
+msgid "\\int _{\\Omega }\\dfrac{\\lambda }{2}\\left(\\mathrm{tr}( E)^{2} +\\mu \\mathrm{tr}\\left( E^{2}\\right)\\right) dx"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:487
+msgid "where :math:`\\lambda`, :math:`\\mu` are the Lamé coefficients and :math:`E` is the strain tensor given by :math:`E=\\left( \\nabla u+( \\nabla u)^{T} +( \\nabla u)^{T} \\nabla u\\right) /2`."
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:489
+msgid "This is possible to perform the assembly of the corresponding tangent problem as follows:"
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:509
+msgid "and to adapt a Newton-Raphson algorithm to solve that nonlinear problem. Of course the expression is rather repetitive and it would be preferable to define some intermediate nonlinear operators. However, note that repeated expressions are automatically detected and computed only once in the assembly."
+msgstr ""
+
+#: ../../doc/gasm_high.ipynb:520
+msgid "The last example is the assembly of the stiffness matrix of an order four problem, the Kirchhoff-Love plate problem:"
+msgstr ""
