@@ -29,4 +29,5 @@ Tutorial
    demo_unit_disk.ipynb
    cantilever.ipynb
    dynamic_analysis.ipynb
+   gasm_high.ipynb
 .. ball_eigen.ipynb
