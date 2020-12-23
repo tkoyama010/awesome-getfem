@@ -28,6 +28,6 @@ Tutorial
    bunny.ipynb
    demo_unit_disk.ipynb
    cantilever.ipynb
-   ball_eigen.ipynb
    dynamic_analysis.ipynb
    gasm_high.ipynb
+.. ball_eigen.ipynb
