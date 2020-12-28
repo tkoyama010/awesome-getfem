@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-09 00:02+0000\n"
+"POT-Creation-Date: 2020-12-28 17:37+0000\n"
 "PO-Revision-Date: 2020-05-17 04:07+0000\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/getfem-doc/teams/110067/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -130,11 +130,11 @@ msgstr ""
 msgid "GetFEM can be imported as follows (numpy has also to be imported)."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:174
+#: ../../doc/demo_unit_disk.ipynb:175
 msgid "Mesh generation"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:185
+#: ../../doc/demo_unit_disk.ipynb:186
 msgid ""
 "We use GetFEM's `MesherObject "
 "<http://getfem.org/python/cmdref_MesherObject.html#>`__ to create a mesh "
@@ -144,7 +144,7 @@ msgid ""
 "using \"ball\" geometry."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:209
+#: ../../doc/demo_unit_disk.ipynb:210
 msgid ""
 "We can make mesh object ``mesh`` by calling the experimental mesher of "
 "GetFEM on the geometry represented by ``mo``. The approximate element "
@@ -152,21 +152,21 @@ msgid ""
 "1` for curved boundaries)."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:232
+#: ../../doc/demo_unit_disk.ipynb:234
 msgid "Boundary selection"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:243
+#: ../../doc/demo_unit_disk.ipynb:245
 msgid ""
 "To define a boundary condition, we set a boundary number on the outer "
 "circumference of the circle."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:267
+#: ../../doc/demo_unit_disk.ipynb:269
 msgid "Mesh draw"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:278
+#: ../../doc/demo_unit_disk.ipynb:280
 msgid ""
 "We visualize the created mesh to check its quality. We can output mesh "
 "objects, but matplotlib can only display triangles. Therefore, we make a "
@@ -175,35 +175,35 @@ msgid ""
 "triangles."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:299
+#: ../../doc/demo_unit_disk.ipynb:301
 msgid "We can export a slice to VTK file by using export\\_to\\_vtk method."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:320
+#: ../../doc/demo_unit_disk.ipynb:322
 msgid ""
 "We can render VTK files using Paraview or mayavi2. In order to display in "
 "the jupyter notebook this time, we read in meshio and draw in matplotlib."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:392
+#: ../../doc/demo_unit_disk.ipynb:383
 msgid "Definition of finite element methods and integration method"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:394
+#: ../../doc/demo_unit_disk.ipynb:385
 msgid ""
 "We define the finite element and integration methods to use. We create a "
 "``MeshFem`` that defines the degree of freedom of the mesh as rank 1 "
 "(scalar)."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:415
+#: ../../doc/demo_unit_disk.ipynb:406
 msgid ""
 "Next we set the finite element used. Classical finite element means a "
 "continuous Lagrange element. Setting ``elements_degree`` to 2 means that we "
 "will use quadratic (isoparametric) elements."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:437
+#: ../../doc/demo_unit_disk.ipynb:428
 msgid ""
 "The last thing to define is an integration method ``mim``. There is no "
 "default integration method in GetFEM so it is mandatory to define an "
@@ -212,11 +212,11 @@ msgid ""
 "element method. Here, the square of ``elements_degree`` is sufficient."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:459
+#: ../../doc/demo_unit_disk.ipynb:450
 msgid "Model definition"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:461
+#: ../../doc/demo_unit_disk.ipynb:452
 msgid ""
 "The model object in GetFEM gathers the variables of the models (the "
 "unknowns), the data and what are called the model bricks. The model bricks "
@@ -228,86 +228,86 @@ msgid ""
 "<http://getfem.org/userdoc/model_object.html>`__ for more details)."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:464
+#: ../../doc/demo_unit_disk.ipynb:455
 msgid ""
 "[K] \\left\\{ u \\right\\} = \\left\\{ F \\right\\}\n"
 "\n"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:487
+#: ../../doc/demo_unit_disk.ipynb:478
 msgid "Poisson's equation"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:489
+#: ../../doc/demo_unit_disk.ipynb:480
 msgid ""
 "To define Poisson's equation, we have to define a Laplacian term and RHS "
 "source term. We can add the Laplacian term (which is called a brick in "
 "GetFEM) by using ``add_Laplacian_brick()``."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:530
+#: ../../doc/demo_unit_disk.ipynb:521
 msgid ""
 "If you want to define constants in GetFEM, we use the ``add_fem_data()`` "
 "method."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:552
+#: ../../doc/demo_unit_disk.ipynb:543
 msgid ""
 "We can set constant values with the ``set_variable()`` method. Here we pass "
 "a vector (``ndarray``) the size of the degrees of freedom."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:573
+#: ../../doc/demo_unit_disk.ipynb:564
 msgid ""
 "We define the term RHS with the ``add_source_term_brick()`` method, using "
 "the constant ``F`` just defined."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:614
+#: ../../doc/demo_unit_disk.ipynb:605
 msgid "Finally, we set the Dirichlet condition at the boundary."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:656
+#: ../../doc/demo_unit_disk.ipynb:647
 msgid "Model solve"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:658
+#: ../../doc/demo_unit_disk.ipynb:649
 msgid "Once the model is correctly defined, we can simply solve it by:"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:700
+#: ../../doc/demo_unit_disk.ipynb:691
 msgid "Export/visualization of the solution"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:702
+#: ../../doc/demo_unit_disk.ipynb:693
 msgid ""
 "The finite element problem is now solved. We can get the solution :math:`u` "
 "by using ``variable`` method."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:723
+#: ../../doc/demo_unit_disk.ipynb:714
 msgid "We can output the computed u with the mesh of the Slice object."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:796
+#: ../../doc/demo_unit_disk.ipynb:774
 msgid "Exact solution"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:798
+#: ../../doc/demo_unit_disk.ipynb:776
 msgid "The exact solution to this problem is given by the following equation:"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:800
+#: ../../doc/demo_unit_disk.ipynb:778
 msgid ""
 "u(x, y) = \\dfrac{1-x^2-y^2}{4}\n"
 "\n"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:821
+#: ../../doc/demo_unit_disk.ipynb:799
 msgid ""
 "We can calculate the error for the L2 and H1 norms by using ``compute``:"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:866
+#: ../../doc/demo_unit_disk.ipynb:844
 msgid "As you can see, the size of the error is within the acceptable range."
 msgstr ""
