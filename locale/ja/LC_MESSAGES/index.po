@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 00:02+0000\n"
+"POT-Creation-Date: 2020-12-29 04:09+0000\n"
 "PO-Revision-Date: 2020-05-17 04:07+0000\n"
 "Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
@@ -26,8 +26,8 @@ msgid "Contents:"
 msgstr "目次:"
 
 #: ../../doc/index.rst:7
-msgid "Welcome to getfem-binder's documentation!"
-msgstr "getfem-binderのドキュメントへようこそ!"
+msgid "Welcome to getfem examples documentation!"
+msgstr ""
 
 #: ../../doc/index.rst:16
 msgid "Indices and tables"

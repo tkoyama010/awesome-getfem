@@ -289,7 +289,7 @@ msgstr ""
 
 #: ../../doc/cantilever.ipynb:385
 msgid "Region"
-msgstr ""
+msgstr "領域"
 
 #: ../../doc/cantilever.ipynb:387
 msgid ""

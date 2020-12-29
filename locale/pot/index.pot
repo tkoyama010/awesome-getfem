@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-13 00:02+0000\n"
+"POT-Creation-Date: 2020-12-29 04:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgid "Contents:"
 msgstr ""
 
 #: ../../doc/index.rst:7
-msgid "Welcome to getfem-binder's documentation!"
+msgid "Welcome to getfem examples documentation!"
 msgstr ""
 
 #: ../../doc/index.rst:16
