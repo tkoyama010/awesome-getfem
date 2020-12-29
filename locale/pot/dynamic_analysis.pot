@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-13 08:49+0000\n"
+"POT-Creation-Date: 2020-12-29 01:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,15 +117,19 @@ msgid "Let us now begin by truss deformation problem. The equation on the deform
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:708
-msgid "  \\dfrac{d}{dx}\\left\\{EA\\dfrac{du}{dx}\\right\\} =F\n"
-"\n"
-"is expressed also:"
+msgid "\\dfrac{d}{dx}\\left\\{EA\\dfrac{du}{dx}\\right\\} =F"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:713
+msgid "is expressed also:"
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:715
-msgid "  \\nabla ( D\\nabla u) =F\n"
-"\n"
-"Where :math:`D = EA`."
+msgid "\\nabla ( D\\nabla u) =F"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:720
+msgid "Where :math:`D = EA`."
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:731
@@ -133,9 +137,11 @@ msgid "We use directly a GWFL term ``add_linear_term(md mim, “E*A*Grad_u.Grad_
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:733
-msgid "  \\int ^{L}_{0} EA\\dfrac{du( x)}{dx}\\dfrac{dv( x)}{dx} dx=\\int ^{L}_{0} F v( x)dx\n"
-"\n"
-":math:`v` it the test function of :math:`u`."
+msgid "\\int ^{L}_{0} EA\\dfrac{du( x)}{dx}\\dfrac{dv( x)}{dx} dx=\\int ^{L}_{0} F v( x)dx"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:738
+msgid ":math:`v` it the test function of :math:`u`."
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:853
@@ -150,15 +156,17 @@ msgid "The equation of Model object will be:"
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:857
-msgid "  \\begin{bmatrix}\\dfrac{EA}{L} & -\\dfrac{EA}{L}\\\\\n"
-"  -\\dfrac{EA}{L} & \\dfrac{EA}{L}\n"
-"  \\end{bmatrix}\\begin{Bmatrix}u_{0}\\\\\n"
-"  u_{1}\n"
-"  \\end{Bmatrix}=\\begin{Bmatrix}0\\\\\n"
-"  0\n"
-"  \\end{Bmatrix}\n"
-"\n"
-"You can assemble equtaion using ``assembly`` method. After assembling, you can check stiffness tangent matrix and rhs of equation using ``tangent_matrix`` and ``rhs`` method."
+msgid "\\begin{bmatrix}\\dfrac{EA}{L} & -\\dfrac{EA}{L}\\\\\n"
+"-\\dfrac{EA}{L} & \\dfrac{EA}{L}\n"
+"\\end{bmatrix}\\begin{Bmatrix}u_{0}\\\\\n"
+"u_{1}\n"
+"\\end{Bmatrix}=\\begin{Bmatrix}0\\\\\n"
+"0\n"
+"\\end{Bmatrix}"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:868
+msgid "You can assemble equtaion using ``assembly`` method. After assembling, you can check stiffness tangent matrix and rhs of equation using ``tangent_matrix`` and ``rhs`` method."
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:961
@@ -251,9 +259,11 @@ msgid "The element consistent mass matrix is given by the following equation usi
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1722
-msgid "  M=\\int_{0}^{L}\\rho u\\cdot vdx\n"
-"\n"
-"Mass brick adds a mass matrix on the tangent linear system with respect to a certain variable. The function which adds this brick to a model is:"
+msgid "M=\\int_{0}^{L}\\rho u\\cdot vdx"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:1727
+msgid "Mass brick adds a mass matrix on the tangent linear system with respect to a certain variable. The function which adds this brick to a model is:"
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1800
@@ -265,11 +275,13 @@ msgid "Excplict mass matrix is"
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1844
-msgid "  M=\\dfrac{\\rho AL}{6}\\begin{bmatrix}2 & 1\\\\\n"
-"  1 & 2\n"
-"  \\end{bmatrix}\n"
-"\n"
-"And the equation is"
+msgid "M=\\dfrac{\\rho AL}{6}\\begin{bmatrix}2 & 1\\\\\n"
+"1 & 2\n"
+"\\end{bmatrix}"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:1851
+msgid "And the equation is"
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1853
@@ -295,9 +307,11 @@ msgid "\\omega_{u}=\\sqrt{\\dfrac{k}{m}}"
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1884
-msgid "  \\omega_{d}=\\dfrac{\\sqrt{4mk-c^{2}}}{2m}\n"
-"\n"
-"with"
+msgid "\\omega_{d}=\\dfrac{\\sqrt{4mk-c^{2}}}{2m}"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:1889
+msgid "with"
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1891
@@ -317,9 +331,11 @@ msgid "The damping matrix is given by the following equation using the viscous d
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1915
-msgid "  C=\\int_{0}^{L}\\mu u\\cdot vdx\n"
-"\n"
-"However it is hard to compute the :math:`mu`, we usually use Rayleigh damping."
+msgid "C=\\int_{0}^{L}\\mu u\\cdot vdx"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:1920
+msgid "However it is hard to compute the :math:`mu`, we usually use Rayleigh damping."
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:1922
@@ -363,9 +379,11 @@ msgid "The equation of Newmark theme is following (:math:`n` is the step of time
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:2095
-msgid "  \\left(K+\\dfrac{\\gamma}{\\beta\\Delta t}C+\\dfrac{1}{\\beta\\Delta t^{2}}M\\right)u_{n+1}=f_{n+1}+M\\left(\\left(\\dfrac{1}{2\\beta}-1\\right)\\dfrac{\\partial^{2}u_{n}}{\\partial t^{2}}+\\dfrac{1}{\\beta\\Delta t}\\dfrac{\\partial u_{n}}{\\partial t}+\\dfrac{1}{\\beta\\Delta t^{2}}u_{n}\\right)+C\\left(\\left(\\dfrac{\\gamma}{2\\beta}-1\\right)\\Delta t_{n}\\dfrac{\\partial^{2}u_{n}}{\\partial t^{2}}+\\left(\\dfrac{\\gamma}{\\beta}-1\\right)\\dfrac{\\partial u_{n}}{\\partial t}+\\dfrac{\\gamma}{\\beta\\Delta t}u_{n}\\right)\n"
-"\n"
-"We can set the time step :math:`dt` using ``set_time_step`` method."
+msgid "\\left(K+\\dfrac{\\gamma}{\\beta\\Delta t}C+\\dfrac{1}{\\beta\\Delta t^{2}}M\\right)u_{n+1}=f_{n+1}+M\\left(\\left(\\dfrac{1}{2\\beta}-1\\right)\\dfrac{\\partial^{2}u_{n}}{\\partial t^{2}}+\\dfrac{1}{\\beta\\Delta t}\\dfrac{\\partial u_{n}}{\\partial t}+\\dfrac{1}{\\beta\\Delta t^{2}}u_{n}\\right)+C\\left(\\left(\\dfrac{\\gamma}{2\\beta}-1\\right)\\Delta t_{n}\\dfrac{\\partial^{2}u_{n}}{\\partial t^{2}}+\\left(\\dfrac{\\gamma}{\\beta}-1\\right)\\dfrac{\\partial u_{n}}{\\partial t}+\\dfrac{\\gamma}{\\beta\\Delta t}u_{n}\\right)"
+msgstr ""
+
+#: ../../doc/dynamic_analysis.ipynb:2100
+msgid "We can set the time step :math:`dt` using ``set_time_step`` method."
 msgstr ""
 
 #: ../../doc/dynamic_analysis.ipynb:2154
