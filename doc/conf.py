@@ -24,7 +24,7 @@ copyright = "2020, Tetsuo Koyama"
 author = "Tetsuo Koyama"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1"
+release = "20.12"
 
 
 # -- General configuration ---------------------------------------------------
