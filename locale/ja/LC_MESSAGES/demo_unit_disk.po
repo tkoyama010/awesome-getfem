@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 17:37+0000\n"
+"POT-Creation-Date: 2020-12-30 07:42+0000\n"
 "PO-Revision-Date: 2020-05-17 04:07+0000\n"
 "Last-Translator: Tetsuo Koyama <tkoyama010@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/getfem-doc/teams/110067/ja/)\n"
@@ -327,15 +327,15 @@ msgstr "有限要素の問題が解かれました。 ``variable`` メソッド�
 msgid "We can output the computed u with the mesh of the Slice object."
 msgstr "Sliceオブジェクトのメッシュを使用して、計算された u を出力できます。"
 
-#: ../../doc/demo_unit_disk.ipynb:774
+#: ../../doc/demo_unit_disk.ipynb:777
 msgid "Exact solution"
 msgstr "理論解"
 
-#: ../../doc/demo_unit_disk.ipynb:776
+#: ../../doc/demo_unit_disk.ipynb:779
 msgid "The exact solution to this problem is given by the following equation:"
 msgstr "この問題の理論解は、次の式で与えられます。"
 
-#: ../../doc/demo_unit_disk.ipynb:778
+#: ../../doc/demo_unit_disk.ipynb:781
 msgid ""
 "u(x, y) = \\dfrac{1-x^2-y^2}{4}\n"
 "\n"
@@ -343,11 +343,22 @@ msgstr ""
 "u(x, y) = \\dfrac{1-x^2-y^2}{4}\n"
 "\n"
 
-#: ../../doc/demo_unit_disk.ipynb:799
+#: ../../doc/demo_unit_disk.ipynb:802
 msgid ""
 "We can calculate the error for the L2 and H1 norms by using ``compute``:"
 msgstr "L 2ノルムとH 1ノルムの誤差は、  ``compute`` を使用して計算できます。"
 
-#: ../../doc/demo_unit_disk.ipynb:844
+#: ../../doc/demo_unit_disk.ipynb:847
 msgid "As you can see, the size of the error is within the acceptable range."
 msgstr "このように、エラーのサイズは許容範囲内です。"
+
+#: ../../doc/demo_unit_disk.ipynb:859
+msgid "Quadrangular shape case"
+msgstr ""
+
+#: ../../doc/demo_unit_disk.ipynb:861
+msgid ""
+"Even if the shape of the region is different, GetFEM can obtain a finite "
+"element solution by rewriting the program a little. In the case of a "
+"quadrangular shape it may be calculated for:."
+msgstr ""

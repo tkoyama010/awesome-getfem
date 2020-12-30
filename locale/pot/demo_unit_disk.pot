@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: getfem examples \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 17:37+0000\n"
+"POT-Creation-Date: 2020-12-30 07:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,24 +212,32 @@ msgstr ""
 msgid "We can output the computed u with the mesh of the Slice object."
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:774
+#: ../../doc/demo_unit_disk.ipynb:777
 msgid "Exact solution"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:776
+#: ../../doc/demo_unit_disk.ipynb:779
 msgid "The exact solution to this problem is given by the following equation:"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:778
+#: ../../doc/demo_unit_disk.ipynb:781
 msgid "u(x, y) = \\dfrac{1-x^2-y^2}{4}\n"
 "\n"
 ""
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:799
+#: ../../doc/demo_unit_disk.ipynb:802
 msgid "We can calculate the error for the L2 and H1 norms by using ``compute``:"
 msgstr ""
 
-#: ../../doc/demo_unit_disk.ipynb:844
+#: ../../doc/demo_unit_disk.ipynb:847
 msgid "As you can see, the size of the error is within the acceptable range."
+msgstr ""
+
+#: ../../doc/demo_unit_disk.ipynb:859
+msgid "Quadrangular shape case"
+msgstr ""
+
+#: ../../doc/demo_unit_disk.ipynb:861
+msgid "Even if the shape of the region is different, GetFEM can obtain a finite element solution by rewriting the program a little. In the case of a quadrangular shape it may be calculated for:."
 msgstr ""
