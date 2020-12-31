@@ -305,7 +305,7 @@ msgstr ""
 
 #: ../../doc/cantilever.ipynb:462
 msgid "Integral method"
-msgstr ""
+msgstr "積分法"
 
 #: ../../doc/cantilever.ipynb:464
 msgid "Associate the integration method with the mesh."
