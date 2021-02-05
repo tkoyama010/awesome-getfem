@@ -1,11 +1,11 @@
 FROM getfemdoc/getfem:stable
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update
+RUN apt-get update
 RUN apt-get -y -f install
-RUN apt -y install python3-pip
+RUN apt-get -y install python3-pip
 
 # install the notebook package
-RUN apt -y install git
+RUN apt-get -y install git
 RUN apt-get -y install libgl1-mesa-dev
 RUN pip3 install PyQt5
 RUN apt-get -y install xvfb
