@@ -6,7 +6,6 @@ import getfem as gf
 import numpy as np
 
 import pyvista as pv
-from pyvirtualdisplay import Display
 
 ###############################################################################
 #
@@ -154,9 +153,6 @@ mfvm2.export_to_vtk("displacement_with_von_mises2.vtk", mfvm2, VM2, "Von Mises S
 # You can view solutions with pyvista:
 #
 
-display = Display(visible=0, size=(1024, 1024))
-display.start()
-
 m1 = pv.read("displacement_with_von_mises1.vtk")
 m2 = pv.read("displacement_with_von_mises2.vtk")
 c1 = m1.contour()
@@ -172,5 +168,3 @@ p.add_mesh(m2, show_edges=False, opacity=0.85)
 p.show_grid()
 
 p.show(screenshot="von_mises.png", window_size=[1200, 900], cpos="xy")
-
-display.stop()
