@@ -27,9 +27,7 @@ E = 200000.0  # Yong Modulus (MPa)
 nu = 0.3  # Poisson ratio
 clambda = E * nu / ((1 + nu) * (1 - 2 * nu))  # First Lame coefficient (MPa)
 cmu = E / (2 * (1 + nu))  # Second Lame coefficient (MPa)
-clambdastar = (
-    2 * clambda * cmu / (clambda + 2 * cmu)
-)  # Lame coefficient for Plane stress (MPa)
+clambdastar = (2 * clambda * cmu / (clambda + 2 * cmu))  # Lame coefficient for Plane stress (MPa)
 
 elements_degree = 2  # Degree of the finite element methods
 
@@ -66,11 +64,11 @@ h = 1.0
 
 mesh1 = gf.Mesh("clone", mesh)
 mesh1.del_convex(cvid2)
-mesh1.export_to_vtk("mesh1.vtk")
+mesh1.export_to_vtk("mesh1.vtk", "ascii")
 
 mesh2 = gf.Mesh("clone", mesh)
 mesh2.del_convex(cvid1)
-mesh2.export_to_vtk("mesh2.vtk")
+mesh2.export_to_vtk("mesh2.vtk", "ascii")
 
 
 ###############################################################################
