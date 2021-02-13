@@ -32,17 +32,39 @@ mo2 = gf.MesherObject("ball", [0.0, 15.0], 8.0)
 mo3 = gf.MesherObject("set minus", mo1, mo2)
 gf.util("trace level", 2)  # No trace for mesh generation
 mesh1 = gf.Mesh("generate", mo3, h, 2)
+mesh1.export_to_vtk("mesh1.vtk")
 
-mesh2 = gf.Mesh("import", "structured", 'GT="GT_PK(2,1)";SIZES=[30,10];NOISED=0;NSUBDIV=[%d,%d];' % (int(30 / h) + 1, int(10 / h) + 1),)
-mesh2.translate([-15.0, -10.0])
+mo4 = gf.MesherObject("ball", [0.0, -15.0], 15.0)
+mo5 = gf.MesherObject("ball", [0.0, -15.0], 8.0)
+mo6 = gf.MesherObject("set minus", mo4, mo5)
+gf.util("trace level", 2)  # No trace for mesh generation
+mesh2 = gf.Mesh("generate", mo6, h, 2)
+mesh2.export_to_vtk("mesh2.vtk")
 
+
+###############################################################################
+#
+
+
+
+m1 = pv.read("mesh1.vtk")
+m2 = pv.read("mesh2.vtk")
+p = pv.Plotter(shape=(1, 1))
+p.subplot(0, 0)
+p.add_mesh(m1, show_edges=True)
+p.add_text("Neumann\ncondition", position=[525, 650])
+p.add_mesh(m2, show_edges=True)
+p.add_text("Dirichlet\ncondition", position=[525, 300])
+p.show_grid()
+p.show(screenshot="mesh.png", window_size=[1200, 1400], cpos="xy")
 
 ###############################################################################
 #
 
 fb1 = mesh1.outer_faces_in_box([-8.1, 6.9], [8.1, 23.1])  # Boundary of the hole
 fb2 = mesh1.outer_faces_with_direction([0.0, -1.0], np.pi / 4.5)  # Contact boundary of the wheel
-fb3 = mesh2.outer_faces_with_direction([0.0, -1.0], 0.01)  # Bottom boundary of the foundation
+fb3 = mesh2.outer_faces_in_box([-8.1, -6.9], [8.1, -23.1])  # Boundary of the hole
+fb4 = mesh2.outer_faces_with_direction([0.0, 1.0], np.pi / 4.5)  # Contact boundary of the wheel
 
 HOLE_BOUND = 1
 CONTACT_BOUND = 2
@@ -51,7 +73,9 @@ BOTTOM_BOUND = 3
 mesh1.set_region(HOLE_BOUND, fb1)
 mesh1.set_region(CONTACT_BOUND, fb2)
 mesh1.region_subtract(CONTACT_BOUND, HOLE_BOUND)
-mesh2.set_region(BOTTOM_BOUND, fb3)
+mesh2.set_region(HOLE_BOUND, fb3)
+mesh2.set_region(CONTACT_BOUND, fb4)
+mesh2.region_subtract(CONTACT_BOUND, HOLE_BOUND)
 
 
 ###############################################################################
@@ -91,12 +115,12 @@ md.add_isotropic_linearized_elasticity_brick(mim2, "u2", "clambdastar", "cmu")
 ###############################################################################
 #
 
-md.add_Dirichlet_condition_with_multipliers(mim2, "u2", elements_degree - 1, BOTTOM_BOUND)
+md.add_Dirichlet_condition_with_multipliers(mim2, "u2", elements_degree - 1, HOLE_BOUND)
 
 ###############################################################################
 #
 
-md.add_interpolate_transformation_from_expression("Proj1", mesh1, mesh2, "[X(1);0]")
+md.add_interpolate_transformation_from_expression("Proj1", mesh1, mesh2, "[X(1);-X(2)]")
 
 ###############################################################################
 #
