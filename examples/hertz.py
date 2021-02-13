@@ -15,12 +15,13 @@
 # 
 # Let us begin by loading Getfem and fixing the parameters of the problem
 
-# In[1]:
-
 
 import getfem as gf
 import numpy as np
 import pyvista as pv
+
+###############################################################################
+#
 
 E = 200000.0  # Yong Modulus (MPa)
 nu = 0.3  # Poisson ratio
@@ -37,6 +38,8 @@ applied_force = 200.0 * 100  # Force at the top boundary (N)
 gamma0 = 1.0 / E  # Augmentation parameter for the augmented Lagrangian
 
 
+###############################################################################
+#
 # We consider that the radius of the two cylinder is 5mm.
 # We load the mesh of the cylinder using the load of a mesh from a GetFEM ascii mesh file (see the documentation of the Mesh object in the python interface).
 
@@ -70,6 +73,8 @@ mesh2.del_convex(cvid1)
 mesh2.export_to_vtk("mesh2.vtk")
 
 
+###############################################################################
+#
 # The result is the following
 
 # In[3]:
@@ -85,11 +90,11 @@ p.show_grid()
 p.show(screenshot="mesh.png", window_size=[1200, 1400], cpos="xy")
 
 
+###############################################################################
+#
 # ## Boundary selection
 
 # We have to select the different parts of the boundary where we will set some boundary conditions, namely the boundary of the rim (in order to apply a force and the fact that the rim is rigid), the contact boundary of the wheel and the bottom boundary of the foundation that we will assume clamped.
-
-# In[4]:
 
 
 fb2 = mesh1.outer_faces_with_direction(
@@ -119,14 +124,14 @@ mesh1.set_region(LEFT_BOUND, fb6)
 mesh2.set_region(LEFT_BOUND, fb7)
 
 
+###############################################################################
+#
 # Note that the command `mesh1.outer_faces_with_direction([0., -1.0], np.pi/6)` allows to select all the faces having a unit outward normal having an angle less or equal to `np.pi/6` with the vector `[0., -1.0]`.
 
 # ## Definition of finite elements methods and integration method
 # We define mfu1, mfu2 two finite element methods which will approximate the displacements in the `cylinder1` and `cylinder2`.
 # `mflambda` is finite element method to approximate a multiplier to take into account the rigidity of the rim, `mflambda_C` is to approximate the contact multiplier (contact pressure) and `mfvm1`, `mfvm2` will be used to interpolate the Von Mises stresses of the wheel and the foundation for post-processing.
 # `mim1`, `mim2` are two integration methods on the `cylinder1` and the `cylinder2`.
-
-# In[5]:
 
 
 mfu1 = gf.MeshFem(mesh1, 2)
@@ -149,6 +154,8 @@ mim1 = gf.MeshIm(mesh1, pow(elements_degree, 2))
 mim2 = gf.MeshIm(mesh2, pow(elements_degree, 2))
 
 
+###############################################################################
+#
 # ## Model definition
 # 
 # We use a real model and declare the two variables which will represent the displacements:
@@ -160,26 +167,22 @@ md = gf.Model("real")
 md.add_fem_variable("u1", mfu1)
 md.add_fem_variable("u2", mfu2)
 
-
+###############################################################################
+#
 # ## Linearized elasticity bricks
 # 
 # We add the Lamé coefficients as data of the model and add a linearized elasticity brick for the wheel and the foundation:
-
-# In[7]:
-
 
 md.add_initialized_data("cmu", [cmu])
 md.add_initialized_data("clambdastar", [clambdastar])
 md.add_isotropic_linearized_elasticity_brick(mim1, "u1", "clambdastar", "cmu")
 md.add_isotropic_linearized_elasticity_brick(mim2, "u2", "clambdastar", "cmu")
 
-
+###############################################################################
+#
 # ## Clamped condition at the bottom boundary
 # 
 # We prescribed the displacement at bottom face of the foundation to vanish, for instance with a multiplier with the add of the following brick:
-
-# In[8]:
-
 
 md.add_initialized_data("r0", [0, -0.1])
 md.add_initialized_data("r1", [0, 0])
@@ -189,9 +192,6 @@ md.add_initialized_data("H0", [[0, 0], [0, 1]])
 md.add_initialized_data("H1", [[1, 0], [0, 0]])
 md.add_initialized_data("H2", [[1, 0], [0, 0]])
 md.add_initialized_data("H3", [[0, 0], [0, 1]])
-
-
-# In[9]:
 
 
 md.add_generalized_Dirichlet_condition_with_multipliers(
@@ -207,6 +207,8 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
     mim2, "u2", mfu2, BOTTOM_BOUND, "r3", "H3"
 )
 
+###############################################################################
+#
 
 # ## Contact condition (use of interpolate transformations)
 
@@ -231,6 +233,8 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 
 md.add_interpolate_transformation_from_expression("Proj1", mesh1, mesh2, "[X(1);-X(2)]")
 
+###############################################################################
+#
 
 # As a consequence, it will be possible to use this transformation, from the mesh of the wheel to the mesh of the foundation, into GWFL expressions.
 # Notes that this is here a very simple constant expression.
@@ -250,24 +254,14 @@ md.add_interpolate_transformation_from_expression("Proj1", mesh1, mesh2, "[X(1);
 # 
 # Using GWFL, the contact condition can be added by:
 
-# In[11]:
-
-
 md.add_initialized_data("gamma0", [gamma0])
 md.add_filtered_fem_variable("lambda1", mflambda_C, CONTACT_BOUND)
-md.add_nonlinear_term(
-    mim1,
-    "lambda1*(Test_u1.[0;1])" "-lambda1*(Interpolate(Test_u2,Proj1).[0;1])",
-    CONTACT_BOUND,
-)
-md.add_nonlinear_term(
-    mim1,
-    "-(gamma0*element_size)"
-    "*(lambda1 + neg_part(lambda1+(1/(gamma0*element_size))"
-    "*((u1-Interpolate(u2,Proj1)+X-Interpolate(X,Proj1)).[0;1])))*Test_lambda1",
-    CONTACT_BOUND,
-)
+md.add_nonlinear_term(mim1, "lambda1*(Test_u1.[0;1])-lambda1*(Interpolate(Test_u2,Proj1).[0;1])", CONTACT_BOUND)
+md.add_nonlinear_term(mim1, "-(gamma0*element_size)*(lambda1 + neg_part(lambda1+(1/(gamma0*element_size))*((u1-Interpolate(u2,Proj1)+X-Interpolate(X,Proj1)).[0;1])))*Test_lambda1", CONTACT_BOUND)
 
+
+###############################################################################
+#
 
 # ## Prescribing the rigidity of the rim and the vertical force
 # We have now to prescribe the rigidity of the rim. This is a non-standard condition, since we do not know a priori what will be the vertical displacement of the rim.
@@ -278,55 +272,34 @@ md.add_nonlinear_term(
 # ## Model solve
 # We can now solve our problem with:
 
-# In[12]:
+###############################################################################
+#
 
 
 md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 
-
+###############################################################################
 # Note that in some configuration, it is preferable to use a more basic line search than the default one:
-md.solve(
-    "max_res", 1e-9, "max_iter", 100, "noisy", "lsearch", "simplest", "alpha min", 0.8
-)
+# md.solve(
+#     "max_res", 1e-9, "max_iter", 100, "noisy", "lsearch", "simplest", "alpha min", 0.8
+# )
 # ## Export the solution
 # 
 # Now the code to export the solution with the VonMises stress:
 
-# In[ ]:
-
 
 U1 = md.variable("u1")
 U2 = md.variable("u2")
-VM1 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
-    "u1", "clambdastar", "cmu", mfvm1
-)
-VM2 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
-    "u2", "clambdastar", "cmu", mfvm2
-)
+VM1 = md.compute_isotropic_linearized_Von_Mises_or_Tresca("u1", "clambdastar", "cmu", mfvm1)
+VM2 = md.compute_isotropic_linearized_Von_Mises_or_Tresca("u2", "clambdastar", "cmu", mfvm2)
 
-mfvm1.export_to_vtk(
-    "displacement_with_von_mises1.vtk",
-    mfvm1,
-    VM1,
-    "Von Mises Stresses",
-    mfu1,
-    U1,
-    "Displacements",
-)
+mfvm1.export_to_vtk("displacement_with_von_mises1.vtk", mfvm1, VM1, "Von Mises Stresses", mfu1, U1, "Displacements")
 
-mfvm2.export_to_vtk(
-    "displacement_with_von_mises2.vtk",
-    mfvm2,
-    VM2,
-    "Von Mises Stresses",
-    mfu2,
-    U2,
-    "Displacements",
-)
+mfvm2.export_to_vtk("displacement_with_von_mises2.vtk", mfvm2, VM2, "Von Mises Stresses", mfu2, U2, "Displacements")
 
-
-# In[ ]:
-
+###############################################################################
+# You can view solutions with pyvista:
+#
 
 m1 = pv.read("displacement_with_von_mises1.vtk")
 m2 = pv.read("displacement_with_von_mises2.vtk")
@@ -346,29 +319,8 @@ p.subplot(0, 1)
 p.add_text("Displacements")
 m1.active_vectors_name = "Displacements"
 m2.active_vectors_name = "Displacements"
-p.add_mesh(
-    m1.warp_by_vector(),
-    style="surface",
-    show_edges=True,
-    clim=[0, 50000],
-    opacity=1.0,
-    color="white",
-)
-p.add_mesh(
-    m2.warp_by_vector(),
-    style="surface",
-    show_edges=True,
-    clim=[0, 50000],
-    opacity=1.0,
-    color="white",
-)
+p.add_mesh(m1.warp_by_vector(), style="surface", show_edges=True, clim=[0, 50000], opacity=1.0, color="white")
+p.add_mesh(m2.warp_by_vector(), style="surface", show_edges=True, clim=[0, 50000], opacity=1.0, color="white")
 p.show_grid()
 
 p.show(screenshot="von_mises.png", window_size=[1200, 900], cpos="xy")
-
-
-# In[ ]:
-
-
-
-
