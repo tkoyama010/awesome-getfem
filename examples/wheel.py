@@ -128,7 +128,7 @@ md.add_interpolate_transformation_from_expression("Proj1", mesh1, mesh2, "[X(1);
 md.add_initialized_data("gamma0", [gamma0])
 md.add_filtered_fem_variable("lambda1", mflambda_C, CONTACT_BOUND)
 md.add_nonlinear_term(mim1, "lambda1*(Test_u1.[0;1])-lambda1*(Interpolate(Test_u2,Proj1).[0;1])", CONTACT_BOUND)
-md.add_nonlinear_term(mim1, "-(gamma0*element_size)*(lambda1 + neg_part(lambda1+(1/(gamma0*element_size))" "*((u1-Interpolate(u2,Proj1)+X-Interpolate(X,Proj1)).[0;1])))*Test_lambda1", CONTACT_BOUND)
+md.add_nonlinear_term(mim1, "-(gamma0*element_size)*(lambda1 + neg_part(lambda1+(1/(gamma0*element_size))*((u1-Interpolate(u2,Proj1)+X-Interpolate(X,Proj1)).[0;1])))*Test_lambda1", CONTACT_BOUND)
 
 ###############################################################################
 #

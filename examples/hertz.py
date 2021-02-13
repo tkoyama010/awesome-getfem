@@ -223,13 +223,10 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 # So we define the transformation
 # 
 # $$
-# X \longmapsto (X(1), 0)
+# X \longmapsto (X(1), -X(2))
 # $$
 # 
 # where $X$ is the vector of coordinates of the point. We add this transformation to the model with the command
-
-# In[10]:
-
 
 md.add_interpolate_transformation_from_expression("Proj1", mesh1, mesh2, "[X(1);-X(2)]")
 
