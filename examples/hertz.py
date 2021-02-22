@@ -8,13 +8,18 @@ Run a Hertz problem and compare the results.
 ###############################################################################
 # # A finite element analysis of elastic contact problem
 #
-# In this example of a deformable ``cylinder 1`` enters in contact with a deformable  ``cylinder 2``. We use here python interface, translate this program for another interface or in C++ is easy (see the previous example).
+# In this example of a deformable ``cylinder 1`` enters in contact with a
+# deformable  ``cylinder 2``. We use here python interface, translate this
+# program for another interface or in C++ is easy (see the previous example).
 #
 # ![Kontakt_paralleler_Zylinder](https://upload.wikimedia.org/wikipedia/commons/e/ef/Kontakt_paralleler_Zylinder.jpg)
 
 # ## The problem setting
 #
-# Let $\Omega^{1} \subset \mathbb{R}^{2}$ be the reference of a 2D cylinder 1 and $\Omega^{2} \subset \mathbb{R}^{2}$ the reference configuration of a deformable cylinder. We consider small deformation of these two bodies (linearized elasticity) and the contact between them.
+# Let $\Omega^{1} \subset \mathbb{R}^{2}$ be the reference of a 2D cylinder 1
+# and $\Omega^{2} \subset \mathbb{R}^{2}$ the reference configuration of a
+# deformable cylinder. We consider small deformation of these two bodies
+# (linearized elasticity) and the contact between them.
 
 ###############################################################################
 # ## Building the program
@@ -26,28 +31,30 @@ import getfem as gf
 import numpy as np
 import pyvista as pv
 
+
+# Yong Modulus (MPa)
+E = 200000.0
+# Poisson ratio
+nu = 0.3
+# First Lame coefficient (MPa)
+clambda = E * nu / ((1 + nu) * (1 - 2 * nu))
+# Second Lame coefficient (MPa)
+cmu = E / (2 * (1 + nu))
+# Lame coefficient for Plane stress (MPa)
+clambdastar = 2 * clambda * cmu / (clambda + 2 * cmu)
+# Degree of the finite element methods
+elements_degree = 2
+# Force at the top boundary (N/mm)
+F = -200.0 / 10
+# Augmentation parameter for the augmented Lagrangian
+gamma0 = 1.0 / E
+
+
 ###############################################################################
 #
-
-E = 200000.0  # Yong Modulus (MPa)
-nu = 0.3  # Poisson ratio
-clambda = E * nu / ((1 + nu) * (1 - 2 * nu))  # First Lame coefficient (MPa)
-cmu = E / (2 * (1 + nu))  # Second Lame coefficient (MPa)
-clambdastar = (
-    2 * clambda * cmu / (clambda + 2 * cmu)
-)  # Lame coefficient for Plane stress (MPa)
-
-elements_degree = 2  # Degree of the finite element methods
-
-F = -200.0 / 10  # Force at the top boundary (N/mm)
-
-gamma0 = 1.0 / E  # Augmentation parameter for the augmented Lagrangian
-
-
-###############################################################################
-#
-# We consider that the radius of the two cylinder is 5mm.
-# We load the mesh of the cylinder using the load of a mesh from a GetFEM ascii mesh file (see the documentation of the Mesh object in the python interface).
+# We consider that the radius of the two cylinder is 5mm. We load the mesh of
+# the cylinder using the load of a mesh from a GetFEM ascii mesh file (see the
+# documentation of the Mesh object in the python interface).
 # !gmsh hertz.mesh -f msh2 -save -o hertz.msh
 mesh = gf.Mesh("import", "gmsh", "hertz.msh")
 mesh.translate([0.0, 5.0])
@@ -94,27 +101,28 @@ mesh2.export_to_vtk("mesh2.vtk", "ascii")
 #
 # ## Boundary selection
 
-# We have to select the different parts of the boundary where we will set some boundary conditions, namely the boundary of the rim (in order to apply a force and the fact that the rim is rigid), the contact boundary of the wheel and the bottom boundary of the foundation that we will assume clamped.
+# We have to select the different parts of the boundary where we will set some
+# boundary conditions, namely the boundary of the rim (in order to apply a
+# force and the fact that the rim is rigid), the contact boundary of the wheel
+# and the bottom boundary of the foundation that we will assume clamped.
 
+# Contact boundary of the wheel
+fb2 = mesh1.outer_faces_with_direction([0.0, -1.0], np.pi / 12.0)
+# Bottom boundary of the foundation
+fb3 = mesh2.outer_faces_with_direction([0.0, -1.0], 0.01)
+# Top boundary
+fb4 = mesh1.outer_faces_with_direction([0.0, 1.0], np.pi / 2.0)
+# Contact boundary of the wheel
+fb5 = mesh2.outer_faces_with_direction([0.0, 1.0], np.pi / 12.0)
+# Left boundary
+fb6 = mesh1.outer_faces_with_direction([-1.0, 0], 0.01)
+# Left boundary
+fb7 = mesh2.outer_faces_with_direction([-1.0, 0], 0.01)
 
-fb2 = mesh1.outer_faces_with_direction(
-    [0.0, -1.0], np.pi / 12.0
-)  # Contact boundary of the wheel
-fb3 = mesh2.outer_faces_with_direction(
-    [0.0, -1.0], 0.01
-)  # Bottom boundary of the foundation
-fb4 = mesh1.outer_faces_with_direction([0.0, 1.0], np.pi / 2.0)  # Top boundary
-fb5 = mesh2.outer_faces_with_direction(
-    [0.0, 1.0], np.pi / 12.0
-)  # Contact boundary of the wheel
-fb6 = mesh1.outer_faces_with_direction([-1.0, 0], 0.01)  # Left boundary
-fb7 = mesh2.outer_faces_with_direction([-1.0, 0], 0.01)  # Left boundary
-
-HOLE_BOUND = 1
-CONTACT_BOUND = 2
-BOTTOM_BOUND = 3
-TOP_BOUND = 4
-LEFT_BOUND = 5
+CONTACT_BOUND = 1
+BOTTOM_BOUND = 2
+TOP_BOUND = 3
+LEFT_BOUND = 4
 
 mesh1.set_region(CONTACT_BOUND, fb2)
 mesh2.set_region(BOTTOM_BOUND, fb3)
@@ -126,12 +134,19 @@ mesh2.set_region(LEFT_BOUND, fb7)
 
 ###############################################################################
 #
-# Note that the command `mesh1.outer_faces_with_direction([0., -1.0], np.pi/6)` allows to select all the faces having a unit outward normal having an angle less or equal to `np.pi/6` with the vector `[0., -1.0]`.
-
+# Note that the command `mesh1.outer_faces_with_direction([0., -1.0], np.pi/6)`
+# allows to select all the faces having a unit outward normal having an angle
+# less or equal to `np.pi/6` with the vector `[0., -1.0]`.
+#
 # ## Definition of finite elements methods and integration method
-# We define mfu1, mfu2 two finite element methods which will approximate the displacements in the `cylinder1` and `cylinder2`.
-# `mflambda` is finite element method to approximate a multiplier to take into account the rigidity of the rim, `mflambda_C` is to approximate the contact multiplier (contact pressure) and `mfvm1`, `mfvm2` will be used to interpolate the Von Mises stresses of the wheel and the foundation for post-processing.
-# `mim1`, `mim2` are two integration methods on the `cylinder1` and the `cylinder2`.
+#
+# We define mfu1, mfu2 two finite element methods which will approximate the
+# displacements in the `cylinder1` and `cylinder2`. `mflambda` is finite
+# element method to approximate a multiplier to take into account the rigidity
+# of the rim, `mflambda_C` is to approximate the contact multiplier (contact
+# pressure) and `mfvm1`, `mfvm2` will be used to interpolate the Von Mises
+# stresses of the wheel and the foundation for post-processing. `mim1`, `mim2`
+# are two integration methods on the `cylinder1` and the `cylinder2`.
 
 
 mfu1 = gf.MeshFem(mesh1, 2)
@@ -158,7 +173,8 @@ mim2 = gf.MeshIm(mesh2, pow(elements_degree, 2))
 #
 # ## Model definition
 #
-# We use a real model and declare the two variables which will represent the displacements:
+# We use a real model and declare the two variables which will represent the
+# displacements:
 
 
 md = gf.Model("real")
@@ -169,18 +185,22 @@ md.add_fem_variable("u2", mfu2)
 #
 # ## Linearized elasticity bricks
 #
-# We add the Lamé coefficients as data of the model and add a linearized elasticity brick for the wheel and the foundation:
+# We add the Lame coefficients as data of the model and add a linearized
+# elasticity brick for the wheel and the foundation:
 
 md.add_initialized_data("cmu", [cmu])
 md.add_initialized_data("clambdastar", [clambdastar])
-md.add_isotropic_linearized_elasticity_brick(mim1, "u1", "clambdastar", "cmu")
-md.add_isotropic_linearized_elasticity_brick(mim2, "u2", "clambdastar", "cmu")
+md.add_initialized_data("E", [E])
+md.add_initialized_data("nu", [nu])
+md.add_isotropic_linearized_elasticity_brick_pstrain(mim1, "u1", "E", "nu")
+md.add_isotropic_linearized_elasticity_brick_pstrain(mim2, "u2", "E", "nu")
 
 ###############################################################################
 #
 # ## Clamped condition at the bottom boundary
 #
-# We prescribed the displacement at bottom face of the foundation to vanish, for instance with a multiplier with the add of the following brick:
+# We prescribed the displacement at bottom face of the foundation to vanish,
+# for instance with a multiplier with the add of the following brick:
 
 md.add_initialized_data("r0", [0, 0])
 md.add_initialized_data("r1", [0, 0])
@@ -211,21 +231,31 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 
 # ## Contact condition (use of interpolate transformations)
 
-# Now, let us see how to prescribed the contact condition between the two structures.
-# It is possible to use predefined bricks (see [Small sliding contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction) for small deformation/small sliding contact and [Large sliding/large deformation contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large) for large deformation/large sliding contact).
-# However, we will see here how to directly prescribe a contact condition using an augmented Lagrangian formulation and the interpolate transformations.
+# Now, let us see how to prescribed the contact condition between the two
+# structures. It is possible to use predefined bricks (see [Small sliding
+# contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction)
+# for small deformation/small sliding contact and [Large sliding/large deformation contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large)
+# for large deformation/large sliding contact).
+# However, we will see here how to directly prescribe a contact condition using
+# an augmented Lagrangian formulation and the interpolate transformations.
 #
-# For small deformation contact, the correspondence between points of one contact surface to the other have to be described on the reference configuration and is not evolving, which is of course simpler but is an approximation.
+# For small deformation contact, the correspondence between points of one
+# contact surface to the other have to be described on the reference
+# configuration and is not evolving, which is of course simpler but is an
+# approximation.
 #
-# We consider that the contact boundary of the wheel is the slave one and we have to describe the transformation from the contact boundary of the wheel to the contact boundary of the foundation.
-# This is quite simple here, since the contact boundary of the foundation corresponds to a vanishing vertical coordinate.
-# So we define the transformation
+# We consider that the contact boundary of the wheel is the slave one and we
+# have to describe the transformation from the contact boundary of the wheel to
+# the contact boundary of the foundation. This is quite simple here, since the
+# contact boundary of the foundation corresponds to a vanishing vertical
+# coordinate. So we define the transformation
 #
 # $$
 # X \longmapsto (X(1), -X(2))
 # $$
 #
-# where $X$ is the vector of coordinates of the point. We add this transformation to the model with the command
+# where $X$ is the vector of coordinates of the point. We add this
+# transformation to the model with the command
 
 md.add_interpolate_transformation_from_expression(
     "Proj1", mesh1, mesh2, "[X(1);-X(2)-0.001]"
@@ -234,21 +264,35 @@ md.add_interpolate_transformation_from_expression(
 ###############################################################################
 #
 
-# As a consequence, it will be possible to use this transformation, from the mesh of the wheel to the mesh of the foundation, into GWFL expressions.
+# As a consequence, it will be possible to use this transformation, from the
+# mesh of the wheel to the mesh of the foundation, into GWFL expressions.
 # Notes that this is here a very simple constant expression.
-# More complex expressions depending on the data or even the variables of the model can be used.
-# If the expression of a transformation depends on the variable of the model, the tangent linear system will automatically takes into account this dependence (see [Interpolate transformations](https://getfem.readthedocs.io/en/latest/userdoc/gasm_high.html#ud-gasm-high-transf) for more details).
-# Note also that transformation corresponding to a large sliding contact and automatically searching for the correspondence between contact boundaries exist in GetFEM (see [Integral contact brick with raytrace](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large-hlgav)).
+# More complex expressions depending on the data or even the variables of the
+# model can be used.
+# If the expression of a transformation depends on the variable of the model,
+# the tangent linear system will automatically takes into account this
+# dependence (see [Interpolate transformations](https://getfem.readthedocs.io/en/latest/userdoc/gasm_high.html#ud-gasm-high-transf) for more details).
+# Note also that transformation corresponding to a large sliding contact and
+# automatically searching for the correspondence between contact boundaries
+# exist in GetFEM (see [Integral contact brick with raytrace](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large-hlgav)).
 #
-# Using the defined transformation, we can write an integral contact condition using an augmented Lagrangian formulation (see [Small sliding contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction) for more details).
-# The corresponding term (to be added to the rest of the weak formulation) reads:
+# Using the defined transformation, we can write an integral contact condition
+# using an augmented Lagrangian formulation (see [Small sliding contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction)
+# for more details).
+# The corresponding term (to be added to the rest of the weak formulation)
+# reads:
 #
 # $$
 #   \cdots +  \int_{\Gamma_c} \lambda_N(X) (\delta_{u^1}(X)-\delta_{u^2}(\Pi(X)))\cdot n d\Gamma \\
 #   -   \int_{\Gamma_c} \left(\lambda_N(X) + \left(\lambda_N(X) + \dfrac{1}{h_T\gamma_0}((X + u^1(X))\cdot n - (\Pi(X) - u^2(\Pi(X)))\cdot n\right)_-\right)\delta_{\lambda_N}(X) d\Gamma = 0 ~~~~ \forall \delta_{\lambda_N}, \forall \delta_{u^1}, \forall \delta_{u^2},
 # $$
 #
-# where $\Gamma_c$ is the slave contact boundary, $\lambda_N$ is the contact multiplier (contact pressure), $h_T$ is the radius of the element, $\Pi$ is the transformation, $n$ is the outward normal vector to the master contact boundary (here $n = (0,1)$), $\gamma_0$ is an augmentation parameter, $(\cdot)_-:I\hspace{-0.2em}R\rightarrow I\hspace{-0.2em}R_+$ is the negative part and $\delta_{\lambda_N}, \delta_{u^1}, \delta_{u^2}$ are the test  functions corresponding to $\lambda_N, u^1, u^2$, respectively.
+# where $\Gamma_c$ is the slave contact boundary, $\lambda_N$ is the contact
+# multiplier (contact pressure), $h_T$ is the radius of the element, $\Pi$ is
+# the transformation, $n$ is the outward normal vector to the master contact
+# boundary (here $n = (0,1)$), $\gamma_0$ is an augmentation parameter, $(\cdot)_-:I\hspace{-0.2em}R\rightarrow I\hspace{-0.2em}R_+$
+# is the negative part and $\delta_{\lambda_N}, \delta_{u^1}, \delta_{u^2}$ are
+# the test  functions corresponding to $\lambda_N, u^1, u^2$, respectively.
 #
 # Using GWFL, the contact condition can be added by:
 
@@ -270,10 +314,11 @@ md.add_nonlinear_term(
 #
 
 # ## Prescribing the rigidity of the rim and the vertical force
-# We have now to prescribe the rigidity of the rim. This is a non-standard condition, since we do not know a priori what will be the vertical displacement of the rim.
-# We can use an additional unknown for that vertical displacement.
-
-# We need a multiplier to prescribe the displacement on the rim boundary:
+# We have now to prescribe the rigidity of the rim. This is a non-standard
+# condition, since we do not know a priori what will be the vertical
+# displacement of the rim. We can use an additional unknown for that vertical
+# displacement. We need a multiplier to prescribe the displacement on the rim
+# boundary:
 
 # ## Model solve
 # We can now solve our problem with:
@@ -285,10 +330,12 @@ md.add_nonlinear_term(
 md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 
 ###############################################################################
-# Note that in some configuration, it is preferable to use a more basic line search than the default one:
+# Note that in some configuration, it is preferable to use a more basic line
+# search than the default one:
 # md.solve(
 #     "max_res", 1e-9, "max_iter", 100, "noisy", "lsearch", "simplest", "alpha min", 0.8
 # )
+#
 # ## Export the solution
 #
 # Now the code to export the solution with the VonMises stress:
