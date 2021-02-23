@@ -30,7 +30,8 @@ Run a Hertz problem and compare the results.
 import getfem as gf
 import numpy as np
 import pyvista as pv
-
+import matplotlib.pyplot as plt
+pv.set_plot_theme("document")
 
 # Yong Modulus (MPa)
 E = 200000.0
@@ -384,18 +385,15 @@ p = pv.Plotter(shape=(1, 2))
 
 p.subplot(0, 0)
 p.add_text("Mesh")
-p.add_mesh(m1, show_edges=True)
-p.add_mesh(m2, show_edges=True)
+p.add_mesh(m1, color="white", show_edges=True)
+p.add_mesh(m2, color="white", show_edges=True)
 p.show_grid()
 
 p.subplot(0, 1)
 p.add_text("Von Mises Stresses")
-c1 = d1.contour()
-c2 = d2.contour()
-p.add_mesh(d1, clim=[0, 270], show_edges=False, opacity=0.85)
-p.add_mesh(d2, clim=[0, 270], show_edges=False, opacity=0.85)
-p.add_mesh(c1, clim=[0, 270], color="white", line_width=5)
-p.add_mesh(c2, clim=[0, 270], color="white", line_width=5)
+boring_cmap = plt.cm.get_cmap("rainbow", 10)
+p.add_mesh(d1, cmap=boring_cmap)
+p.add_mesh(d2, cmap=boring_cmap)
 p.show_grid()
 
 p.show(screenshot="von_mises.png", window_size=[1200, 900], cpos="xy")
