@@ -31,6 +31,7 @@ import getfem as gf
 import numpy as np
 import pyvista as pv
 import matplotlib.pyplot as plt
+
 pv.set_plot_theme("document")
 
 # Yong Modulus (MPa)
