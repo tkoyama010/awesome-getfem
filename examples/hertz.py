@@ -391,9 +391,9 @@ p.show_grid()
 
 p.subplot(0, 1)
 p.add_text("Von Mises Stresses")
-boring_cmap = plt.cm.get_cmap("rainbow", 10)
-p.add_mesh(d1, cmap=boring_cmap)
-p.add_mesh(d2, cmap=boring_cmap)
+cmap = plt.cm.get_cmap("rainbow", 10)
+p.add_mesh(d1, cmap=cmap)
+p.add_mesh(d2, cmap=cmap)
 p.show_grid()
 
 p.show(screenshot="von_mises.png", window_size=[1200, 900], cpos="xy")
