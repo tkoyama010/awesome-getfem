@@ -109,10 +109,14 @@ mesh6.export_to_vtk("mesh6.vtk", "ascii")
 
 # m1 = pv.read("mesh1.vtk")
 # m2 = pv.read("mesh2.vtk")
+# m5 = pv.read("mesh5.vtk")
+# m6 = pv.read("mesh6.vtk")
 # p = pv.Plotter(shape=(1, 1))
 # p.subplot(0, 0)
 # p.add_mesh(m1, show_edges=True)
 # p.add_mesh(m2, show_edges=True)
+# p.add_mesh(m5, show_edges=True)
+# p.add_mesh(m6, show_edges=True)
 # p.show_grid()
 # p.show(screenshot="mesh.png", window_size=[1200, 1400], cpos="xy")
 
@@ -126,30 +130,35 @@ mesh6.export_to_vtk("mesh6.vtk", "ascii")
 # force and the fact that the rim is rigid), the contact boundary of the wheel
 # and the bottom boundary of the foundation that we will assume clamped.
 
-# Contact boundary of the wheel
-fb2 = mesh1.outer_faces_with_direction([0.0, -1.0], np.pi / 12.0)
-# Bottom boundary of the foundation
-fb3 = mesh2.outer_faces_with_direction([0.0, -1.0], 0.01)
-# Top boundary
-fb4 = mesh1.outer_faces_with_direction([0.0, 1.0], np.pi / 2.0)
-# Contact boundary of the wheel
-fb5 = mesh2.outer_faces_with_direction([0.0, 1.0], np.pi / 12.0)
-# Left boundary
-fb6 = mesh1.outer_faces_with_direction([-1.0, 0], 0.01)
-# Left boundary
-fb7 = mesh2.outer_faces_with_direction([-1.0, 0], 0.01)
+fb11 = mesh1.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
+fb12 = mesh1.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
+fb13 = mesh1.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
+fb21 = mesh2.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
+fb22 = mesh2.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
+fb23 = mesh2.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
+fb51 = mesh5.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
+fb52 = mesh5.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
+fb53 = mesh5.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
+fb61 = mesh6.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
+fb62 = mesh6.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
+fb63 = mesh6.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
 
-CONTACT_BOUND = 1
+TOP_BOUND = 1
 BOTTOM_BOUND = 2
-TOP_BOUND = 3
-LEFT_BOUND = 4
+LEFT_BOUND = 3
 
-mesh1.set_region(CONTACT_BOUND, fb2)
-mesh2.set_region(BOTTOM_BOUND, fb3)
-mesh1.set_region(TOP_BOUND, fb4)
-mesh2.set_region(CONTACT_BOUND, fb5)
-mesh1.set_region(LEFT_BOUND, fb6)
-mesh2.set_region(LEFT_BOUND, fb7)
+mesh1.set_region(TOP_BOUND, fb11)
+mesh2.set_region(TOP_BOUND, fb21)
+mesh5.set_region(TOP_BOUND, fb51)
+mesh6.set_region(TOP_BOUND, fb61)
+mesh1.set_region(BOTTOM_BOUND, fb12)
+mesh2.set_region(BOTTOM_BOUND, fb22)
+mesh5.set_region(BOTTOM_BOUND, fb52)
+mesh6.set_region(BOTTOM_BOUND, fb62)
+mesh1.set_region(LEFT_BOUND, fb13)
+mesh2.set_region(LEFT_BOUND, fb23)
+mesh5.set_region(LEFT_BOUND, fb53)
+mesh6.set_region(LEFT_BOUND, fb63)
 
 
 ###############################################################################
@@ -161,26 +170,25 @@ mesh2.set_region(LEFT_BOUND, fb7)
 # ## Definition of finite elements methods and integration method
 #
 # We define mfu1, mfu2 two finite element methods which will approximate the
-# displacements in the `cylinder1` and `cylinder2`. `mflambda` is finite
-# element method to approximate a multiplier to take into account the rigidity
-# of the rim, `mflambda_C` is to approximate the contact multiplier (contact
-# pressure) and `mfvm1`, `mfvm2` will be used to interpolate the Von Mises
-# stresses of the wheel and the foundation for post-processing. `mim1`, `mim2`
-# are two integration methods on the `cylinder1` and the `cylinder2`.
+# displacements in the `cylinder1` and `cylinder2`. `mflambda_C1` is to
+# approximate the contact multiplier (contact pressure) and `mfvm1`, `mfvm2`
+# will be used to interpolate the Von Mises stresses of the wheel and the
+# foundation for post-processing. `mim1`, `mim2` are two integration methods
+# on the `cylinder1` and the `cylinder2`.
 
 
 mfu1 = gf.MeshFem(mesh1, 2)
 mfu1.set_classical_fem(elements_degree)
 mfd1 = gf.MeshFem(mesh1, 1)
 mfd1.set_classical_fem(elements_degree)
-mflambda = gf.MeshFem(mesh1, 2)
-mflambda.set_classical_fem(elements_degree - 1)
-mflambda_C = gf.MeshFem(mesh1, 1)
-mflambda_C.set_classical_fem(elements_degree - 1)
+mflambda_C1 = gf.MeshFem(mesh1, 1)
+mflambda_C1.set_classical_fem(elements_degree - 1)
 mfu2 = gf.MeshFem(mesh2, 2)
 mfu2.set_classical_fem(elements_degree)
 mfd2 = gf.MeshFem(mesh2, 1)
 mfd2.set_classical_fem(elements_degree)
+mflambda_C2 = gf.MeshFem(mesh2, 1)
+mflambda_C2.set_classical_fem(elements_degree)
 mfvm1 = gf.MeshFem(mesh1, 1)
 mfvm1.set_classical_discontinuous_fem(elements_degree)
 mfvm2 = gf.MeshFem(mesh2, 1)
@@ -188,6 +196,16 @@ mfvm2.set_classical_discontinuous_fem(elements_degree)
 mim1 = gf.MeshIm(mesh1, pow(elements_degree, 2))
 mim2 = gf.MeshIm(mesh2, pow(elements_degree, 2))
 
+mfu5 = gf.MeshFem(mesh5, 2)
+mfu5.set_classical_fem(elements_degree)
+mfd5 = gf.MeshFem(mesh5, 1)
+mfd5.set_classical_fem(elements_degree)
+mfu6 = gf.MeshFem(mesh6, 2)
+mfu6.set_classical_fem(elements_degree)
+mfd6 = gf.MeshFem(mesh6, 1)
+mfd6.set_classical_fem(elements_degree)
+mim5 = gf.MeshIm(mesh5, pow(elements_degree, 2))
+mim6 = gf.MeshIm(mesh6, pow(elements_degree, 2))
 
 ###############################################################################
 #
@@ -200,6 +218,8 @@ mim2 = gf.MeshIm(mesh2, pow(elements_degree, 2))
 md = gf.Model("real")
 md.add_fem_variable("u1", mfu1)
 md.add_fem_variable("u2", mfu2)
+md.add_fem_variable("u5", mfu5)
+md.add_fem_variable("u6", mfu6)
 
 ###############################################################################
 #
@@ -210,10 +230,13 @@ md.add_fem_variable("u2", mfu2)
 
 md.add_initialized_data("cmu", [cmu])
 md.add_initialized_data("clambdastar", [clambdastar])
-md.add_initialized_data("E", [E])
+md.add_initialized_data("E1", [E])
+md.add_initialized_data("E2", [E * 1000.0])
 md.add_initialized_data("nu", [nu])
-md.add_isotropic_linearized_elasticity_brick_pstrain(mim1, "u1", "E", "nu")
-md.add_isotropic_linearized_elasticity_brick_pstrain(mim2, "u2", "E", "nu")
+md.add_isotropic_linearized_elasticity_brick_pstrain(mim1, "u1", "E1", "nu")
+md.add_isotropic_linearized_elasticity_brick_pstrain(mim2, "u2", "E1", "nu")
+md.add_isotropic_linearized_elasticity_brick_pstrain(mim5, "u5", "E2", "nu")
+md.add_isotropic_linearized_elasticity_brick_pstrain(mim6, "u6", "E2", "nu")
 
 ###############################################################################
 #
@@ -222,28 +245,25 @@ md.add_isotropic_linearized_elasticity_brick_pstrain(mim2, "u2", "E", "nu")
 # We prescribed the displacement at bottom face of the foundation to vanish,
 # for instance with a multiplier with the add of the following brick:
 
-md.add_initialized_data("r0", [0, 0])
-md.add_initialized_data("r1", [0, 0])
-md.add_initialized_data("r2", [0, 0])
-md.add_initialized_data("r3", [0, 0])
-md.add_initialized_data("H0", [[1, 0], [0, 0]])
-md.add_initialized_data("H1", [[1, 0], [0, 0]])
-md.add_initialized_data("H2", [[1, 0], [0, 0]])
-md.add_initialized_data("H3", [[0, 0], [0, 1]])
+md.add_initialized_data("r", [0, 0])
+md.add_initialized_data("H", [[1, 0], [0, 0]])
 md.add_initialized_data("F", F)
 
-md.add_source_term_brick(mim1, "u1", "[0.0, F]", TOP_BOUND)
 md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim1, "u1", mfu1, TOP_BOUND, "r0", "H0"
+    mim1, "u1", mfu1, LEFT_BOUND, "r", "H"
 )
 md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim1, "u1", mfu1, LEFT_BOUND, "r1", "H1"
+    mim2, "u2", mfu2, LEFT_BOUND, "r", "H"
+)
+md.add_source_term_brick(mim5, "u5", "[0.0, F]", TOP_BOUND)
+md.add_generalized_Dirichlet_condition_with_multipliers(
+    mim5, "u5", mfu5, LEFT_BOUND, "r", "H"
+)
+md.add_Dirichlet_condition_with_multipliers(
+    mim6, "u6", elements_degree - 1, BOTTOM_BOUND
 )
 md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim2, "u2", mfu2, LEFT_BOUND, "r2", "H2"
-)
-md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim2, "u2", mfu2, BOTTOM_BOUND, "r3", "H3"
+    mim6, "u6", mfu6, LEFT_BOUND, "r", "H"
 )
 
 ###############################################################################
@@ -278,8 +298,10 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 # transformation to the model with the command
 
 md.add_interpolate_transformation_from_expression(
-    "Proj1", mesh1, mesh2, "[X(1);-X(2)-0.001]"
+    "Proj12", mesh1, mesh2, "[X(1);-X(2)-0.001]"
 )
+md.add_interpolate_transformation_from_expression("Proj15", mesh1, mesh5, "[X(1);10.000]")
+md.add_interpolate_transformation_from_expression("Proj26", mesh2, mesh6, "[X(1);-10.000]")
 
 ###############################################################################
 #
@@ -317,16 +339,38 @@ md.add_interpolate_transformation_from_expression(
 # Using GWFL, the contact condition can be added by:
 
 md.add_initialized_data("gamma0", [gamma0])
-md.add_filtered_fem_variable("lambda1", mflambda_C, CONTACT_BOUND)
+md.add_filtered_fem_variable("lambda15", mflambda_C1, TOP_BOUND)
 md.add_nonlinear_term(
     mim1,
-    "lambda1*(Test_u1.[0;1])-lambda1*(Interpolate(Test_u2,Proj1).[0;1])",
-    CONTACT_BOUND,
+    "lambda15*(Test_u1.[0;1])-lambda15*(Interpolate(Test_u5,Proj15).[0;1])",
+    TOP_BOUND,
 )
 md.add_nonlinear_term(
     mim1,
-    "-(gamma0*element_size)*(lambda1 + neg_part(lambda1+(1/(gamma0*element_size))*((u1-Interpolate(u2,Proj1)+X-Interpolate(X,Proj1)).[0;1])))*Test_lambda1",
-    CONTACT_BOUND,
+    "-(gamma0*element_size)*(lambda15 + neg_part(lambda15+(1/(gamma0*element_size))*((u1-Interpolate(u5,Proj15)+X-Interpolate(X,Proj15)).[0;1])))*Test_lambda15",
+    TOP_BOUND,
+)
+md.add_filtered_fem_variable("lambda12", mflambda_C1, BOTTOM_BOUND)
+md.add_nonlinear_term(
+    mim1,
+    "lambda12*(Test_u1.[0;1])-lambda12*(Interpolate(Test_u2,Proj12).[0;1])",
+    BOTTOM_BOUND,
+)
+md.add_nonlinear_term(
+    mim1,
+    "-(gamma0*element_size)*(lambda12 + neg_part(lambda12+(1/(gamma0*element_size))*((u1-Interpolate(u2,Proj12)+X-Interpolate(X,Proj12)).[0;1])))*Test_lambda12",
+    BOTTOM_BOUND,
+)
+md.add_filtered_fem_variable("lambda26", mflambda_C2, BOTTOM_BOUND)
+md.add_nonlinear_term(
+    mim2,
+    "lambda26*(Test_u2.[0;1])-lambda26*(Interpolate(Test_u6,Proj26).[0;1])",
+    BOTTOM_BOUND,
+)
+md.add_nonlinear_term(
+    mim2,
+    "-(gamma0*element_size)*(lambda26 + neg_part(lambda26+(1/(gamma0*element_size))*((u2-Interpolate(u6,Proj26)+X-Interpolate(X,Proj26)).[0;1])))*Test_lambda26",
+    BOTTOM_BOUND,
 )
 
 
@@ -347,7 +391,7 @@ md.add_nonlinear_term(
 #
 
 
-md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
+md.solve("max_res", 1e-9, "max_iter", 300, "noisy")
 
 ###############################################################################
 # Note that in some configuration, it is preferable to use a more basic line
