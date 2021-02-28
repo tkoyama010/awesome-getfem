@@ -204,6 +204,10 @@ mfu6 = gf.MeshFem(mesh6, 2)
 mfu6.set_classical_fem(elements_degree)
 mfd6 = gf.MeshFem(mesh6, 1)
 mfd6.set_classical_fem(elements_degree)
+mfvm5 = gf.MeshFem(mesh5, 1)
+mfvm5.set_classical_discontinuous_fem(elements_degree)
+mfvm6 = gf.MeshFem(mesh6, 1)
+mfvm6.set_classical_discontinuous_fem(elements_degree)
 mim5 = gf.MeshIm(mesh5, pow(elements_degree, 2))
 mim6 = gf.MeshIm(mesh6, pow(elements_degree, 2))
 
@@ -407,11 +411,19 @@ md.solve("max_res", 1e-5, "max_iter", 300, "noisy")
 
 U1 = md.variable("u1")
 U2 = md.variable("u2")
+U5 = md.variable("u5")
+U6 = md.variable("u6")
 VM1 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
     "u1", "clambdastar", "cmu", mfvm1
 )
 VM2 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
     "u2", "clambdastar", "cmu", mfvm2
+)
+VM5 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
+    "u5", "clambdastar", "cmu", mfvm5
+)
+VM6 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
+    "u6", "clambdastar", "cmu", mfvm6
 )
 
 mfvm1.export_to_vtk(
@@ -436,6 +448,29 @@ mfvm2.export_to_vtk(
     "Displacements",
 )
 
+mfvm5.export_to_vtk(
+    "displacement_with_von_mises5.vtk",
+    "ascii",
+    mfvm5,
+    VM5,
+    "Von Mises Stresses",
+    mfu5,
+    U5,
+    "Displacements",
+)
+
+mfvm6.export_to_vtk(
+    "displacement_with_von_mises6.vtk",
+    "ascii",
+    mfvm6,
+    VM6,
+    "Von Mises Stresses",
+    mfu6,
+    U6,
+    "Displacements",
+)
+
+
 ###############################################################################
 # You can view solutions with pyvista:
 #
@@ -446,6 +481,8 @@ m5 = pv.read("mesh5.vtk")
 m6 = pv.read("mesh6.vtk")
 d1 = pv.read("displacement_with_von_mises1.vtk")
 d2 = pv.read("displacement_with_von_mises2.vtk")
+d5 = pv.read("displacement_with_von_mises5.vtk")
+d6 = pv.read("displacement_with_von_mises6.vtk")
 p = pv.Plotter(shape=(1, 2))
 
 p.subplot(0, 0)
@@ -458,9 +495,11 @@ p.show_grid()
 
 p.subplot(0, 1)
 p.add_text("Von Mises Stresses")
-cmap = plt.cm.get_cmap("rainbow", 10)
-p.add_mesh(d1, cmap=cmap)
-p.add_mesh(d2, cmap=cmap)
+cmap = plt.cm.get_cmap("rainbow", 20)
+p.add_mesh(d1, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(d2, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(d5, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(d6, clim=[0.0, 500.0], cmap=cmap)
 p.show_grid()
 
 p.show(screenshot="von_mises.png", window_size=[1200, 900], cpos="xy")
