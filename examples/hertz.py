@@ -130,18 +130,18 @@ mesh6.export_to_vtk("mesh6.vtk", "ascii")
 # force and the fact that the rim is rigid), the contact boundary of the wheel
 # and the bottom boundary of the foundation that we will assume clamped.
 
-fb11 = mesh1.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
-fb12 = mesh1.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
-fb13 = mesh1.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
-fb21 = mesh2.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
-fb22 = mesh2.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
-fb23 = mesh2.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
-fb51 = mesh5.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
-fb52 = mesh5.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
-fb53 = mesh5.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
-fb61 = mesh6.outer_faces_with_direction([+0.0, +1.0], np.pi / 12.0)
-fb62 = mesh6.outer_faces_with_direction([+0.0, -1.0], np.pi / 12.0)
-fb63 = mesh6.outer_faces_with_direction([-1.0, +0.0], np.pi / 12.0)
+fb11 = mesh1.outer_faces_with_direction([+0.0, +1.0], np.pi / 4.0)
+fb12 = mesh1.outer_faces_with_direction([+0.0, -1.0], np.pi / 4.0)
+fb13 = mesh1.outer_faces_with_direction([-1.0, +0.0], np.pi / 4.0)
+fb21 = mesh2.outer_faces_with_direction([+0.0, +1.0], np.pi / 4.0)
+fb22 = mesh2.outer_faces_with_direction([+0.0, -1.0], np.pi / 4.0)
+fb23 = mesh2.outer_faces_with_direction([-1.0, +0.0], np.pi / 4.0)
+fb51 = mesh5.outer_faces_with_direction([+0.0, +1.0], np.pi / 4.0)
+fb52 = mesh5.outer_faces_with_direction([+0.0, -1.0], np.pi / 4.0)
+fb53 = mesh5.outer_faces_with_direction([-1.0, +0.0], np.pi / 4.0)
+fb61 = mesh6.outer_faces_with_direction([+0.0, +1.0], np.pi / 4.0)
+fb62 = mesh6.outer_faces_with_direction([+0.0, -1.0], np.pi / 4.0)
+fb63 = mesh6.outer_faces_with_direction([-1.0, +0.0], np.pi / 4.0)
 
 TOP_BOUND = 1
 BOTTOM_BOUND = 2
@@ -391,7 +391,7 @@ md.add_nonlinear_term(
 #
 
 
-md.solve("max_res", 1e-9, "max_iter", 300, "noisy")
+md.solve("max_res", 1e-5, "max_iter", 300, "noisy")
 
 ###############################################################################
 # Note that in some configuration, it is preferable to use a more basic line
