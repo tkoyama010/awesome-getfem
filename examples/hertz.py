@@ -91,6 +91,16 @@ mesh4.translate([0.0, -10.0])
 mesh2.merge(mesh4)
 mesh2.export_to_vtk("mesh2.vtk", "ascii")
 
+X = np.arange(0.0, 5.0 + 0.1, 0.1)
+Y = np.arange(0.0, 2.0 + 0.1, 0.1)
+
+mesh5 = gf.Mesh("cartesian", X, Y)
+mesh5.translate([0.0, 10.0])
+mesh5.export_to_vtk("mesh5.vtk", "ascii")
+
+mesh6 = gf.Mesh("cartesian", X, Y)
+mesh6.translate([0.0, -12.0])
+mesh6.export_to_vtk("mesh6.vtk", "ascii")
 
 ###############################################################################
 #
@@ -388,6 +398,8 @@ mfvm2.export_to_vtk(
 
 m1 = pv.read("mesh1.vtk")
 m2 = pv.read("mesh2.vtk")
+m5 = pv.read("mesh5.vtk")
+m6 = pv.read("mesh6.vtk")
 d1 = pv.read("displacement_with_von_mises1.vtk")
 d2 = pv.read("displacement_with_von_mises2.vtk")
 p = pv.Plotter(shape=(1, 2))
@@ -396,6 +408,8 @@ p.subplot(0, 0)
 p.add_text("Mesh")
 p.add_mesh(m1, color="white", show_edges=True)
 p.add_mesh(m2, color="white", show_edges=True)
+p.add_mesh(m5, color="white", show_edges=True)
+p.add_mesh(m6, color="white", show_edges=True)
 p.show_grid()
 
 p.subplot(0, 1)
