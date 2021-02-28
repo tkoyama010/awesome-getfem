@@ -77,10 +77,18 @@ h = 1.0
 
 mesh1 = gf.Mesh("clone", mesh)
 mesh1.del_convex(cvid2)
-mesh1.export_to_vtk("mesh1.vtk", "ascii")
 
 mesh2 = gf.Mesh("clone", mesh)
 mesh2.del_convex(cvid1)
+
+mesh3 = gf.Mesh("clone", mesh2)
+mesh3.translate([0.0, 10.0])
+mesh1.merge(mesh3)
+mesh1.export_to_vtk("mesh1.vtk", "ascii")
+
+mesh4 = gf.Mesh("clone", mesh1)
+mesh4.translate([0.0, -10.0])
+mesh2.merge(mesh4)
 mesh2.export_to_vtk("mesh2.vtk", "ascii")
 
 
