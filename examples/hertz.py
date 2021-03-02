@@ -342,39 +342,40 @@ md.add_interpolate_transformation_from_expression("Proj26", mesh2, mesh6, "[X(1)
 #
 # Using GWFL, the contact condition can be added by:
 
-# TODO Add macro of normal vector
 md.add_initialized_data("gamma0", [gamma0])
 md.add_filtered_fem_variable("lambda15", mflambda_C1, TOP_BOUND)
+md.add_macro("n15", "[0;-1]")
 md.add_nonlinear_term(
     mim1,
-    "lambda15*(Test_u1.[0;-1])-lambda15*(Interpolate(Test_u5,Proj15).[0;-1])",
+    "lambda15*(Test_u1.n15)-lambda15*(Interpolate(Test_u5,Proj15).n15)",
     TOP_BOUND,
 )
 md.add_nonlinear_term(
     mim1,
-    "-(gamma0*element_size)*(lambda15 + neg_part(lambda15+(1/(gamma0*element_size))*((u1-Interpolate(u5,Proj15)+X-Interpolate(X,Proj15)).[0;-1])))*Test_lambda15",
+    "-(gamma0*element_size)*(lambda15 + neg_part(lambda15+(1/(gamma0*element_size))*((u1-Interpolate(u5,Proj15)+X-Interpolate(X,Proj15)).n15)))*Test_lambda15",
     TOP_BOUND,
 )
 md.add_filtered_fem_variable("lambda12", mflambda_C1, BOTTOM_BOUND)
+md.add_macro("n12", "[0;+1]")
 md.add_nonlinear_term(
     mim1,
-    "lambda12*(Test_u1.[0;1])-lambda12*(Interpolate(Test_u2,Proj12).[0;1])",
+    "lambda12*(Test_u1.n12)-lambda12*(Interpolate(Test_u2,Proj12).n12)",
     BOTTOM_BOUND,
 )
 md.add_nonlinear_term(
     mim1,
-    "-(gamma0*element_size)*(lambda12 + neg_part(lambda12+(1/(gamma0*element_size))*((u1-Interpolate(u2,Proj12)+X-Interpolate(X,Proj12)).[0;1])))*Test_lambda12",
+    "-(gamma0*element_size)*(lambda12 + neg_part(lambda12+(1/(gamma0*element_size))*((u1-Interpolate(u2,Proj12)+X-Interpolate(X,Proj12)).n12)))*Test_lambda12",
     BOTTOM_BOUND,
 )
 md.add_filtered_fem_variable("lambda26", mflambda_C2, BOTTOM_BOUND)
 md.add_nonlinear_term(
     mim2,
-    "lambda26*(Test_u2.[0;1])-lambda26*(Interpolate(Test_u6,Proj26).[0;1])",
+    "lambda26*(Test_u2.n12)-lambda26*(Interpolate(Test_u6,Proj26).n12)",
     BOTTOM_BOUND,
 )
 md.add_nonlinear_term(
     mim2,
-    "-(gamma0*element_size)*(lambda26 + neg_part(lambda26+(1/(gamma0*element_size))*((u2-Interpolate(u6,Proj26)+X-Interpolate(X,Proj26)).[0;1])))*Test_lambda26",
+    "-(gamma0*element_size)*(lambda26 + neg_part(lambda26+(1/(gamma0*element_size))*((u2-Interpolate(u6,Proj26)+X-Interpolate(X,Proj26)).n12)))*Test_lambda26",
     BOTTOM_BOUND,
 )
 
