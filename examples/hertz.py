@@ -342,16 +342,17 @@ md.add_interpolate_transformation_from_expression("Proj26", mesh2, mesh6, "[X(1)
 #
 # Using GWFL, the contact condition can be added by:
 
+# TODO Add macro of normal vector
 md.add_initialized_data("gamma0", [gamma0])
 md.add_filtered_fem_variable("lambda15", mflambda_C1, TOP_BOUND)
 md.add_nonlinear_term(
     mim1,
-    "lambda15*(Test_u1.[0;1])-lambda15*(Interpolate(Test_u5,Proj15).[0;1])",
+    "lambda15*(Test_u1.[0;-1])-lambda15*(Interpolate(Test_u5,Proj15).[0;-1])",
     TOP_BOUND,
 )
 md.add_nonlinear_term(
     mim1,
-    "-(gamma0*element_size)*(lambda15 + neg_part(lambda15+(1/(gamma0*element_size))*((u1-Interpolate(u5,Proj15)+X-Interpolate(X,Proj15)).[0;1])))*Test_lambda15",
+    "-(gamma0*element_size)*(lambda15 + neg_part(lambda15+(1/(gamma0*element_size))*((u1-Interpolate(u5,Proj15)+X-Interpolate(X,Proj15)).[0;-1])))*Test_lambda15",
     TOP_BOUND,
 )
 md.add_filtered_fem_variable("lambda12", mflambda_C1, BOTTOM_BOUND)
@@ -395,7 +396,7 @@ md.add_nonlinear_term(
 #
 
 
-md.solve("max_res", 1e-5, "max_iter", 300, "noisy")
+md.solve("max_res", 1e-5, "max_iter", 100, "noisy")
 
 ###############################################################################
 # Note that in some configuration, it is preferable to use a more basic line
