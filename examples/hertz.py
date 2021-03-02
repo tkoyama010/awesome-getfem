@@ -304,8 +304,12 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 md.add_interpolate_transformation_from_expression(
     "Proj12", mesh1, mesh2, "[X(1);-X(2)-0.001]"
 )
-md.add_interpolate_transformation_from_expression("Proj15", mesh1, mesh5, "[X(1);10.000]")
-md.add_interpolate_transformation_from_expression("Proj26", mesh2, mesh6, "[X(1);-10.000]")
+md.add_interpolate_transformation_from_expression(
+    "Proj15", mesh1, mesh5, "[X(1);+10.000]"
+)
+md.add_interpolate_transformation_from_expression(
+    "Proj26", mesh2, mesh6, "[X(1);-10.000]"
+)
 
 ###############################################################################
 #
@@ -352,7 +356,9 @@ md.add_nonlinear_term(
 )
 md.add_nonlinear_term(
     mim1,
-    "-(gamma0*element_size)*(lambda15 + neg_part(lambda15+(1/(gamma0*element_size))*((u1-Interpolate(u5,Proj15)+X-Interpolate(X,Proj15)).n15)))*Test_lambda15",
+    "-(gamma0*element_size)"
+    "*(lambda15 + neg_part(lambda15+(1/(gamma0*element_size))"
+    "*((u1-Interpolate(u5,Proj15)+X-Interpolate(X,Proj15)).n15)))*Test_lambda15",
     TOP_BOUND,
 )
 md.add_filtered_fem_variable("lambda12", mflambda_C1, BOTTOM_BOUND)
@@ -364,7 +370,9 @@ md.add_nonlinear_term(
 )
 md.add_nonlinear_term(
     mim1,
-    "-(gamma0*element_size)*(lambda12 + neg_part(lambda12+(1/(gamma0*element_size))*((u1-Interpolate(u2,Proj12)+X-Interpolate(X,Proj12)).n12)))*Test_lambda12",
+    "-(gamma0*element_size)"
+    "*(lambda12 + neg_part(lambda12+(1/(gamma0*element_size))"
+    "*((u1-Interpolate(u2,Proj12)+X-Interpolate(X,Proj12)).n12)))*Test_lambda12",
     BOTTOM_BOUND,
 )
 md.add_filtered_fem_variable("lambda26", mflambda_C2, BOTTOM_BOUND)
@@ -375,7 +383,9 @@ md.add_nonlinear_term(
 )
 md.add_nonlinear_term(
     mim2,
-    "-(gamma0*element_size)*(lambda26 + neg_part(lambda26+(1/(gamma0*element_size))*((u2-Interpolate(u6,Proj26)+X-Interpolate(X,Proj26)).n12)))*Test_lambda26",
+    "-(gamma0*element_size)"
+    "*(lambda26 + neg_part(lambda26+(1/(gamma0*element_size))"
+    "*((u2-Interpolate(u6,Proj26)+X-Interpolate(X,Proj26)).n12)))*Test_lambda26",
     BOTTOM_BOUND,
 )
 
