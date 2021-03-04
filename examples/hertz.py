@@ -515,3 +515,15 @@ p.add_mesh(d6, clim=[0.0, 500.0], cmap=cmap)
 p.show_grid()
 
 p.show(screenshot="von_mises.png", window_size=[1200, 900], cpos="xy")
+
+
+###############################################################################
+# Plot the values of a dataset over a line through that dataset
+#
+
+# Make two points to construct the line between
+a = [0.000, 5.000, 0.000]
+b = [0.000, 0.000, 0.000]
+
+# Run the filter and produce a line plot
+d1.plot_over_line(a, b, scalars="Displacements")
