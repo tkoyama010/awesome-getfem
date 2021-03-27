@@ -409,6 +409,56 @@ md.add_nonlinear_term(
 
 md.solve("max_res", 1e-5, "max_iter", 100, "noisy")
 
+
+###############################################################################
+# Compute Cauchy stress tensor with direction Y-axis in global cooridnate.
+#
+
+U1 = md.variable("u1")
+
+Grad_u1 = gf.compute_gradient(mfu1, U1, mfd1)
+Div_u1 = np.trace(Grad_u1).reshape(-1, 1)
+I = np.eye(2)
+sigma = clambda * np.outer(Div_u1, I).reshape(2, 2, -1) + cmu * (
+    Grad_u1 + Grad_u1.transpose(1, 0, 2)
+)
+n = np.array([0.0, 1.0])
+t1 = sigma[1, 0] * n[0] + sigma[1, 1] * n[1]
+
+U2 = md.variable("u2")
+
+Grad_u2 = gf.compute_gradient(mfu2, U2, mfd2)
+Div_u2 = np.trace(Grad_u2).reshape(-1, 1)
+I = np.eye(2)
+sigma = clambda * np.outer(Div_u2, I).reshape(2, 2, -1) + cmu * (
+    Grad_u2 + Grad_u2.transpose(1, 0, 2)
+)
+n = np.array([0.0, 1.0])
+t2 = sigma[1, 0] * n[0] + sigma[1, 1] * n[1]
+
+U5 = md.variable("u5")
+
+Grad_u5 = gf.compute_gradient(mfu5, U5, mfd5)
+Div_u5 = np.trace(Grad_u5).reshape(-1, 1)
+I = np.eye(2)
+sigma = clambda * np.outer(Div_u5, I).reshape(2, 2, -1) + cmu * (
+    Grad_u5 + Grad_u5.transpose(1, 0, 2)
+)
+n = np.array([0.0, 1.0])
+t5 = sigma[1, 0] * n[0] + sigma[1, 1] * n[1]
+
+U6 = md.variable("u6")
+
+Grad_u6 = gf.compute_gradient(mfu6, U6, mfd6)
+Div_u6 = np.trace(Grad_u6).reshape(-1, 1)
+I = np.eye(2)
+sigma = clambda * np.outer(Div_u6, I).reshape(2, 2, -1) + cmu * (
+    Grad_u6 + Grad_u6.transpose(1, 0, 2)
+)
+n = np.array([0.0, 1.0])
+t6 = sigma[1, 0] * n[0] + sigma[1, 1] * n[1]
+
+
 ###############################################################################
 # Note that in some configuration, it is preferable to use a more basic line
 # search than the default one:
@@ -421,10 +471,6 @@ md.solve("max_res", 1e-5, "max_iter", 100, "noisy")
 # Now the code to export the solution with the VonMises stress:
 
 
-U1 = md.variable("u1")
-U2 = md.variable("u2")
-U5 = md.variable("u5")
-U6 = md.variable("u6")
 VM1 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
     "u1", "clambdastar", "cmu", mfvm1
 )
@@ -449,6 +495,10 @@ mfvm1.export_to_vtk(
     "Displacements",
 )
 
+mfd1.export_to_vtk(
+    "stress1.vtk", "ascii", mfd1, t1, "Stress",
+)
+
 mfvm2.export_to_vtk(
     "displacement_with_von_mises2.vtk",
     "ascii",
@@ -458,6 +508,10 @@ mfvm2.export_to_vtk(
     mfu2,
     U2,
     "Displacements",
+)
+
+mfd2.export_to_vtk(
+    "stress2.vtk", "ascii", mfd2, t2, "Stress",
 )
 
 mfvm5.export_to_vtk(
@@ -471,6 +525,10 @@ mfvm5.export_to_vtk(
     "Displacements",
 )
 
+mfd5.export_to_vtk(
+    "stress5.vtk", "ascii", mfd5, t5, "Stress",
+)
+
 mfvm6.export_to_vtk(
     "displacement_with_von_mises6.vtk",
     "ascii",
@@ -480,6 +538,10 @@ mfvm6.export_to_vtk(
     mfu6,
     U6,
     "Displacements",
+)
+
+mfd6.export_to_vtk(
+    "stress6.vtk", "ascii", mfd6, t6, "Stress",
 )
 
 
@@ -526,4 +588,8 @@ a = [0.000, 5.000, 0.000]
 b = [0.000, 0.000, 0.000]
 
 # Run the filter and produce a line plot
-d1.plot_over_line(a, b, scalars="Displacements")
+sampled = d1.sample_over_line(a, b)
+values = sampled.get_array("Displacements")
+distance = sampled["Distance"]
+plt.plot(distance, values[:, 0])
+plt.show()
