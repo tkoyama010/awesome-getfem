@@ -598,42 +598,73 @@ p.show(screenshot="contour.png", window_size=[2400, 1200], cpos="xy")
 
 # Run the filter and produce a line plot
 fig = plt.figure()
-ax = fig.add_subplot(211)
+ax = fig.add_subplot(311)
+
+ax.set_title("Displacements in X direction of left side")
+
+ax.set_ylim(-1.0, 1.0)
+ax.set_xlabel("Y-coordinate")
+ax.set_ylabel("Displacements")
 
 a = [0.000, 0.000, 0.000]
 b = [0.000, 10.000, 0.000]
 sampled = d1.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
-distance = sampled.points[:, 1]
-ax.plot(distance, values[:, 0])
+position = sampled.points[:, 1]
+ax.plot(position, values[:, 0])
 
 a = [0.000, -10.000, 0.000]
 b = [0.000, 0.000, 0.000]
 sampled = d2.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
-distance = sampled.points[:, 1]
-ax.plot(distance, values[:, 0])
+position = sampled.points[:, 1]
+ax.plot(position, values[:, 0])
 
 a = [0.000, 10.000, 0.000]
 b = [0.000, 15.000, 0.000]
 sampled = d5.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
-distance = sampled.points[:, 1]
-ax.plot(distance, values[:, 0])
+position = sampled.points[:, 1]
+ax.plot(position, values[:, 0])
 
 a = [0.000, -15.000, 0.000]
 b = [0.000, -10.000, 0.000]
 sampled = d6.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
-distance = sampled.points[:, 1]
-ax.plot(distance, values[:, 0])
+position = sampled.points[:, 1]
+ax.plot(position, values[:, 0])
 
-ax.set_title("Displacements in X direction of left side")
+ax = fig.add_subplot(312)
+
+ax.set_title("Displacements in Y direction of top side")
+
 ax.set_ylim(-1.0, 1.0)
-ax.set_xlabel("Y-coordinate")
+ax.set_xlabel("X-coordinate")
 ax.set_ylabel("Displacements")
+
+a = [0.000, 15.000, 0.000]
+b = [5.000, 15.000, 0.000]
+sampled = d5.sample_over_line(a, b)
+values = sampled.get_array("Displacements")
+position = sampled.points[:, 0]
+ax.plot(position, values[:, 0])
+
+ax = fig.add_subplot(313)
+
+ax.set_title("Displacements in Y direction of bottom side")
+
+ax.set_ylim(-1.0, 1.0)
+ax.set_xlabel("X-coordinate")
+ax.set_ylabel("Displacements")
+
+a = [0.000, -15.000, 0.000]
+b = [5.000, -15.000, 0.000]
+sampled = d6.sample_over_line(a, b)
+values = sampled.get_array("Displacements")
+position = sampled.points[:, 0]
+ax.plot(position, values[:, 0])
+
 plt.show()
-plt.savefig("displacements.png")
 
 
 ###############################################################################
@@ -662,10 +693,6 @@ plt.plot(distance, values)
 
 plt.show()
 
-
-###############################################################################
-# Plot the values of a dataset over a line through that dataset
-#
 
 a = [0.000, 10.000, 0.000]
 b = [5.000, 10.000, 0.000]
