@@ -596,21 +596,28 @@ p.show(screenshot="contour.png", window_size=[1200, 1200], cpos="xy")
 # Plot the values of a dataset over a line through that dataset
 #
 
-# Make two points to construct the line between
-a = [0.000, 5.000, 0.000]
-b = [0.000, 0.000, 0.000]
-
 # Run the filter and produce a line plot
 fig = plt.figure()
 ax = fig.add_subplot(211)
+
+a = [0.000, 0.000, 0.000]
+b = [0.000, 5.000, 0.000]
 sampled = d1.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
-distance = sampled["Distance"]
+distance = sampled.points[:, 1]
 ax.plot(distance, values[:, 0])
+
+a = [0.000, -5.000, 0.000]
+b = [0.000, 0.000, 0.000]
+sampled = d2.sample_over_line(a, b)
+values = sampled.get_array("Displacements")
+distance = sampled.points[:, 1]
+ax.plot(distance, values[:, 0])
+
 ax.set_title("Displacements in X direction of left side")
 ax.set_ylim(-1.0, 1.0)
 ax.set_xlabel("Distance")
-ax.set_ylabel("Displacements")
+ax.set_ylabel("Y-coordinate")
 plt.show()
 plt.savefig("displacements.png")
 
