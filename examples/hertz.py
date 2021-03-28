@@ -601,12 +601,23 @@ a = [0.000, 5.000, 0.000]
 b = [0.000, 0.000, 0.000]
 
 # Run the filter and produce a line plot
+fig = plt.figure()
+ax = fig.add_subplot(211)
 sampled = d1.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
 distance = sampled["Distance"]
-plt.plot(distance, values[:, 0])
+ax.plot(distance, values[:, 0])
+ax.set_title("Displacements in X direction of left side")
+ax.set_ylim(-1.0, 1.0)
+ax.set_xlabel("Distance")
+ax.set_ylabel("Displacements")
 plt.show()
 plt.savefig("displacements.png")
+
+
+###############################################################################
+# Plot the values of a dataset over a line through that dataset
+#
 
 # Make two points to construct the line between
 
@@ -629,6 +640,11 @@ distance = sampled["Distance"]
 plt.plot(distance, values)
 
 plt.show()
+
+
+###############################################################################
+# Plot the values of a dataset over a line through that dataset
+#
 
 a = [0.000, 10.000, 0.000]
 b = [5.000, 10.000, 0.000]
