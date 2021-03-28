@@ -610,6 +610,26 @@ plt.savefig("displacements.png")
 
 # Make two points to construct the line between
 
+center = [0.0, 5.0, 0.0]
+normal = [0.0, 0.0, 1.0]
+polar = [0.0, -(5.0 - 0.001), 0.0]
+angle = 180.0
+sampled = s1.sample_over_circular_arc2(center, normal=normal, polar=polar)
+values = sampled.get_array("Stress")
+distance = sampled["Distance"]
+plt.plot(distance, values)
+
+center = [0.0, -5.0, 0.0]
+normal = [0.0, 0.0, -1.0]
+polar = [0.0, 5.0 - 0.001, 0.0]
+angle = 180.0
+sampled = s2.sample_over_circular_arc2(center, normal=normal, polar=polar)
+values = sampled.get_array("Stress")
+distance = sampled["Distance"]
+plt.plot(distance, values)
+
+plt.show()
+
 a = [0.000, 10.000, 0.000]
 b = [5.000, 10.000, 0.000]
 sampled = s5.sample_over_line(a, b)
