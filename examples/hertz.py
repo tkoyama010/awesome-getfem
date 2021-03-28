@@ -589,7 +589,7 @@ p.add_mesh(s2, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(s5, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(s6, clim=[0.0, 500.0], cmap=cmap)
 
-p.show(screenshot="contour.png", window_size=[1200, 1200], cpos="xy")
+p.show(screenshot="contour.png", window_size=[2400, 1200], cpos="xy")
 
 
 ###############################################################################
