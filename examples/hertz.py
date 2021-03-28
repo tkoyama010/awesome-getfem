@@ -582,7 +582,7 @@ p.add_mesh(d6, clim=[0.0, 500.0], cmap=cmap)
 p.show_grid()
 
 p.subplot(0, 2)
-p.add_text("Surface traction (Y-direction)")
+p.add_text("Surface traction (Y direction)")
 cmap = plt.cm.get_cmap("rainbow", 20)
 p.add_mesh(s1, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(s2, clim=[0.0, 500.0], cmap=cmap)
@@ -606,6 +606,7 @@ values = sampled.get_array("Displacements")
 distance = sampled["Distance"]
 plt.plot(distance, values[:, 0])
 plt.show()
+plt.savefig("displacements.png")
 
 # Make two points to construct the line between
 
@@ -623,3 +624,4 @@ values = sampled.get_array("Stress")
 distance = sampled["Distance"]
 plt.plot(distance, values)
 plt.show()
+plt.savefig("surface_traction.png")
