@@ -107,18 +107,18 @@ mesh6.export_to_vtk("mesh6.vtk", "ascii")
 # The result is the following
 
 
-# m1 = pv.read("mesh1.vtk")
-# m2 = pv.read("mesh2.vtk")
-# m5 = pv.read("mesh5.vtk")
-# m6 = pv.read("mesh6.vtk")
-# p = pv.Plotter(shape=(1, 1))
-# p.subplot(0, 0)
-# p.add_mesh(m1, show_edges=True)
-# p.add_mesh(m2, show_edges=True)
-# p.add_mesh(m5, show_edges=True)
-# p.add_mesh(m6, show_edges=True)
-# p.show_grid()
-# p.show(screenshot="mesh.png", window_size=[1200, 1400], cpos="xy")
+m1 = pv.read("mesh1.vtk")
+m2 = pv.read("mesh2.vtk")
+m5 = pv.read("mesh5.vtk")
+m6 = pv.read("mesh6.vtk")
+p = pv.Plotter(shape=(1, 1))
+p.subplot(0, 0)
+p.add_mesh(m1, show_edges=True)
+p.add_mesh(m2, show_edges=True)
+p.add_mesh(m5, show_edges=True)
+p.add_mesh(m6, show_edges=True)
+p.show_grid()
+p.show(screenshot="mesh.png", window_size=[1200, 1400], cpos="xy")
 
 
 ###############################################################################
@@ -250,24 +250,25 @@ md.add_isotropic_linearized_elasticity_brick_pstrain(mim6, "u6", "E2", "nu")
 # for instance with a multiplier with the add of the following brick:
 
 md.add_initialized_data("r", [0, 0])
-md.add_initialized_data("H", [[1, 0], [0, 0]])
+md.add_initialized_data("H1", [[1, 0], [0, 0]])
+md.add_initialized_data("H2", [[0, 0], [0, 1]])
 md.add_initialized_data("F", F)
 
 md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim1, "u1", mfu1, LEFT_BOUND, "r", "H"
+    mim1, "u1", mfu1, LEFT_BOUND, "r", "H1"
 )
 md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim2, "u2", mfu2, LEFT_BOUND, "r", "H"
+    mim2, "u2", mfu2, LEFT_BOUND, "r", "H1"
 )
 md.add_source_term_brick(mim5, "u5", "[0.0, F]", TOP_BOUND)
 md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim5, "u5", mfu5, LEFT_BOUND, "r", "H"
-)
-md.add_Dirichlet_condition_with_multipliers(
-    mim6, "u6", elements_degree - 1, BOTTOM_BOUND
+    mim5, "u5", mfu5, LEFT_BOUND, "r", "H1"
 )
 md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim6, "u6", mfu6, LEFT_BOUND, "r", "H"
+    mim6, "u6", mfu6, BOTTOM_BOUND, "r", "H2"
+)
+md.add_generalized_Dirichlet_condition_with_multipliers(
+    mim6, "u6", mfu6, LEFT_BOUND, "r", "H1"
 )
 
 ###############################################################################
@@ -557,7 +558,11 @@ d1 = pv.read("displacement_with_von_mises1.vtk")
 d2 = pv.read("displacement_with_von_mises2.vtk")
 d5 = pv.read("displacement_with_von_mises5.vtk")
 d6 = pv.read("displacement_with_von_mises6.vtk")
-p = pv.Plotter(shape=(1, 2))
+s1 = pv.read("stress1.vtk")
+s2 = pv.read("stress2.vtk")
+s5 = pv.read("stress5.vtk")
+s6 = pv.read("stress6.vtk")
+p = pv.Plotter(shape=(1, 3))
 
 p.subplot(0, 0)
 p.add_text("Mesh")
@@ -576,7 +581,15 @@ p.add_mesh(d5, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(d6, clim=[0.0, 500.0], cmap=cmap)
 p.show_grid()
 
-p.show(screenshot="von_mises.png", window_size=[1200, 900], cpos="xy")
+p.subplot(0, 2)
+p.add_text("Surface traction (Y-direction)")
+cmap = plt.cm.get_cmap("rainbow", 20)
+p.add_mesh(s1, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(s2, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(s5, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(s6, clim=[0.0, 500.0], cmap=cmap)
+
+p.show(screenshot="contour.png", window_size=[1200, 1200], cpos="xy")
 
 
 ###############################################################################
@@ -592,4 +605,21 @@ sampled = d1.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
 distance = sampled["Distance"]
 plt.plot(distance, values[:, 0])
+plt.show()
+
+# Make two points to construct the line between
+
+a = [0.000, 10.000, 0.000]
+b = [5.000, 10.000, 0.000]
+sampled = s5.sample_over_line(a, b)
+values = sampled.get_array("Stress")
+distance = sampled["Distance"]
+plt.plot(distance, values)
+
+a = [0.000, -10.000, 0.000]
+b = [5.000, -10.000, 0.000]
+sampled = s6.sample_over_line(a, b)
+values = sampled.get_array("Stress")
+distance = sampled["Distance"]
+plt.plot(distance, values)
 plt.show()
