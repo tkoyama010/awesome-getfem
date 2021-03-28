@@ -419,25 +419,25 @@ U1 = md.variable("u1")
 
 Grad_u1 = gf.compute_gradient(mfu1, U1, mfd1)
 Div_u1 = np.trace(Grad_u1).reshape(-1, 1)
-sigmayy1 = clambda * (Grad_u1[:, 0] + Grad_u1[:, 1]) + 2.0 * cmu * Grad_u1[:, 1]
+sigmayy1 = clambda * (Grad_u1[0, 0] + Grad_u1[1, 1]) + 2.0 * cmu * Grad_u1[1, 1]
 
 U2 = md.variable("u2")
 
 Grad_u2 = gf.compute_gradient(mfu2, U2, mfd2)
 Div_u2 = np.trace(Grad_u2).reshape(-1, 1)
-sigmayy2 = clambda * (Grad_u2[:, 0] + Grad_u2[:, 1]) + 2.0 * cmu * Grad_u2[:, 1]
+sigmayy2 = clambda * (Grad_u2[0, 0] + Grad_u2[1, 1]) + 2.0 * cmu * Grad_u2[1, 1]
 
 U5 = md.variable("u5")
 
 Grad_u5 = gf.compute_gradient(mfu5, U5, mfd5)
 Div_u5 = np.trace(Grad_u5).reshape(-1, 1)
-sigmayy5 = clambda * (Grad_u5[:, 0] + Grad_u5[:, 1]) + 2.0 * cmu * Grad_u5[:, 1]
+sigmayy5 = clambda * (Grad_u5[0, 0] + Grad_u5[1, 1]) + 2.0 * cmu * Grad_u5[1, 1]
 
 U6 = md.variable("u6")
 
 Grad_u6 = gf.compute_gradient(mfu6, U6, mfd6)
 Div_u6 = np.trace(Grad_u6).reshape(-1, 1)
-sigmayy6 = clambda * (Grad_u6[:, 0] + Grad_u6[:, 1]) + 2.0 * cmu * Grad_u6[:, 1]
+sigmayy6 = clambda * (Grad_u6[0, 0] + Grad_u6[1, 1]) + 2.0 * cmu * Grad_u6[1, 1]
 
 
 ###############################################################################
