@@ -408,7 +408,7 @@ md.add_nonlinear_term(
 #
 
 
-md.solve("max_res", 1e-5, "max_iter", 100, "noisy")
+md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 
 
 ###############################################################################
