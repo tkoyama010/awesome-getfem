@@ -660,7 +660,7 @@ b = [0.000, 10.000, 0.000]
 sampled = s1.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
-# ax.plot(position, values)
+ax.plot(position, values)
 
 a = [0.000, -10.000, 0.000]
 b = [0.000, 0.000, 0.000]
