@@ -574,7 +574,6 @@ ax = fig.add_subplot(311)
 
 ax.set_title("Displacements of left side")
 
-ax.set_xlabel("Y-coordinate")
 ax.set_ylabel("Displacements")
 
 a = [0.000, 0.000, 0.000]
@@ -614,7 +613,6 @@ ax = fig.add_subplot(312)
 ax.set_title("Displacements in Y direction of top side")
 
 ax.set_ylim(-1.0, 1.0)
-ax.set_xlabel("X-coordinate")
 ax.set_ylabel("Displacements")
 
 a = [0.000, 15.000, 0.000]
@@ -648,49 +646,42 @@ plt.show()
 
 # Run the filter and produce a line plot
 fig = plt.figure()
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(311)
 
 ax.set_title("Sigmayy of left side")
-
-ax.set_xlabel("Y-coordinate")
 ax.set_ylabel("Sigmayy")
 
-a = [0.000, 0.000, 0.000]
-b = [0.000, 10.000, 0.000]
+a = [0.0, 0.0, 0.0]
+b = [0.0, 10.0, 0.0]
 sampled = s1.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
 ax.plot(position, values)
 
-a = [0.000, -10.000, 0.000]
-b = [0.000, 0.000, 0.000]
+a = [0.0, -10.0, 0.0]
+b = [0.0, 0.0, 0.0]
 sampled = s2.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
 ax.plot(position, values)
 
-a = [0.000, 10.000, 0.000]
-b = [0.000, 12.000, 0.000]
+a = [0.0, 10.0, 0.0]
+b = [0.0, 12.0, 0.0]
 sampled = s5.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
 ax.plot(position, values)
 
-a = [0.000, -12.000, 0.000]
-b = [0.000, -10.000, 0.000]
+a = [0.0, -12.0, 0.0]
+b = [0.0, -10.0, 0.0]
 sampled = s6.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
 ax.plot(position, values)
 
-plt.show()
+ax = fig.add_subplot(312)
 
-
-###############################################################################
-# Plot the values of a dataset over a line through that dataset
-#
-
-# Make two points to construct the line between
+ax.set_title("Sigmayy of uppper ball")
 
 center = [0.0, 5.0, 0.0]
 normal = [0.0, 0.0, 1.0]
@@ -699,7 +690,7 @@ angle = 180.0
 sampled = s1.sample_over_circular_arc2(center, normal=normal, polar=polar)
 values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
-plt.plot(distance, values)
+ax.plot(distance, values)
 
 center = [0.0, -5.0, 0.0]
 normal = [0.0, 0.0, -1.0]
@@ -708,22 +699,24 @@ angle = 180.0
 sampled = s2.sample_over_circular_arc2(center, normal=normal, polar=polar)
 values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
-plt.plot(distance, values)
+ax.plot(distance, values)
 
-plt.show()
+ax = fig.add_subplot(313)
 
+ax.set_title("Sigmayy of rectangular")
+ax.set_xlabel("Distance")
 
-a = [0.000, 10.000, 0.000]
-b = [5.000, 10.000, 0.000]
+a = [0.0, 10.0, 0.0]
+b = [5.0, 10.0, 0.0]
 sampled = s5.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
-plt.plot(distance, values)
+ax.plot(distance, values)
 
-a = [0.000, -10.000, 0.000]
-b = [5.000, -10.000, 0.000]
+a = [0.0, -10.0, 0.0]
+b = [5.0, -10.0, 0.0]
 sampled = s6.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
-plt.plot(distance, values)
+ax.plot(distance, values)
 plt.show()
