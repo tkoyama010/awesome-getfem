@@ -554,7 +554,7 @@ p.add_mesh(d6, clim=[0.0, 500.0], cmap=cmap)
 p.show_grid()
 
 p.subplot(0, 2)
-p.add_text("SigmaYY")
+p.add_text("Sigmayy")
 cmap = plt.cm.get_cmap("rainbow", 20)
 p.add_mesh(s1, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(s2, clim=[0.0, 500.0], cmap=cmap)
@@ -638,6 +638,50 @@ sampled = d6.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
 position = sampled.points[:, 0]
 ax.plot(position, values[:, 0])
+
+plt.show()
+
+
+###############################################################################
+# Plot the values of a dataset over a line through that dataset
+#
+
+# Run the filter and produce a line plot
+fig = plt.figure()
+ax = fig.add_subplot(111)
+
+ax.set_title("Sigmayy of left side")
+
+ax.set_xlabel("Y-coordinate")
+ax.set_ylabel("Sigmayy")
+
+a = [0.000, 0.000, 0.000]
+b = [0.000, 10.000, 0.000]
+sampled = s1.sample_over_line(a, b)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 1]
+# ax.plot(position, values)
+
+a = [0.000, -10.000, 0.000]
+b = [0.000, 0.000, 0.000]
+sampled = s2.sample_over_line(a, b)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 1]
+ax.plot(position, values)
+
+a = [0.000, 10.000, 0.000]
+b = [0.000, 12.000, 0.000]
+sampled = s5.sample_over_line(a, b)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 1]
+ax.plot(position, values)
+
+a = [0.000, -12.000, 0.000]
+b = [0.000, -10.000, 0.000]
+sampled = s6.sample_over_line(a, b)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 1]
+ax.plot(position, values)
 
 plt.show()
 
