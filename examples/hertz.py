@@ -457,60 +457,48 @@ VM6 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
     "u6", "clambdastar", "cmu", mfvm6
 )
 
+mfu1.export_to_vtk(
+    "displacement1.vtk", "ascii", mfu1, U1, "Displacements",
+)
+
 mfvm1.export_to_vtk(
-    "displacement_with_von_mises1.vtk",
-    "ascii",
-    mfvm1,
-    VM1,
-    "Von Mises Stresses",
-    mfu1,
-    U1,
-    "Displacements",
+    "von_mises1.vtk", "ascii", mfvm1, VM1, "Von Mises Stresses",
 )
 
 mfd1.export_to_vtk(
     "stress1.vtk", "ascii", mfd1, sigmayy1, "Sigmayy",
 )
 
+mfu2.export_to_vtk(
+    "displacement2.vtk", "ascii", mfu2, U2, "Displacements",
+)
+
 mfvm2.export_to_vtk(
-    "displacement_with_von_mises2.vtk",
-    "ascii",
-    mfvm2,
-    VM2,
-    "Von Mises Stresses",
-    mfu2,
-    U2,
-    "Displacements",
+    "von_mises2.vtk", "ascii", mfvm2, VM2, "Von Mises Stresses",
 )
 
 mfd2.export_to_vtk(
     "stress2.vtk", "ascii", mfd2, sigmayy2, "Sigmayy",
 )
 
+mfu5.export_to_vtk(
+    "displacement5.vtk", "ascii", mfu5, U5, "Displacements",
+)
+
 mfvm5.export_to_vtk(
-    "displacement_with_von_mises5.vtk",
-    "ascii",
-    mfvm5,
-    VM5,
-    "Von Mises Stresses",
-    mfu5,
-    U5,
-    "Displacements",
+    "von_mises5.vtk", "ascii", mfvm5, VM5, "Von Mises Stresses",
 )
 
 mfd5.export_to_vtk(
     "stress5.vtk", "ascii", mfd5, sigmayy5, "Sigmayy",
 )
 
+mfu6.export_to_vtk(
+    "displacement6.vtk", "ascii", mfu6, U6, "Displacements",
+)
+
 mfvm6.export_to_vtk(
-    "displacement_with_von_mises6.vtk",
-    "ascii",
-    mfvm6,
-    VM6,
-    "Von Mises Stresses",
-    mfu6,
-    U6,
-    "Displacements",
+    "von_mises6.vtk", "ascii", mfvm6, VM6, "Von Mises Stresses",
 )
 
 mfd6.export_to_vtk(
@@ -526,10 +514,14 @@ m1 = pv.read("mesh1.vtk")
 m2 = pv.read("mesh2.vtk")
 m5 = pv.read("mesh5.vtk")
 m6 = pv.read("mesh6.vtk")
-d1 = pv.read("displacement_with_von_mises1.vtk")
-d2 = pv.read("displacement_with_von_mises2.vtk")
-d5 = pv.read("displacement_with_von_mises5.vtk")
-d6 = pv.read("displacement_with_von_mises6.vtk")
+d1 = pv.read("displacement1.vtk")
+d2 = pv.read("displacement2.vtk")
+d5 = pv.read("displacement5.vtk")
+d6 = pv.read("displacement6.vtk")
+v1 = pv.read("von_mises1.vtk")
+v2 = pv.read("von_mises2.vtk")
+v5 = pv.read("von_mises5.vtk")
+v6 = pv.read("von_mises6.vtk")
 s1 = pv.read("stress1.vtk")
 s2 = pv.read("stress2.vtk")
 s5 = pv.read("stress5.vtk")
@@ -537,20 +529,31 @@ s6 = pv.read("stress6.vtk")
 p = pv.Plotter(shape=(1, 3))
 
 p.subplot(0, 0)
-p.add_text("Mesh")
+p.add_text("Displacements")
 p.add_mesh(m1, color="white", show_edges=True)
 p.add_mesh(m2, color="white", show_edges=True)
 p.add_mesh(m5, color="white", show_edges=True)
 p.add_mesh(m6, color="white", show_edges=True)
+
+d1.set_active_vectors("Displacements")
+d2.set_active_vectors("Displacements")
+d5.set_active_vectors("Displacements")
+d6.set_active_vectors("Displacements")
+
+p.add_mesh(d1.arrows)
+p.add_mesh(d2.arrows)
+p.add_mesh(d5.arrows)
+p.add_mesh(d6.arrows)
+
 p.show_grid()
 
 p.subplot(0, 1)
 p.add_text("Von Mises Stresses")
 cmap = plt.cm.get_cmap("rainbow", 20)
-p.add_mesh(d1, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(d2, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(d5, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(d6, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(v1, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(v2, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(v5, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(v6, clim=[0.0, 500.0], cmap=cmap)
 p.show_grid()
 
 p.subplot(0, 2)
