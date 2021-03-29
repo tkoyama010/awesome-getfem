@@ -510,10 +510,6 @@ mfd6.export_to_vtk(
 # You can view solutions with pyvista:
 #
 
-m1 = pv.read("mesh1.vtk")
-m2 = pv.read("mesh2.vtk")
-m5 = pv.read("mesh5.vtk")
-m6 = pv.read("mesh6.vtk")
 d1 = pv.read("displacement1.vtk")
 d2 = pv.read("displacement2.vtk")
 d5 = pv.read("displacement5.vtk")
@@ -530,20 +526,21 @@ p = pv.Plotter(shape=(1, 3))
 
 p.subplot(0, 0)
 p.add_text("Displacements")
-p.add_mesh(m1, color="white", show_edges=True)
-p.add_mesh(m2, color="white", show_edges=True)
-p.add_mesh(m5, color="white", show_edges=True)
-p.add_mesh(m6, color="white", show_edges=True)
 
-d1.set_active_vectors("Displacements")
-d2.set_active_vectors("Displacements")
-d5.set_active_vectors("Displacements")
-d6.set_active_vectors("Displacements")
+e1 = d1.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
+e2 = d2.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
+e5 = d5.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
+e6 = d6.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
 
-p.add_mesh(d1.arrows)
-p.add_mesh(d2.arrows)
-p.add_mesh(d5.arrows)
-p.add_mesh(d6.arrows)
+e1.set_active_vectors("Displacements")
+e2.set_active_vectors("Displacements")
+e5.set_active_vectors("Displacements")
+e6.set_active_vectors("Displacements")
+
+p.add_mesh(e1.warp_by_vector(factor=10.00), color="red", line_width=5)
+p.add_mesh(e2.warp_by_vector(factor=10.00), color="red", line_width=5)
+p.add_mesh(e5.warp_by_vector(factor=10.00), color="red", line_width=5)
+p.add_mesh(e6.warp_by_vector(factor=10.00), color="red", line_width=5)
 
 p.show_grid()
 
