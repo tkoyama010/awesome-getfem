@@ -81,9 +81,6 @@ mesh1.del_convex(cvid2)
 mesh2 = gf.Mesh("clone", mesh)
 mesh2.del_convex(cvid1)
 
-mesh3 = gf.Mesh("clone", mesh2)
-mesh3.translate([0.0, 10.0])
-mesh1.merge(mesh3)
 mesh1.export_to_vtk("mesh1.vtk", "ascii")
 
 mesh2.export_to_vtk("mesh2.vtk", "ascii")
@@ -92,7 +89,7 @@ X = np.arange(0.0, 5.0 + 0.1, 0.1)
 Y = np.arange(0.0, 2.0 + 0.1, 0.1)
 
 mesh5 = gf.Mesh("cartesian", X, Y)
-mesh5.translate([0.0, 10.0])
+mesh5.translate([0.0, 5.0])
 mesh5.export_to_vtk("mesh5.vtk", "ascii")
 
 ###############################################################################
@@ -279,7 +276,7 @@ md.add_interpolate_transformation_from_expression(
     "Proj12", mesh1, mesh2, "[X(1);-X(2)-0.001]"
 )
 md.add_interpolate_transformation_from_expression(
-    "Proj15", mesh1, mesh5, "[X(1);+10.000]"
+    "Proj15", mesh1, mesh5, "[X(1);+5.000]"
 )
 
 ###############################################################################
@@ -471,9 +468,9 @@ e1.set_active_vectors("Displacements")
 e2.set_active_vectors("Displacements")
 e5.set_active_vectors("Displacements")
 
-p.add_mesh(e1.warp_by_vector(factor=100.00), color="red", line_width=5)
-p.add_mesh(e2.warp_by_vector(factor=100.00), color="red", line_width=5)
-p.add_mesh(e5.warp_by_vector(factor=100.00), color="red", line_width=5)
+p.add_mesh(e1.warp_by_vector(factor=10.00), color="red", line_width=5)
+p.add_mesh(e2.warp_by_vector(factor=10.00), color="red", line_width=5)
+p.add_mesh(e5.warp_by_vector(factor=10.00), color="red", line_width=5)
 
 p.show_grid()
 
@@ -597,7 +594,7 @@ ax.plot(position, values)
 
 ax = fig.add_subplot(312)
 
-ax.set_title("Sigmayy of uppper ball")
+ax.set_title("Sigmayy of upper ball")
 
 center = [0.0, 5.0, 0.0]
 normal = [0.0, 0.0, 1.0]
