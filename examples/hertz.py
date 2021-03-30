@@ -86,9 +86,6 @@ mesh3.translate([0.0, 10.0])
 mesh1.merge(mesh3)
 mesh1.export_to_vtk("mesh1.vtk", "ascii")
 
-mesh4 = gf.Mesh("clone", mesh1)
-mesh4.translate([0.0, -10.0])
-mesh2.merge(mesh4)
 mesh2.export_to_vtk("mesh2.vtk", "ascii")
 
 X = np.arange(0.0, 5.0 + 0.1, 0.1)
@@ -98,10 +95,6 @@ mesh5 = gf.Mesh("cartesian", X, Y)
 mesh5.translate([0.0, 10.0])
 mesh5.export_to_vtk("mesh5.vtk", "ascii")
 
-mesh6 = gf.Mesh("cartesian", X, Y)
-mesh6.translate([0.0, -12.0])
-mesh6.export_to_vtk("mesh6.vtk", "ascii")
-
 ###############################################################################
 #
 # The result is the following
@@ -110,13 +103,11 @@ mesh6.export_to_vtk("mesh6.vtk", "ascii")
 m1 = pv.read("mesh1.vtk")
 m2 = pv.read("mesh2.vtk")
 m5 = pv.read("mesh5.vtk")
-m6 = pv.read("mesh6.vtk")
 p = pv.Plotter(shape=(1, 1))
 p.subplot(0, 0)
 p.add_mesh(m1, show_edges=True)
 p.add_mesh(m2, show_edges=True)
 p.add_mesh(m5, show_edges=True)
-p.add_mesh(m6, show_edges=True)
 p.show_grid()
 p.show(screenshot="mesh.png", window_size=[1200, 1400], cpos="xy")
 
@@ -139,9 +130,6 @@ fb23 = mesh2.outer_faces_with_direction([-1.0, +0.0], np.pi / 4.0)
 fb51 = mesh5.outer_faces_with_direction([+0.0, +1.0], np.pi / 4.0)
 fb52 = mesh5.outer_faces_with_direction([+0.0, -1.0], np.pi / 4.0)
 fb53 = mesh5.outer_faces_with_direction([-1.0, +0.0], np.pi / 4.0)
-fb61 = mesh6.outer_faces_with_direction([+0.0, +1.0], np.pi / 4.0)
-fb62 = mesh6.outer_faces_with_direction([+0.0, -1.0], np.pi / 4.0)
-fb63 = mesh6.outer_faces_with_direction([-1.0, +0.0], np.pi / 4.0)
 
 TOP_BOUND = 1
 BOTTOM_BOUND = 2
@@ -150,15 +138,12 @@ LEFT_BOUND = 3
 mesh1.set_region(TOP_BOUND, fb11)
 mesh2.set_region(TOP_BOUND, fb21)
 mesh5.set_region(TOP_BOUND, fb51)
-mesh6.set_region(TOP_BOUND, fb61)
 mesh1.set_region(BOTTOM_BOUND, fb12)
 mesh2.set_region(BOTTOM_BOUND, fb22)
 mesh5.set_region(BOTTOM_BOUND, fb52)
-mesh6.set_region(BOTTOM_BOUND, fb62)
 mesh1.set_region(LEFT_BOUND, fb13)
 mesh2.set_region(LEFT_BOUND, fb23)
 mesh5.set_region(LEFT_BOUND, fb53)
-mesh6.set_region(LEFT_BOUND, fb63)
 
 
 ###############################################################################
@@ -200,16 +185,9 @@ mfu5 = gf.MeshFem(mesh5, 2)
 mfu5.set_classical_fem(elements_degree)
 mfd5 = gf.MeshFem(mesh5, 1)
 mfd5.set_classical_fem(elements_degree)
-mfu6 = gf.MeshFem(mesh6, 2)
-mfu6.set_classical_fem(elements_degree)
-mfd6 = gf.MeshFem(mesh6, 1)
-mfd6.set_classical_fem(elements_degree)
 mfvm5 = gf.MeshFem(mesh5, 1)
 mfvm5.set_classical_discontinuous_fem(elements_degree)
-mfvm6 = gf.MeshFem(mesh6, 1)
-mfvm6.set_classical_discontinuous_fem(elements_degree)
 mim5 = gf.MeshIm(mesh5, pow(elements_degree, 2))
-mim6 = gf.MeshIm(mesh6, pow(elements_degree, 2))
 
 ###############################################################################
 #
@@ -223,7 +201,6 @@ md = gf.Model("real")
 md.add_fem_variable("u1", mfu1)
 md.add_fem_variable("u2", mfu2)
 md.add_fem_variable("u5", mfu5)
-md.add_fem_variable("u6", mfu6)
 
 ###############################################################################
 #
@@ -240,7 +217,6 @@ md.add_initialized_data("nu", [nu])
 md.add_isotropic_linearized_elasticity_brick_pstrain(mim1, "u1", "E1", "nu")
 md.add_isotropic_linearized_elasticity_brick_pstrain(mim2, "u2", "E1", "nu")
 md.add_isotropic_linearized_elasticity_brick_pstrain(mim5, "u5", "E2", "nu")
-md.add_isotropic_linearized_elasticity_brick_pstrain(mim6, "u6", "E2", "nu")
 
 ###############################################################################
 #
@@ -258,17 +234,14 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
     mim1, "u1", mfu1, LEFT_BOUND, "r", "H1"
 )
 md.add_generalized_Dirichlet_condition_with_multipliers(
+    mim2, "u2", mfu2, BOTTOM_BOUND, "r", "H2"
+)
+md.add_generalized_Dirichlet_condition_with_multipliers(
     mim2, "u2", mfu2, LEFT_BOUND, "r", "H1"
 )
 md.add_source_term_brick(mim5, "u5", "[0.0, F]", TOP_BOUND)
 md.add_generalized_Dirichlet_condition_with_multipliers(
     mim5, "u5", mfu5, LEFT_BOUND, "r", "H1"
-)
-md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim6, "u6", mfu6, BOTTOM_BOUND, "r", "H2"
-)
-md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim6, "u6", mfu6, LEFT_BOUND, "r", "H1"
 )
 
 ###############################################################################
@@ -307,9 +280,6 @@ md.add_interpolate_transformation_from_expression(
 )
 md.add_interpolate_transformation_from_expression(
     "Proj15", mesh1, mesh5, "[X(1);+10.000]"
-)
-md.add_interpolate_transformation_from_expression(
-    "Proj26", mesh2, mesh6, "[X(1);-10.000]"
 )
 
 ###############################################################################
@@ -376,19 +346,6 @@ md.add_nonlinear_term(
     "*((u1-Interpolate(u2,Proj12)+X-Interpolate(X,Proj12)).n12)))*Test_lambda12",
     BOTTOM_BOUND,
 )
-md.add_filtered_fem_variable("lambda26", mflambda_C2, BOTTOM_BOUND)
-md.add_nonlinear_term(
-    mim2,
-    "lambda26*(Test_u2.n12)-lambda26*(Interpolate(Test_u6,Proj26).n12)",
-    BOTTOM_BOUND,
-)
-md.add_nonlinear_term(
-    mim2,
-    "-(gamma0*element_size)"
-    "*(lambda26 + neg_part(lambda26+(1/(gamma0*element_size))"
-    "*((u2-Interpolate(u6,Proj26)+X-Interpolate(X,Proj26)).n12)))*Test_lambda26",
-    BOTTOM_BOUND,
-)
 
 
 ###############################################################################
@@ -427,10 +384,6 @@ U5 = md.variable("u5")
 Grad_u5 = gf.compute_gradient(mfu5, U5, mfd5)
 sigmayy5 = clambda * (Grad_u5[0, 0] + Grad_u5[1, 1]) + 2.0 * cmu * Grad_u5[1, 1]
 
-U6 = md.variable("u6")
-Grad_u6 = gf.compute_gradient(mfu6, U6, mfd6)
-sigmayy6 = clambda * (Grad_u6[0, 0] + Grad_u6[1, 1]) + 2.0 * cmu * Grad_u6[1, 1]
-
 
 ###############################################################################
 # Note that in some configuration, it is preferable to use a more basic line
@@ -452,9 +405,6 @@ VM2 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
 )
 VM5 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
     "u5", "clambdastar", "cmu", mfvm5
-)
-VM6 = md.compute_isotropic_linearized_Von_Mises_or_Tresca(
-    "u6", "clambdastar", "cmu", mfvm6
 )
 
 mfu1.export_to_vtk(
@@ -493,17 +443,6 @@ mfd5.export_to_vtk(
     "stress5.vtk", "ascii", mfd5, sigmayy5, "Sigmayy",
 )
 
-mfu6.export_to_vtk(
-    "displacement6.vtk", "ascii", mfu6, U6, "Displacements",
-)
-
-mfvm6.export_to_vtk(
-    "von_mises6.vtk", "ascii", mfvm6, VM6, "Von Mises Stresses",
-)
-
-mfd6.export_to_vtk(
-    "stress6.vtk", "ascii", mfd6, sigmayy6, "Sigmayy",
-)
 
 
 ###############################################################################
@@ -513,15 +452,12 @@ mfd6.export_to_vtk(
 d1 = pv.read("displacement1.vtk")
 d2 = pv.read("displacement2.vtk")
 d5 = pv.read("displacement5.vtk")
-d6 = pv.read("displacement6.vtk")
 v1 = pv.read("von_mises1.vtk")
 v2 = pv.read("von_mises2.vtk")
 v5 = pv.read("von_mises5.vtk")
-v6 = pv.read("von_mises6.vtk")
 s1 = pv.read("stress1.vtk")
 s2 = pv.read("stress2.vtk")
 s5 = pv.read("stress5.vtk")
-s6 = pv.read("stress6.vtk")
 p = pv.Plotter(shape=(1, 3))
 
 p.subplot(0, 0)
@@ -530,17 +466,14 @@ p.add_text("Displacements")
 e1 = d1.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
 e2 = d2.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
 e5 = d5.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
-e6 = d6.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
 
 e1.set_active_vectors("Displacements")
 e2.set_active_vectors("Displacements")
 e5.set_active_vectors("Displacements")
-e6.set_active_vectors("Displacements")
 
-p.add_mesh(e1.warp_by_vector(factor=10.00), color="red", line_width=5)
-p.add_mesh(e2.warp_by_vector(factor=10.00), color="red", line_width=5)
-p.add_mesh(e5.warp_by_vector(factor=10.00), color="red", line_width=5)
-p.add_mesh(e6.warp_by_vector(factor=10.00), color="red", line_width=5)
+p.add_mesh(e1.warp_by_vector(factor=100.00), color="red", line_width=5)
+p.add_mesh(e2.warp_by_vector(factor=100.00), color="red", line_width=5)
+p.add_mesh(e5.warp_by_vector(factor=100.00), color="red", line_width=5)
 
 p.show_grid()
 
@@ -550,7 +483,6 @@ cmap = plt.cm.get_cmap("rainbow", 20)
 p.add_mesh(v1, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(v2, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(v5, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(v6, clim=[0.0, 500.0], cmap=cmap)
 p.show_grid()
 
 p.subplot(0, 2)
@@ -559,7 +491,6 @@ cmap = plt.cm.get_cmap("rainbow", 20)
 p.add_mesh(s1, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(s2, clim=[0.0, 500.0], cmap=cmap)
 p.add_mesh(s5, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(s6, clim=[0.0, 500.0], cmap=cmap)
 
 p.show(screenshot="contour.png", window_size=[2400, 1200], cpos="xy")
 
@@ -584,7 +515,7 @@ position = sampled.points[:, 1]
 ax.plot(position, values[:, 0])
 ax.plot(position, values[:, 1])
 
-a = [0.000, -10.000, 0.000]
+a = [0.000, -5.000, 0.000]
 b = [0.000, 0.000, 0.000]
 sampled = d2.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
@@ -595,14 +526,6 @@ ax.plot(position, values[:, 1])
 a = [0.000, 10.000, 0.000]
 b = [0.000, 12.000, 0.000]
 sampled = d5.sample_over_line(a, b)
-values = sampled.get_array("Displacements")
-position = sampled.points[:, 1]
-ax.plot(position, values[:, 0])
-ax.plot(position, values[:, 1])
-
-a = [0.000, -12.000, 0.000]
-b = [0.000, -10.000, 0.000]
-sampled = d6.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
 position = sampled.points[:, 1]
 ax.plot(position, values[:, 0])
@@ -630,9 +553,9 @@ ax.set_ylim(-1.0, 1.0)
 ax.set_xlabel("X-coordinate")
 ax.set_ylabel("Displacements")
 
-a = [0.000, -15.000, 0.000]
-b = [5.000, -15.000, 0.000]
-sampled = d6.sample_over_line(a, b)
+a = [0.000, -5.000, 0.000]
+b = [5.000, -5.000, 0.000]
+sampled = d2.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
 position = sampled.points[:, 0]
 ax.plot(position, values[:, 0])
@@ -658,7 +581,7 @@ values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
 ax.plot(position, values)
 
-a = [0.0, -10.0, 0.0]
+a = [0.0, -5.0, 0.0]
 b = [0.0, 0.0, 0.0]
 sampled = s2.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
@@ -668,13 +591,6 @@ ax.plot(position, values)
 a = [0.0, 10.0, 0.0]
 b = [0.0, 12.0, 0.0]
 sampled = s5.sample_over_line(a, b)
-values = sampled.get_array("Sigmayy")
-position = sampled.points[:, 1]
-ax.plot(position, values)
-
-a = [0.0, -12.0, 0.0]
-b = [0.0, -10.0, 0.0]
-sampled = s6.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
 ax.plot(position, values)
@@ -713,10 +629,4 @@ values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
 ax.plot(distance, values)
 
-a = [0.0, -10.0, 0.0]
-b = [5.0, -10.0, 0.0]
-sampled = s6.sample_over_line(a, b)
-values = sampled.get_array("Sigmayy")
-distance = sampled["Distance"]
-ax.plot(distance, values)
 plt.show()
