@@ -33,7 +33,7 @@ epsilon = 0.001  # thickness of plate (m)
 
 E = 210e9  # Elastic moduli in Pa (kg/(m*s**2))
 nu = 0.3  # Poisson's Ratio
-F = 1000. # Force density at the right boundary(Pa/m3)
+F = 1000.0  # Force density at the right boundary(Pa/m3)
 
 elements_degree = 2  # Degree of the finite element methods
 
@@ -72,7 +72,7 @@ plate_with_hole_anum = gf.MesherObject("set minus", rect_anum, circ_anum)
 hole_esize = np.pi * diameter / 50  # 0.0002
 plate_esize = 0.01
 
-mesh = gf.Mesh("generate", plate_with_hole_anum, hole_esize)
+mesh = gf.Mesh("generate", rect_anum, hole_esize)
 mesh.export_to_vtk("mesh.vtk")
 
 m = pv.read("mesh.vtk")
@@ -166,7 +166,7 @@ md.add_initialized_data("E", [E])
 md.add_initialized_data("nu", [nu])
 md.add_isotropic_linearized_elasticity_brick_pstress(mim, "u", "E", "nu")
 # Solve the static analysis
-md.solve("max_res", 1E-9, "max_iter", 100, "noisy")
+md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 
 ###############################################################################
 # Post-Processing
@@ -196,11 +196,61 @@ U = md.variable("u")
 mfu.export_to_vtk("displacement.vtk", mfu, U, "Displacements")
 
 Grad_u = gf.compute_gradient(mfu, U, mfd)
-clambda = E*nu/((1+nu)*(1-2*nu))
-cmu = E/(2*(1+nu))
-clambdastar = 2*clambda*cmu/(clambda+2*cmu)
-sigmaxx = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[1, 1]
+clambda = E * nu / ((1 + nu) * (1 - 2 * nu))
+cmu = E / (2 * (1 + nu))
+clambdastar = 2 * clambda * cmu / (clambda + 2 * cmu)
+sigmaxx = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[0, 0]
+sigmayy = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[1, 1]
+tauxy = cmu * (Grad_u[0, 1] + Grad_u[1, 0])
+tauyx = cmu * (Grad_u[1, 0] + Grad_u[0, 1])
 mfd.export_to_vtk("sigmaxx.vtk", mfd, sigmaxx, "Sigmaxx")
+mfd.export_to_vtk("sigmayy.vtk", mfd, sigmayy, "Sigmayy")
+mfd.export_to_vtk("tauxy.vtk", mfd, tauxy, "Tauxy")
+mfd.export_to_vtk("tauyx.vtk", mfd, tauyx, "Tauyx")
+
+s1 = pv.read("sigmaxx.vtk")
+s2 = pv.read("sigmayy.vtk")
+s3 = pv.read("tauxy.vtk")
+s4 = pv.read("tauyx.vtk")
+
+a = [0.0, width / 2, 0.0]
+b = [length, width / 2, 0.0]
+
+fig = plt.figure()
+
+ax = fig.add_subplot(411)
+ax.set_ylabel("Sigmaxx")
+sampled = s1.sample_over_line(a, b)
+values = sampled.get_array("Sigmaxx")
+position = sampled.points[:, 0]
+ax.set_ylim([0.0, 200.0])
+ax.plot(position, values)
+
+ax = fig.add_subplot(412)
+ax.set_ylabel("Sigmayy")
+sampled = s2.sample_over_line(a, b)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 0]
+ax.set_ylim([0.0, 200.0])
+ax.plot(position, values)
+
+ax = fig.add_subplot(413)
+ax.set_ylabel("Tauxy")
+sampled = s3.sample_over_line(a, b)
+values = sampled.get_array("Tauxy")
+position = sampled.points[:, 0]
+ax.set_ylim([0.0, 200.0])
+ax.plot(position, values)
+
+ax = fig.add_subplot(414)
+ax.set_ylabel("Tauyx")
+sampled = s4.sample_over_line(a, b)
+values = sampled.get_array("Tauyx")
+position = sampled.points[:, 0]
+ax.set_ylim([0.0, 200.0])
+ax.plot(position, values)
+
+plt.show()
 
 ###############################################################################
 # Compute the Stress Concentration
@@ -224,7 +274,7 @@ mfd.export_to_vtk("sigmaxx.vtk", mfd, sigmaxx, "Sigmaxx")
 # We use nanmean here because mid-side nodes have no stress
 mask = mfvm.basic_dof_nodes()[0, :] == length
 far_field_stress = np.nanmean(von_mises[mask])
-print('Far field von mises stress: %e' % far_field_stress)
+print("Far field von mises stress: %e" % far_field_stress)
 # Which almost exactly equals the analytical value of 10000000.0 Pa
 
 ###############################################################################
