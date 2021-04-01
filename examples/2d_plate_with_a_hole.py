@@ -317,28 +317,6 @@ stress_con = max_stress / stress_adj
 print("Stress Concentration: %.2f" % stress_con)
 
 
-###############################################################################
-# Batch Analysis
-# ~~~~~~~~~~~~~~
-# The above script can be placed within a function to compute the
-# stress concentration for a variety of hole diameters.  For each
-# batch, getfem is reset and the geometry is generated from scratch.
-
-def compute_stress_con(ratio):
-
-    # finally, compute the stress concentration
-    return 0.0
-
-
-###############################################################################
-# Run the batch and record the stress concentration
-k_t_exp = []
-ratios = np.linspace(0.01, 0.5, 15)
-print("    Ratio  : Stress Concentration (K_t)")
-for ratio in ratios:
-    stress_con = compute_stress_con(ratio)
-    print("%10.4f : %10.4f" % (ratio, stress_con))
-    k_t_exp.append(stress_con)
 
 
 ###############################################################################
