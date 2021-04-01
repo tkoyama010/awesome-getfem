@@ -320,10 +320,25 @@ print("Stress Concentration: %.2f" % stress_con)
 ###############################################################################
 # Batch Analysis
 # ~~~~~~~~~~~~~~
+# The above script can be placed within a function to compute the
+# stress concentration for a variety of hole diameters.  For each
+# batch, getfem is reset and the geometry is generated from scratch.
+
+def compute_stress_con(ratio):
+
+    # finally, compute the stress concentration
+    return 0.0
 
 
 ###############################################################################
 # Run the batch and record the stress concentration
+k_t_exp = []
+ratios = np.linspace(0.01, 0.5, 15)
+print("    Ratio  : Stress Concentration (K_t)")
+for ratio in ratios:
+    stress_con = compute_stress_con(ratio)
+    print("%10.4f : %10.4f" % (ratio, stress_con))
+    k_t_exp.append(stress_con)
 
 
 ###############################################################################
@@ -348,3 +363,11 @@ print("Stress Concentration: %.2f" % stress_con)
 # height and width of the plate.
 
 # where ratio is (d/h)
+k_t_anl = 3 - 3.14 * ratios + 3.667 * ratios ** 2 - 1.527 * ratios ** 3
+
+plt.plot(ratios, k_t_anl, label=r"$K_t$ Analytical")
+plt.plot(ratios, k_t_exp, label=r"$K_t$ GetFEM")
+plt.legend()
+plt.xlabel("Ratio of Hole Diameter to Width of Plate")
+plt.ylabel("Stress Concentration")
+plt.show()
