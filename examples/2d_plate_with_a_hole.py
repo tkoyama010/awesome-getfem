@@ -201,24 +201,40 @@ cmu = E / (2 * (1 + nu))
 clambdastar = 2 * clambda * cmu / (clambda + 2 * cmu)
 sigmaxx = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[0, 0]
 sigmayy = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[1, 1]
-tauxy = cmu * (Grad_u[0, 1] + Grad_u[1, 0])
-tauyx = cmu * (Grad_u[1, 0] + Grad_u[0, 1])
+sigmazz = 0.0
+sigmaxy = cmu * (Grad_u[0, 1] + Grad_u[1, 0])
+sigmayx = cmu * (Grad_u[1, 0] + Grad_u[0, 1])
+sigmayz = 0.0
+sigmazx = 0.0
+
+von_mises = np.sqrt(
+    0.5
+    * (
+        (sigmaxx - sigmayy) ** 2
+        + (sigmayy - sigmazz) ** 2
+        + (sigmazz - sigmaxx) ** 2
+        + 6.0 * (sigmaxy ** 2 + sigmayz ** 2 + sigmazx ** 2)
+    )
+)
+
 mfd.export_to_vtk("sigmaxx.vtk", mfd, sigmaxx, "Sigmaxx")
 mfd.export_to_vtk("sigmayy.vtk", mfd, sigmayy, "Sigmayy")
-mfd.export_to_vtk("tauxy.vtk", mfd, tauxy, "Tauxy")
-mfd.export_to_vtk("tauyx.vtk", mfd, tauyx, "Tauyx")
+mfd.export_to_vtk("sigmaxy.vtk", mfd, sigmaxy, "Sigmaxy")
+mfd.export_to_vtk("sigmayx.vtk", mfd, sigmayx, "Sigmayx")
+mfd.export_to_vtk("von_mises.vtk", mfd, von_mises, "Von_Mises")
 
 s1 = pv.read("sigmaxx.vtk")
 s2 = pv.read("sigmayy.vtk")
-s3 = pv.read("tauxy.vtk")
-s4 = pv.read("tauyx.vtk")
+s3 = pv.read("sigmaxy.vtk")
+s4 = pv.read("sigmayx.vtk")
+s5 = pv.read("von_mises.vtk")
 
 a = [0.0, width / 2, 0.0]
 b = [length, width / 2, 0.0]
 
 fig = plt.figure()
 
-ax = fig.add_subplot(411)
+ax = fig.add_subplot(511)
 ax.set_ylabel("Sigmaxx")
 sampled = s1.sample_over_line(a, b)
 values = sampled.get_array("Sigmaxx")
@@ -226,7 +242,7 @@ position = sampled.points[:, 0]
 ax.set_ylim([0.0, 200.0])
 ax.plot(position, values)
 
-ax = fig.add_subplot(412)
+ax = fig.add_subplot(512)
 ax.set_ylabel("Sigmayy")
 sampled = s2.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
@@ -234,18 +250,26 @@ position = sampled.points[:, 0]
 ax.set_ylim([0.0, 200.0])
 ax.plot(position, values)
 
-ax = fig.add_subplot(413)
-ax.set_ylabel("Tauxy")
+ax = fig.add_subplot(513)
+ax.set_ylabel("Sigmaxy")
 sampled = s3.sample_over_line(a, b)
-values = sampled.get_array("Tauxy")
+values = sampled.get_array("Sigmaxy")
 position = sampled.points[:, 0]
 ax.set_ylim([0.0, 200.0])
 ax.plot(position, values)
 
-ax = fig.add_subplot(414)
-ax.set_ylabel("Tauyx")
+ax = fig.add_subplot(514)
+ax.set_ylabel("Sigmayx")
 sampled = s4.sample_over_line(a, b)
-values = sampled.get_array("Tauyx")
+values = sampled.get_array("Sigmayx")
+position = sampled.points[:, 0]
+ax.set_ylim([0.0, 200.0])
+ax.plot(position, values)
+
+ax = fig.add_subplot(515)
+ax.set_ylabel("Von Mises")
+sampled = s5.sample_over_line(a, b)
+values = sampled.get_array("Von_Mises")
 position = sampled.points[:, 0]
 ax.set_ylim([0.0, 200.0])
 ax.plot(position, values)
@@ -272,7 +296,7 @@ plt.show()
 # the right-most side of the plate.
 
 # We use nanmean here because mid-side nodes have no stress
-mask = mfvm.basic_dof_nodes()[0, :] == length
+mask = mfd.basic_dof_nodes()[0, :] == length
 far_field_stress = np.nanmean(von_mises[mask])
 print("Far field von mises stress: %e" % far_field_stress)
 # Which almost exactly equals the analytical value of 10000000.0 Pa
