@@ -33,7 +33,7 @@ epsilon = 0.001  # thickness of plate (m)
 
 E = 210e9  # Elastic moduli in Pa (kg/(m*s**2))
 nu = 0.3  # Poisson's Ratio
-F = 1000.0  # Force density at the right boundary(Pa/m3)
+F = 100000000.0  # Force density at the right boundary(Pa/m3)
 
 elements_degree = 2  # Degree of the finite element methods
 
@@ -72,7 +72,7 @@ plate_with_hole_anum = gf.MesherObject("set minus", rect_anum, circ_anum)
 hole_esize = np.pi * diameter / 50  # 0.0002
 plate_esize = 0.01
 
-mesh = gf.Mesh("generate", rect_anum, hole_esize)
+mesh = gf.Mesh("generate", plate_with_hole_anum, hole_esize)
 mesh.export_to_vtk("mesh.vtk")
 
 m = pv.read("mesh.vtk")
@@ -181,13 +181,6 @@ mfvm.set_classical_discontinuous_fem(elements_degree)
 von_mises = md.compute_isotropic_linearized_Von_Mises_pstress("u", "E", "nu", mfvm)
 
 mfvm.export_to_vtk("von_mises.vtk", mfvm, von_mises, "Von Mises Stresses")
-v = pv.read("von_mises.vtk")
-p = pv.Plotter(shape=(1, 1))
-p.subplot(0, 0)
-cmap = plt.cm.get_cmap("rainbow", 10)
-p.add_mesh(v, cmap=cmap)
-p.show_grid()
-p.show(screenshot="von_mises.png", cpos="xy")
 
 # Must use nanmax as stress is not computed at mid-side nodes
 max_stress = np.nanmax(von_mises)
@@ -217,6 +210,14 @@ von_mises = np.sqrt(
     )
 )
 
+v = pv.read("von_mises.vtk")
+p = pv.Plotter(shape=(1, 1))
+p.subplot(0, 0)
+cmap = plt.cm.get_cmap("rainbow", 10)
+p.add_mesh(v, cmap=cmap)
+p.show_grid()
+p.show(screenshot="von_mises.png", cpos="xy")
+
 mfd.export_to_vtk("sigmaxx.vtk", mfd, sigmaxx, "Sigmaxx")
 mfd.export_to_vtk("sigmayy.vtk", mfd, sigmayy, "Sigmayy")
 mfd.export_to_vtk("sigmaxy.vtk", mfd, sigmaxy, "Sigmaxy")
@@ -239,7 +240,7 @@ ax.set_ylabel("Sigmaxx")
 sampled = s1.sample_over_line(a, b)
 values = sampled.get_array("Sigmaxx")
 position = sampled.points[:, 0]
-ax.set_ylim([0.0, 200.0])
+ax.set_ylim([-20000000.0, 20000000.0])
 ax.plot(position, values)
 
 ax = fig.add_subplot(512)
@@ -247,7 +248,7 @@ ax.set_ylabel("Sigmayy")
 sampled = s2.sample_over_line(a, b)
 values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 0]
-ax.set_ylim([0.0, 200.0])
+ax.set_ylim([-20000000.0, 20000000.0])
 ax.plot(position, values)
 
 ax = fig.add_subplot(513)
@@ -255,7 +256,7 @@ ax.set_ylabel("Sigmaxy")
 sampled = s3.sample_over_line(a, b)
 values = sampled.get_array("Sigmaxy")
 position = sampled.points[:, 0]
-ax.set_ylim([0.0, 200.0])
+ax.set_ylim([-20000000.0, 20000000.0])
 ax.plot(position, values)
 
 ax = fig.add_subplot(514)
@@ -263,7 +264,7 @@ ax.set_ylabel("Sigmayx")
 sampled = s4.sample_over_line(a, b)
 values = sampled.get_array("Sigmayx")
 position = sampled.points[:, 0]
-ax.set_ylim([0.0, 200.0])
+ax.set_ylim([-20000000.0, 20000000.0])
 ax.plot(position, values)
 
 ax = fig.add_subplot(515)
@@ -271,7 +272,7 @@ ax.set_ylabel("Von Mises")
 sampled = s5.sample_over_line(a, b)
 values = sampled.get_array("Von_Mises")
 position = sampled.points[:, 0]
-ax.set_ylim([0.0, 200.0])
+ax.set_ylim([-20000000.0, 20000000.0])
 ax.plot(position, values)
 
 plt.show()
