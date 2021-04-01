@@ -176,14 +176,11 @@ md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 # ``pyvista`` result reader.
 
 # grab the result from the ``getfem`` instance
-mfvm = gf.MeshFem(mesh, 1)
-mfvm.set_classical_discontinuous_fem(elements_degree)
-von_mises = md.compute_isotropic_linearized_Von_Mises_pstress("u", "E", "nu", mfvm)
 
-mfvm.export_to_vtk("von_mises.vtk", mfvm, von_mises, "Von Mises Stresses")
-
-# Must use nanmax as stress is not computed at mid-side nodes
-max_stress = np.nanmax(von_mises)
+# mfvm = gf.MeshFem(mesh, 1)
+# mfvm.set_classical_discontinuous_fem(elements_degree)
+# von_mises = md.compute_isotropic_linearized_Von_Mises_pstress("u", "E", "nu", mfvm)
+# mfvm.export_to_vtk("von_mises.vtk", mfvm, von_mises, "Von Mises Stresses")
 
 U = md.variable("u")
 mfu.export_to_vtk("displacement.vtk", mfu, U, "Displacements")
@@ -209,6 +206,9 @@ von_mises = np.sqrt(
         + 6.0 * (sigmaxy ** 2 + sigmayz ** 2 + sigmazx ** 2)
     )
 )
+
+# Must use nanmax as stress is not computed at mid-side nodes
+max_stress = np.nanmax(von_mises)
 
 v = pv.read("von_mises.vtk")
 p = pv.Plotter(shape=(1, 1))
@@ -304,6 +304,17 @@ print("Far field von mises stress: %e" % far_field_stress)
 
 ###############################################################################
 # Since the expected nominal stress across the cross section of the
+# hole will increase as the size of the hole increases, regardless of
+# the stress concentration, the stress must be adjusted to arrive at
+# the correct stress.  This stress is adjusted by the ratio of the
+# width over the modified cross section width.
+adj = width / (width - diameter)
+stress_adj = far_field_stress * adj
+
+# The stress concentration is then simply the maximum stress divided
+# by the adjusted far-field stress.
+stress_con = max_stress / stress_adj
+print("Stress Concentration: %.2f" % stress_con)
 
 
 ###############################################################################
