@@ -203,97 +203,37 @@ for md in mds:
 
 # grab the result from the ``getfem`` instance
 
-# mfvm = gf.MeshFem(mesh, 1)
-# mfvm.set_classical_discontinuous_fem(elements_degree)
-# von_mises = md.compute_isotropic_linearized_Von_Mises_pstress("u", "E", "nu", mfvm)
-# mfvm.export_to_vtk("von_mises.vtk", mfvm, von_mises, "Von Mises Stresses")
 max_stresss = []
 von_misess = []
-for i, (mfu, mfd, mim, md) in enumerate(zip(mfus, mfds, mims, mds)):
-    U = md.variable("u")
-    mfu.export_to_vtk("displacement" + str(i) + ".vtk", mfu, U, "Displacements")
-    Grad_u = gf.compute_gradient(mfu, U, mfd)
-    clambda = E * nu / ((1 + nu) * (1 - 2 * nu))
-    cmu = E / (2 * (1 + nu))
-    clambdastar = 2 * clambda * cmu / (clambda + 2 * cmu)
-    sigmaxx = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[0, 0]
-    sigmayy = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[1, 1]
-    sigmazz = 0.0
-    sigmaxy = cmu * (Grad_u[0, 1] + Grad_u[1, 0])
-    sigmayx = cmu * (Grad_u[1, 0] + Grad_u[0, 1])
-    sigmayz = 0.0
-    sigmazx = 0.0
-
-    von_mises = np.sqrt(
-        0.5
-        * (
-            (sigmaxx - sigmayy) ** 2
-            + (sigmayy - sigmazz) ** 2
-            + (sigmazz - sigmaxx) ** 2
-            + 6.0 * (sigmaxy ** 2 + sigmayz ** 2 + sigmazx ** 2)
-        )
+mfvms = []
+for i, (mesh, mfu, mfd, mim, md) in enumerate(zip(meshs, mfus, mfds, mims, mds)):
+    mfvm = gf.MeshFem(mesh, 1)
+    mfvm.set_classical_discontinuous_fem(elements_degree)
+    von_mises = (
+        1.0
+        / np.sqrt(3)
+        * md.compute_isotropic_linearized_Von_Mises_pstress("u", "E", "nu", mfvm)
     )
 
-# Must use nanmax as stress is not computed at mid-side nodes
+    # Must use nanmax as stress is not computed at mid-side nodes
     max_stress = np.nanmax(von_mises)
+    mfvm.export_to_vtk("von_mises" + str(i) + ".vtk", mfvm, von_mises, "Von_Mises")
 
-    mfd.export_to_vtk("sigmaxx"+str(i)+".vtk", mfd, sigmaxx, "Sigmaxx")
-    mfd.export_to_vtk("sigmayy"+str(i)+".vtk", mfd, sigmayy, "Sigmayy")
-    mfd.export_to_vtk("sigmaxy"+str(i)+".vtk", mfd, sigmaxy, "Sigmaxy")
-    mfd.export_to_vtk("sigmayx"+str(i)+".vtk", mfd, sigmayx, "Sigmayx")
-    mfd.export_to_vtk("von_mises"+str(i)+".vtk", mfd, von_mises, "Von_Mises")
-
-    s1 = pv.read("sigmaxx"+str(i)+".vtk")
-    s2 = pv.read("sigmayy"+str(i)+".vtk")
-    s3 = pv.read("sigmaxy"+str(i)+".vtk")
-    s4 = pv.read("sigmayx"+str(i)+".vtk")
-    s5 = pv.read("von_mises"+str(i)+".vtk")
+    s5 = pv.read("von_mises" + str(i) + ".vtk")
 
     p = pv.Plotter(shape=(1, 1))
     p.subplot(0, 0)
     cmap = plt.cm.get_cmap("rainbow", 10)
     p.add_mesh(s5, cmap=cmap)
     p.show_grid()
-    p.show(screenshot="von_mises"+str(i)+".png", cpos="xy")
+    p.show(screenshot="von_mises" + str(i) + ".png", cpos="xy")
 
     a = [0.0, width / 2, 0.0]
     b = [length, width / 2, 0.0]
 
     fig = plt.figure()
 
-    ax = fig.add_subplot(511)
-    ax.set_ylabel("Sigmaxx")
-    sampled = s1.sample_over_line(a, b)
-    values = sampled.get_array("Sigmaxx")
-    position = sampled.points[:, 0]
-    ax.set_ylim([-20000000.0, 20000000.0])
-    ax.plot(position, values)
-
-    ax = fig.add_subplot(512)
-    ax.set_ylabel("Sigmayy")
-    sampled = s2.sample_over_line(a, b)
-    values = sampled.get_array("Sigmayy")
-    position = sampled.points[:, 0]
-    ax.set_ylim([-20000000.0, 20000000.0])
-    ax.plot(position, values)
-
-    ax = fig.add_subplot(513)
-    ax.set_ylabel("Sigmaxy")
-    sampled = s3.sample_over_line(a, b)
-    values = sampled.get_array("Sigmaxy")
-    position = sampled.points[:, 0]
-    ax.set_ylim([-20000000.0, 20000000.0])
-    ax.plot(position, values)
-
-    ax = fig.add_subplot(514)
-    ax.set_ylabel("Sigmayx")
-    sampled = s4.sample_over_line(a, b)
-    values = sampled.get_array("Sigmayx")
-    position = sampled.points[:, 0]
-    ax.set_ylim([-20000000.0, 20000000.0])
-    ax.plot(position, values)
-
-    ax = fig.add_subplot(515)
+    ax = fig.add_subplot(111)
     ax.set_ylabel("Von Mises")
     sampled = s5.sample_over_line(a, b)
     values = sampled.get_array("Von_Mises")
@@ -304,6 +244,8 @@ for i, (mfu, mfd, mim, md) in enumerate(zip(mfus, mfds, mims, mds)):
     plt.show()
     von_misess.append(von_mises)
     max_stresss.append(max_stress)
+
+    mfvms.append(mfvm)
 
 ###############################################################################
 # Compute the Stress Concentration
@@ -326,8 +268,8 @@ for i, (mfu, mfd, mim, md) in enumerate(zip(mfus, mfds, mims, mds)):
 
 # We use nanmean here because mid-side nodes have no stress
 far_field_stresss = []
-for mfd, von_mises in zip(mfds, von_misess):
-    mask = mfd.basic_dof_nodes()[0, :] == length
+for mfvm, von_mises in zip(mfvms, von_misess):
+    mask = mfvm.basic_dof_nodes()[0, :] == length
     far_field_stress = np.nanmean(von_mises[mask])
     print("Far field von mises stress: %e" % far_field_stress)
     far_field_stresss.append(far_field_stress)
@@ -347,8 +289,6 @@ stress_adjs = far_field_stresss * adjs
 k_t_exp = max_stresss / stress_adjs
 for stress_con in k_t_exp:
     print("Stress Concentration: %.2f" % stress_con)
-
-
 
 
 ###############################################################################
@@ -380,4 +320,6 @@ plt.plot(ratios, k_t_exp, label=r"$K_t$ GetFEM")
 plt.legend()
 plt.xlabel("Ratio of Hole Diameter to Width of Plate")
 plt.ylabel("Stress Concentration")
+plt.xlim(-0.01, 0.51)
+plt.ylim(2.11, 3.01)
 plt.show()
