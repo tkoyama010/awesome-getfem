@@ -48,32 +48,41 @@ elements_degree = 2  # Degree of the finite element methods
 length = 0.4
 width = 0.1
 
-ratio = 0.3  # diameter/width
-diameter = width * ratio
-radius = diameter * 0.5
+ratios = np.array([0.3, 0.5])  # diameter/width
+diameters = width * ratios
+radiuss = diameters * 0.5
 
 
 # create the rectangle
 rect_anum = gf.MesherObject("rectangle", [0.0, 0.0], [length, width / 2])
 
 # create a circle in the middle of the rectangle
-circ_anum = gf.MesherObject("ball", [length / 2, width / 2], radius)
+circ_anums = []
+for radius in radiuss:
+    circ_anum = gf.MesherObject("ball", [length / 2, width / 2], radius)
+    circ_anums.append(circ_anum)
 
 # Note how GetFEM parses the output and returns the area numbers
 # created by each command.  This can be used to execute a boolean
 # operation on these areas to cut the circle out of the rectangle.
-plate_with_hole_anum = gf.MesherObject("set minus", rect_anum, circ_anum)
+plate_with_hole_anums = []
+for circ_anum in circ_anums:
+    plate_with_hole_anum = gf.MesherObject("set minus", rect_anum, circ_anum)
+    plate_with_hole_anums.append(plate_with_hole_anum)
 
 ###############################################################################
 # Meshing
 # ~~~~~~~
 # Mesh the plate using an approximate mesh size.
 # ensure there are at 50 elements around the hole
-hole_esize = np.pi * diameter / 50  # 0.0002
+hole_esizes = np.pi * diameters / 50  # 0.0002
 plate_esize = 0.01
 
-mesh = gf.Mesh("generate", plate_with_hole_anum, hole_esize)
-mesh.export_to_vtk("mesh.vtk")
+meshs = []
+for plate_with_hole_anum, hole_esize in zip(plate_with_hole_anums, hole_esizes):
+    mesh = gf.Mesh("generate", plate_with_hole_anum, hole_esize)
+    meshs.append(mesh)
+    mesh.export_to_vtk("mesh.vtk")
 
 m = pv.read("mesh.vtk")
 p = pv.Plotter(shape=(1, 1))
@@ -89,60 +98,78 @@ p.show(screenshot="mesh.png", cpos="xy")
 # force of 1 kN in the positive X direction.
 #
 
-mfu = gf.MeshFem(mesh, 2)
-mfu.set_classical_fem(elements_degree)
+mfus = []
+mfds = []
+mds = []
+mims = []
 
-mfd = gf.MeshFem(mesh, 1)
-mfd.set_classical_fem(elements_degree)
+for mesh, radius in zip(meshs, radiuss):
+    mfu = gf.MeshFem(mesh, 2)
+    mfu.set_classical_fem(elements_degree)
+    mfus.append(mfu)
 
-md = gf.Model("real")
-md.add_fem_variable("u", mfu)
+    mfd = gf.MeshFem(mesh, 1)
+    mfd.set_classical_fem(elements_degree)
+    mfds.append(mfd)
 
-mim = gf.MeshIm(mesh, elements_degree * 2)
+    md = gf.Model("real")
+    md.add_fem_variable("u", mfu)
+    mds.append(md)
+
+    mim = gf.MeshIm(mesh, elements_degree * 2)
+    mims.append(mim)
 
 HOLE_BOUND = 1
-fb1 = mesh.outer_faces_in_box(
-    [length / 2 - radius * 1.01, width / 2 - radius * 1.01],
-    [length / 2 + radius * 1.01, width / 2 + radius * 1.01],
-)
-mesh.set_region(HOLE_BOUND, fb1)
+for mesh, radius in zip(meshs, radiuss):
+    fb1 = mesh.outer_faces_in_box(
+        [length / 2 - radius * 1.01, width / 2 - radius * 1.01],
+        [length / 2 + radius * 1.01, width / 2 + radius * 1.01],
+    )
+    mesh.set_region(HOLE_BOUND, fb1)
 
 # Fix the left-hand side.
 LEFT_BOUND = 2
-fb2 = mesh.outer_faces_with_direction([-1.0, 0.0], 0.01)
+for mesh, mfu, mim, md in zip(meshs, mfus, mims, mds):
+    fb2 = mesh.outer_faces_with_direction([-1.0, 0.0], 0.01)
 
-mesh.set_region(LEFT_BOUND, fb2)
-mesh.region_subtract(LEFT_BOUND, HOLE_BOUND)
+    mesh.set_region(LEFT_BOUND, fb2)
+    mesh.region_subtract(LEFT_BOUND, HOLE_BOUND)
 
-md.add_initialized_data("r2", [0, 0])
-md.add_initialized_data("H2", [[1, 0], [0, 0]])
-md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim, "u", mfu, LEFT_BOUND, "r2", "H2"
-)
+    md.add_initialized_data("r2", [0, 0])
+    md.add_initialized_data("H2", [[1, 0], [0, 0]])
+    md.add_generalized_Dirichlet_condition_with_multipliers(
+        mim, "u", mfu, LEFT_BOUND, "r2", "H2"
+    )
 
 # Fix nodes on the top side of the plate in the Y
 # direction.  Otherwise, the mesh would be allowed to move in the y
 # direction and would be an improperly constrained mesh.
 TOP_BOUND = 3
-fb3 = mesh.outer_faces_with_direction([0.0, 1.0], 0.01)
+for mesh, mfu, mim, md in zip(meshs, mfus, mims, mds):
+    fb3 = mesh.outer_faces_with_direction([0.0, 1.0], 0.01)
 
-mesh.set_region(TOP_BOUND, fb3)
-mesh.region_subtract(TOP_BOUND, HOLE_BOUND)
+    mesh.set_region(TOP_BOUND, fb3)
+    mesh.region_subtract(TOP_BOUND, HOLE_BOUND)
 
-md.add_initialized_data("r3", [0, 0])
-md.add_initialized_data("H3", [[0, 0], [0, 1]])
-md.add_generalized_Dirichlet_condition_with_multipliers(
-    mim, "u", mfu, TOP_BOUND, "r3", "H3"
-)
+    md.add_initialized_data("r3", [0, 0])
+    md.add_initialized_data("H3", [[0, 0], [0, 1]])
+    md.add_generalized_Dirichlet_condition_with_multipliers(
+        mim, "u", mfu, TOP_BOUND, "r3", "H3"
+    )
 
 # Apply a force on the right-hand side of the plate.  For this
 # example, we select the nodes at the right-most side of the plate.
 RIGHT_BOUND = 4
-fb4 = mesh.outer_faces_with_direction([1.0, 0.0], 0.01)
+for mesh, mfu, mim, md in zip(meshs, mfus, mims, mds):
+    fb4 = mesh.outer_faces_with_direction([1.0, 0.0], 0.01)
 
-mesh.set_region(RIGHT_BOUND, fb4)
-mesh.region_subtract(RIGHT_BOUND, HOLE_BOUND)
+    mesh.set_region(RIGHT_BOUND, fb4)
+    mesh.region_subtract(RIGHT_BOUND, HOLE_BOUND)
 
+    md.add_initialized_data("width", [width])
+    md.add_initialized_data("plate_esize", [plate_esize])
+    md.add_initialized_data("F", [F])
+    md.add_source_term_brick(mim, "u", "[F/width*plate_esize, 0]", RIGHT_BOUND)
 # TODO: Verify that only the nodes at length have been selected:
 
 # Next, couple the DOF for these nodes.  This lets us provide a force
@@ -150,10 +177,6 @@ mesh.region_subtract(RIGHT_BOUND, HOLE_BOUND)
 # set.
 # Select a single node in this set and apply a force to it
 # We use "R" to re-select from the current node group
-md.add_initialized_data("width", [width])
-md.add_initialized_data("plate_esize", [plate_esize])
-md.add_initialized_data("F", [F])
-md.add_source_term_brick(mim, "u", "[F/width*plate_esize, 0]", RIGHT_BOUND)
 
 # TODO: finally, be sure to select all nodes again to solve the entire solution
 
@@ -162,11 +185,13 @@ md.add_source_term_brick(mim, "u", "[F/width*plate_esize, 0]", RIGHT_BOUND)
 # Solve the Static Problem
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 # define a plain stress element type with thickness
-md.add_initialized_data("E", [E])
-md.add_initialized_data("nu", [nu])
-md.add_isotropic_linearized_elasticity_brick_pstress(mim, "u", "E", "nu")
+for mim, md in zip(mims, mds):
+    md.add_initialized_data("E", [E])
+    md.add_initialized_data("nu", [nu])
+    md.add_isotropic_linearized_elasticity_brick_pstress(mim, "u", "E", "nu")
 # Solve the static analysis
-md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
+for md in mds:
+    md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 
 ###############################################################################
 # Post-Processing
@@ -174,6 +199,7 @@ md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 # The static result can be post-processed outside of GetFEM using ``pyvista``.
 # This example shows how to extract the von Mises stress and plot it using the
 # ``pyvista`` result reader.
+# TODO: Interpolate stress by Lagrange.
 
 # grab the result from the ``getfem`` instance
 
@@ -181,101 +207,103 @@ md.solve("max_res", 1e-9, "max_iter", 100, "noisy")
 # mfvm.set_classical_discontinuous_fem(elements_degree)
 # von_mises = md.compute_isotropic_linearized_Von_Mises_pstress("u", "E", "nu", mfvm)
 # mfvm.export_to_vtk("von_mises.vtk", mfvm, von_mises, "Von Mises Stresses")
+max_stresss = []
+von_misess = []
+for i, (mfu, mfd, mim, md) in enumerate(zip(mfus, mfds, mims, mds)):
+    U = md.variable("u")
+    mfu.export_to_vtk("displacement" + str(i) + ".vtk", mfu, U, "Displacements")
+    Grad_u = gf.compute_gradient(mfu, U, mfd)
+    clambda = E * nu / ((1 + nu) * (1 - 2 * nu))
+    cmu = E / (2 * (1 + nu))
+    clambdastar = 2 * clambda * cmu / (clambda + 2 * cmu)
+    sigmaxx = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[0, 0]
+    sigmayy = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[1, 1]
+    sigmazz = 0.0
+    sigmaxy = cmu * (Grad_u[0, 1] + Grad_u[1, 0])
+    sigmayx = cmu * (Grad_u[1, 0] + Grad_u[0, 1])
+    sigmayz = 0.0
+    sigmazx = 0.0
 
-U = md.variable("u")
-mfu.export_to_vtk("displacement.vtk", mfu, U, "Displacements")
-
-Grad_u = gf.compute_gradient(mfu, U, mfd)
-clambda = E * nu / ((1 + nu) * (1 - 2 * nu))
-cmu = E / (2 * (1 + nu))
-clambdastar = 2 * clambda * cmu / (clambda + 2 * cmu)
-sigmaxx = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[0, 0]
-sigmayy = clambdastar * (Grad_u[0, 0] + Grad_u[1, 1]) + 2.0 * cmu * Grad_u[1, 1]
-sigmazz = 0.0
-sigmaxy = cmu * (Grad_u[0, 1] + Grad_u[1, 0])
-sigmayx = cmu * (Grad_u[1, 0] + Grad_u[0, 1])
-sigmayz = 0.0
-sigmazx = 0.0
-
-von_mises = np.sqrt(
-    0.5
-    * (
-        (sigmaxx - sigmayy) ** 2
-        + (sigmayy - sigmazz) ** 2
-        + (sigmazz - sigmaxx) ** 2
-        + 6.0 * (sigmaxy ** 2 + sigmayz ** 2 + sigmazx ** 2)
+    von_mises = np.sqrt(
+        0.5
+        * (
+            (sigmaxx - sigmayy) ** 2
+            + (sigmayy - sigmazz) ** 2
+            + (sigmazz - sigmaxx) ** 2
+            + 6.0 * (sigmaxy ** 2 + sigmayz ** 2 + sigmazx ** 2)
+        )
     )
-)
 
 # Must use nanmax as stress is not computed at mid-side nodes
-max_stress = np.nanmax(von_mises)
+    max_stress = np.nanmax(von_mises)
 
-v = pv.read("von_mises.vtk")
-p = pv.Plotter(shape=(1, 1))
-p.subplot(0, 0)
-cmap = plt.cm.get_cmap("rainbow", 10)
-p.add_mesh(v, cmap=cmap)
-p.show_grid()
-p.show(screenshot="von_mises.png", cpos="xy")
+    mfd.export_to_vtk("sigmaxx"+str(i)+".vtk", mfd, sigmaxx, "Sigmaxx")
+    mfd.export_to_vtk("sigmayy"+str(i)+".vtk", mfd, sigmayy, "Sigmayy")
+    mfd.export_to_vtk("sigmaxy"+str(i)+".vtk", mfd, sigmaxy, "Sigmaxy")
+    mfd.export_to_vtk("sigmayx"+str(i)+".vtk", mfd, sigmayx, "Sigmayx")
+    mfd.export_to_vtk("von_mises"+str(i)+".vtk", mfd, von_mises, "Von_Mises")
 
-mfd.export_to_vtk("sigmaxx.vtk", mfd, sigmaxx, "Sigmaxx")
-mfd.export_to_vtk("sigmayy.vtk", mfd, sigmayy, "Sigmayy")
-mfd.export_to_vtk("sigmaxy.vtk", mfd, sigmaxy, "Sigmaxy")
-mfd.export_to_vtk("sigmayx.vtk", mfd, sigmayx, "Sigmayx")
-mfd.export_to_vtk("von_mises.vtk", mfd, von_mises, "Von_Mises")
+    s1 = pv.read("sigmaxx"+str(i)+".vtk")
+    s2 = pv.read("sigmayy"+str(i)+".vtk")
+    s3 = pv.read("sigmaxy"+str(i)+".vtk")
+    s4 = pv.read("sigmayx"+str(i)+".vtk")
+    s5 = pv.read("von_mises"+str(i)+".vtk")
 
-s1 = pv.read("sigmaxx.vtk")
-s2 = pv.read("sigmayy.vtk")
-s3 = pv.read("sigmaxy.vtk")
-s4 = pv.read("sigmayx.vtk")
-s5 = pv.read("von_mises.vtk")
+    p = pv.Plotter(shape=(1, 1))
+    p.subplot(0, 0)
+    cmap = plt.cm.get_cmap("rainbow", 10)
+    p.add_mesh(s5, cmap=cmap)
+    p.show_grid()
+    p.show(screenshot="von_mises"+str(i)+".png", cpos="xy")
 
-a = [0.0, width / 2, 0.0]
-b = [length, width / 2, 0.0]
+    a = [0.0, width / 2, 0.0]
+    b = [length, width / 2, 0.0]
 
-fig = plt.figure()
+    fig = plt.figure()
 
-ax = fig.add_subplot(511)
-ax.set_ylabel("Sigmaxx")
-sampled = s1.sample_over_line(a, b)
-values = sampled.get_array("Sigmaxx")
-position = sampled.points[:, 0]
-ax.set_ylim([-20000000.0, 20000000.0])
-ax.plot(position, values)
+    ax = fig.add_subplot(511)
+    ax.set_ylabel("Sigmaxx")
+    sampled = s1.sample_over_line(a, b)
+    values = sampled.get_array("Sigmaxx")
+    position = sampled.points[:, 0]
+    ax.set_ylim([-20000000.0, 20000000.0])
+    ax.plot(position, values)
 
-ax = fig.add_subplot(512)
-ax.set_ylabel("Sigmayy")
-sampled = s2.sample_over_line(a, b)
-values = sampled.get_array("Sigmayy")
-position = sampled.points[:, 0]
-ax.set_ylim([-20000000.0, 20000000.0])
-ax.plot(position, values)
+    ax = fig.add_subplot(512)
+    ax.set_ylabel("Sigmayy")
+    sampled = s2.sample_over_line(a, b)
+    values = sampled.get_array("Sigmayy")
+    position = sampled.points[:, 0]
+    ax.set_ylim([-20000000.0, 20000000.0])
+    ax.plot(position, values)
 
-ax = fig.add_subplot(513)
-ax.set_ylabel("Sigmaxy")
-sampled = s3.sample_over_line(a, b)
-values = sampled.get_array("Sigmaxy")
-position = sampled.points[:, 0]
-ax.set_ylim([-20000000.0, 20000000.0])
-ax.plot(position, values)
+    ax = fig.add_subplot(513)
+    ax.set_ylabel("Sigmaxy")
+    sampled = s3.sample_over_line(a, b)
+    values = sampled.get_array("Sigmaxy")
+    position = sampled.points[:, 0]
+    ax.set_ylim([-20000000.0, 20000000.0])
+    ax.plot(position, values)
 
-ax = fig.add_subplot(514)
-ax.set_ylabel("Sigmayx")
-sampled = s4.sample_over_line(a, b)
-values = sampled.get_array("Sigmayx")
-position = sampled.points[:, 0]
-ax.set_ylim([-20000000.0, 20000000.0])
-ax.plot(position, values)
+    ax = fig.add_subplot(514)
+    ax.set_ylabel("Sigmayx")
+    sampled = s4.sample_over_line(a, b)
+    values = sampled.get_array("Sigmayx")
+    position = sampled.points[:, 0]
+    ax.set_ylim([-20000000.0, 20000000.0])
+    ax.plot(position, values)
 
-ax = fig.add_subplot(515)
-ax.set_ylabel("Von Mises")
-sampled = s5.sample_over_line(a, b)
-values = sampled.get_array("Von_Mises")
-position = sampled.points[:, 0]
-ax.set_ylim([-20000000.0, 20000000.0])
-ax.plot(position, values)
+    ax = fig.add_subplot(515)
+    ax.set_ylabel("Von Mises")
+    sampled = s5.sample_over_line(a, b)
+    values = sampled.get_array("Von_Mises")
+    position = sampled.points[:, 0]
+    ax.set_ylim([-20000000.0, 20000000.0])
+    ax.plot(position, values)
 
-plt.show()
+    plt.show()
+    von_misess.append(von_mises)
+    max_stresss.append(max_stress)
 
 ###############################################################################
 # Compute the Stress Concentration
@@ -297,9 +325,12 @@ plt.show()
 # the right-most side of the plate.
 
 # We use nanmean here because mid-side nodes have no stress
-mask = mfd.basic_dof_nodes()[0, :] == length
-far_field_stress = np.nanmean(von_mises[mask])
-print("Far field von mises stress: %e" % far_field_stress)
+far_field_stresss = []
+for mfd, von_mises in zip(mfds, von_misess):
+    mask = mfd.basic_dof_nodes()[0, :] == length
+    far_field_stress = np.nanmean(von_mises[mask])
+    print("Far field von mises stress: %e" % far_field_stress)
+    far_field_stresss.append(far_field_stress)
 # Which almost exactly equals the analytical value of 10000000.0 Pa
 
 ###############################################################################
@@ -308,13 +339,14 @@ print("Far field von mises stress: %e" % far_field_stress)
 # the stress concentration, the stress must be adjusted to arrive at
 # the correct stress.  This stress is adjusted by the ratio of the
 # width over the modified cross section width.
-adj = width / (width - diameter)
-stress_adj = far_field_stress * adj
+adjs = width / (width - diameters)
+stress_adjs = far_field_stresss * adjs
 
 # The stress concentration is then simply the maximum stress divided
 # by the adjusted far-field stress.
-stress_con = max_stress / stress_adj
-print("Stress Concentration: %.2f" % stress_con)
+k_t_exp = max_stresss / stress_adjs
+for stress_con in k_t_exp:
+    print("Stress Concentration: %.2f" % stress_con)
 
 
 
