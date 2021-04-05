@@ -209,10 +209,8 @@ mfvms = []
 for i, (mesh, mfu, mfd, mim, md) in enumerate(zip(meshs, mfus, mfds, mims, mds)):
     mfvm = gf.MeshFem(mesh, 1)
     mfvm.set_classical_discontinuous_fem(elements_degree)
-    von_mises = (
-        1.0
-        / np.sqrt(3)
-        * md.compute_isotropic_linearized_Von_Mises_pstress("u", "E", "nu", mfvm)
+    von_mises = np.sqrt(4.0 / 3.0) * md.compute_isotropic_linearized_Von_Mises_pstress(
+        "u", "E", "nu", mfvm
     )
 
     # Must use nanmax as stress is not computed at mid-side nodes
