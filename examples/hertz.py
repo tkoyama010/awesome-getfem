@@ -211,9 +211,9 @@ md.add_initialized_data("clambdastar", [clambdastar])
 md.add_initialized_data("E1", [E])
 md.add_initialized_data("E2", [E * 1000.0])
 md.add_initialized_data("nu", [nu])
-md.add_isotropic_linearized_elasticity_brick_pstrain(mim1, "u1", "E1", "nu")
-md.add_isotropic_linearized_elasticity_brick_pstrain(mim2, "u2", "E1", "nu")
-md.add_isotropic_linearized_elasticity_brick_pstrain(mim5, "u5", "E2", "nu")
+md.add_isotropic_linearized_elasticity_pstrain_brick(mim1, "u1", "E1", "nu")
+md.add_isotropic_linearized_elasticity_pstrain_brick(mim2, "u2", "E1", "nu")
+md.add_isotropic_linearized_elasticity_pstrain_brick(mim5, "u5", "E2", "nu")
 
 ###############################################################################
 #
@@ -600,7 +600,7 @@ center = [0.0, 5.0, 0.0]
 normal = [0.0, 0.0, 1.0]
 polar = [0.0, -(5.0 - 0.001), 0.0]
 angle = 180.0
-sampled = s1.sample_over_circular_arc2(center, normal=normal, polar=polar)
+sampled = s1.sample_over_circular_arc_normal(center, normal=normal, polar=polar)
 values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
 ax.plot(distance, values)
@@ -609,7 +609,7 @@ center = [0.0, -5.0, 0.0]
 normal = [0.0, 0.0, -1.0]
 polar = [0.0, 5.0 - 0.001, 0.0]
 angle = 180.0
-sampled = s2.sample_over_circular_arc2(center, normal=normal, polar=polar)
+sampled = s2.sample_over_circular_arc_normal(center, normal=normal, polar=polar)
 values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
 ax.plot(distance, values)
