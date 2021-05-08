@@ -78,8 +78,10 @@ h = 1.0
 mesh1 = gf.Mesh("clone", mesh)
 mesh1.del_convex(cvid2)
 
-mesh2 = gf.Mesh("clone", mesh)
-mesh2.del_convex(cvid1)
+mesh2 = gf.Mesh("clone", mesh1)
+theta = np.pi
+mesh2.transform(np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]]))
+mesh2.transform(np.array([[-1.0, 0.0], [0.0, 1.0]]))
 
 mesh1.export_to_vtk("mesh1.vtk", "ascii")
 
