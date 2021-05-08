@@ -60,7 +60,7 @@ gamma0 = 1.0 / E
 # the cylinder using the load of a mesh from a GetFEM ascii mesh file (see the
 # documentation of the Mesh object in the python interface).
 # !gmsh hertz.mesh -f msh2 -save -o hertz.msh
-mesh = gf.Mesh("import", "gmsh", "/home/tetsuo/getfem-examples/examples/hertz.msh")
+mesh = gf.Mesh("import", "gmsh", "hertz.msh")
 mesh.translate([0.0, 5.0])
 P = mesh.pts()
 
@@ -107,8 +107,7 @@ mesh5.export_to_vtk("mesh5.vtk", "ascii")
 m1 = pv.read("mesh1.vtk")
 m2 = pv.read("mesh2.vtk")
 m5 = pv.read("mesh5.vtk")
-p = pv.Plotter(shape=(1, 1))
-p.subplot(0, 0)
+p = pv.Plotter()
 p.add_mesh(m1, show_edges=True)
 p.add_mesh(m2, show_edges=True)
 p.add_mesh(m5, show_edges=True)
@@ -464,17 +463,23 @@ p = pv.Plotter(shape=(1, 3))
 p.subplot(0, 0)
 p.add_text("Displacements")
 
-e1 = d1.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
-e2 = d2.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
-e5 = d5.extract_feature_edges(boundary_edges=True, feature_edges=False, manifold_edges=False)
+e1 = d1.extract_feature_edges(
+    boundary_edges=True, feature_edges=False, manifold_edges=False
+)
+e2 = d2.extract_feature_edges(
+    boundary_edges=True, feature_edges=False, manifold_edges=False
+)
+e5 = d5.extract_feature_edges(
+    boundary_edges=True, feature_edges=False, manifold_edges=False
+)
 
 e1.set_active_vectors("Displacements")
 e2.set_active_vectors("Displacements")
 e5.set_active_vectors("Displacements")
 
-p.add_mesh(e1.warp_by_vector(factor=10.00), color="red", line_width=5)
-p.add_mesh(e2.warp_by_vector(factor=10.00), color="red", line_width=5)
-p.add_mesh(e5.warp_by_vector(factor=10.00), color="red", line_width=5)
+p.add_mesh(e1.warp_by_vector(factor=100.00), color="black", line_width=2)
+p.add_mesh(e2.warp_by_vector(factor=100.00), color="black", line_width=2)
+p.add_mesh(e5.warp_by_vector(factor=100.00), color="black", line_width=2)
 
 p.show_grid()
 
@@ -489,11 +494,106 @@ p.show_grid()
 p.subplot(0, 2)
 p.add_text("Sigmayy")
 cmap = plt.cm.get_cmap("rainbow", 20)
-p.add_mesh(s1, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(s2, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(s5, clim=[0.0, 500.0], cmap=cmap)
+p.add_mesh(s1, clim=[-300.0, 0.0], cmap=cmap)
+p.add_mesh(s2, clim=[-300.0, 0.0], cmap=cmap)
+p.add_mesh(s5, clim=[-300.0, 0.0], cmap=cmap)
+
+a = [0.01, -5.00, 0.0]
+b = [0.01, -0.01, 0.0]
+c = [0.01, 9.99, 0.0]
+d = [0.01, 12.00, 0.0]
+
+bb = [0.01, 0.01, 0.0]
+cc = [0.01, 10.01, 0.0]
+
+line = pv.Line(a, b)
+p.add_mesh(line, color="gray", line_width=5)
+line = pv.Line(b, c)
+p.add_mesh(line, color="gray", line_width=5)
+line = pv.Line(c, d)
+p.add_mesh(line, color="gray", line_width=5)
+p.add_point_labels(
+    [a, b, c, d],
+    ["A", "B", "C", "D"],
+    font_size=24,
+    point_color="red",
+    text_color="white",
+)
+
+center1 = [0.0, 5.0, 0.0]
+normal1 = [0.0, 0.0, 1.0]
+polar1 = [0.0, -(5.0-0.01), 0.0]
+angle1 = 10.0
+arc1 = pv.CircularArcFromNormal(center1, normal=normal1, polar=polar1, angle=angle1)
+p.add_mesh(arc1, color="gray", line_width=5)
+
+center2 = [0.0, -5.0, 0.0]
+normal2 = [0.0, 0.0, -1.0]
+polar2 = [0.0, (5.0-0.01), 0.0]
+angle2 = 10.0
+arc2 = pv.CircularArcFromNormal(center2, normal=normal2, polar=polar2, angle=angle2)
+p.add_mesh(arc2, color="gray", line_width=5)
 
 p.show(screenshot="contour.png", window_size=[2400, 1200], cpos="xy")
+
+
+###############################################################################
+# Plot the values of a dataset over a line through that dataset
+#
+# Run the filter and produce a line plot
+
+plt.clf()
+fig = plt.figure()
+ax = fig.add_subplot(211)
+
+ax.set_title("Sigmayy")
+
+ax.set_ylabel("Sigmayy(MPa)")
+
+sampled = s2.sample_over_line(a, b)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 1]
+ax.plot(position, values, label="A-B")
+
+sampled = s1.sample_over_line(bb, c)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 1]
+ax.plot(position, values, label="B-C")
+
+sampled = s5.sample_over_line(cc, d)
+values = sampled.get_array("Sigmayy")
+position = sampled.points[:, 1]
+ax.plot(position, values, label="C-D")
+
+ax.scatter(np.array([0.0]), np.array([-1673.16]), label="Analytical")
+
+ax.legend()
+
+ax = fig.add_subplot(212)
+
+ax.set_ylabel("Sigmayy(MPa)")
+
+sampled = s2.sample_over_circular_arc_normal(
+    center2, resolution=100000, normal=normal2, polar=polar2, angle=angle2
+)
+values = sampled.get_array("Sigmayy")
+distance = sampled["Distance"]
+ax.plot(distance, values, label="Under Ball Surface")
+
+sampled = s1.sample_over_circular_arc_normal(
+    center1, resolution=100000, normal=normal1, polar=polar1, angle=angle1
+)
+values = sampled.get_array("Sigmayy")
+distance = sampled["Distance"]
+ax.plot(distance, values, label="Upper Ball Surface")
+
+ax.scatter(np.array([0.0]), np.array([-1673.16]), label="Analytical")
+ax.scatter(np.array([0.07611]), np.array([0.0]), label="Analytical")
+
+ax.legend()
+
+# plt.show()
+plt.savefig("sigmayy.png")
 
 
 ###############################################################################
@@ -504,7 +604,7 @@ p.show(screenshot="contour.png", window_size=[2400, 1200], cpos="xy")
 fig = plt.figure()
 ax = fig.add_subplot(311)
 
-ax.set_title("Displacements of A-B")
+ax.set_title("Displacements of left side")
 
 ax.set_ylabel("Displacements")
 
@@ -560,72 +660,5 @@ values = sampled.get_array("Displacements")
 position = sampled.points[:, 0]
 ax.plot(position, values[:, 0])
 
-plt.show()
-
-
-###############################################################################
-# Plot the values of a dataset over a line through that dataset
-#
-# Run the filter and produce a line plot
-fig = plt.figure()
-ax = fig.add_subplot(311)
-
-ax.set_title("Sigmayy of left side")
-ax.set_ylabel("Sigmayy")
-
-a = [0.0, -5.0, 0.0]
-b = [0.0, 0.0, 0.0]
-sampled = s2.sample_over_line(a, b)
-values = sampled.get_array("Sigmayy")
-position = sampled.points[:, 1]
-ax.plot(position, values)
-
-a = [0.0, 0.0, 0.0]
-b = [0.0, 10.0, 0.0]
-sampled = s1.sample_over_line(a, b)
-values = sampled.get_array("Sigmayy")
-position = sampled.points[:, 1]
-ax.plot(position, values)
-
-a = [0.0, 10.0, 0.0]
-b = [0.0, 12.0, 0.0]
-sampled = s5.sample_over_line(a, b)
-values = sampled.get_array("Sigmayy")
-position = sampled.points[:, 1]
-ax.plot(position, values)
-
-ax = fig.add_subplot(312)
-
-ax.set_title("Sigmayy of upper ball")
-
-center = [0.0, 5.0, 0.0]
-normal = [0.0, 0.0, 1.0]
-polar = [0.0, -(5.0 - 0.001), 0.0]
-angle = 180.0
-sampled = s1.sample_over_circular_arc_normal(center, normal=normal, polar=polar)
-values = sampled.get_array("Sigmayy")
-distance = sampled["Distance"]
-ax.plot(distance, values)
-
-center = [0.0, -5.0, 0.0]
-normal = [0.0, 0.0, -1.0]
-polar = [0.0, 5.0 - 0.001, 0.0]
-angle = 180.0
-sampled = s2.sample_over_circular_arc_normal(center, normal=normal, polar=polar)
-values = sampled.get_array("Sigmayy")
-distance = sampled["Distance"]
-ax.plot(distance, values)
-
-ax = fig.add_subplot(313)
-
-ax.set_title("Sigmayy of rectangular")
-ax.set_xlabel("Distance")
-
-a = [0.0, 10.0, 0.0]
-b = [5.0, 10.0, 0.0]
-sampled = s5.sample_over_line(a, b)
-values = sampled.get_array("Sigmayy")
-distance = sampled["Distance"]
-ax.plot(distance, values)
-
-plt.show()
+# plt.show()
+plt.savefig("displacements.png")
