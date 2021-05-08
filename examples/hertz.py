@@ -6,15 +6,17 @@ Run a Hertz problem and compare the results.
 
 """
 ###############################################################################
-# # A finite element analysis of elastic contact problem
+# A finite element analysis of elastic contact problem
+# ====================================================
 #
 # In this example of a deformable ``cylinder 1`` enters in contact with a
 # deformable  ``cylinder 2``. We use here python interface, translate this
 # program for another interface or in C++ is easy (see the previous example).
 #
-# ![Kontakt_paralleler_Zylinder](https://upload.wikimedia.org/wikipedia/commons/e/ef/Kontakt_paralleler_Zylinder.jpg)
-
-# ## The problem setting
+# .. image:: https://upload.wikimedia.org/wikipedia/commons/e/ef/Kontakt_paralleler_Zylinder.jpg
+#
+# The problem setting
+# +++++++++++++++++++
 #
 # Let $\Omega^{1} \subset \mathbb{R}^{2}$ be the reference of a 2D cylinder 1
 # and $\Omega^{2} \subset \mathbb{R}^{2}$ the reference configuration of a
@@ -22,7 +24,8 @@ Run a Hertz problem and compare the results.
 # (linearized elasticity) and the contact between them.
 
 ###############################################################################
-# ## Building the program
+# Building the program
+# ++++++++++++++++++++
 #
 # Let us begin by loading Getfem and fixing the parameters of the problem
 
@@ -53,12 +56,11 @@ gamma0 = 1.0 / E
 
 
 ###############################################################################
-#
 # We consider that the radius of the two cylinder is 5mm. We load the mesh of
 # the cylinder using the load of a mesh from a GetFEM ascii mesh file (see the
 # documentation of the Mesh object in the python interface).
 # !gmsh hertz.mesh -f msh2 -save -o hertz.msh
-mesh = gf.Mesh("import", "gmsh", "hertz.msh")
+mesh = gf.Mesh("import", "gmsh", "/home/tetsuo/getfem-examples/examples/hertz.msh")
 mesh.translate([0.0, 5.0])
 P = mesh.pts()
 
@@ -99,7 +101,6 @@ mesh5.translate([0.0, 10.0])
 mesh5.export_to_vtk("mesh5.vtk", "ascii")
 
 ###############################################################################
-#
 # The result is the following
 
 
@@ -116,9 +117,8 @@ p.show(screenshot="mesh.png", window_size=[1200, 1400], cpos="xy")
 
 
 ###############################################################################
-#
-# ## Boundary selection
-
+# Boundary selection
+# ++++++++++++++++++
 # We have to select the different parts of the boundary where we will set some
 # boundary conditions, namely the boundary of the rim (in order to apply a
 # force and the fact that the rim is rigid), the contact boundary of the wheel
@@ -155,7 +155,8 @@ mesh5.set_region(LEFT_BOUND, fb53)
 # allows to select all the faces having a unit outward normal having an angle
 # less or equal to `np.pi/6` with the vector `[0., -1.0]`.
 #
-# ## Definition of finite elements methods and integration method
+# Definition of finite elements methods and integration method
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #
 # We define mfu1, mfu2 two finite element methods which will approximate the
 # displacements in the `cylinder1` and `cylinder2`. `mflambda_C1` is to
@@ -194,7 +195,8 @@ mim5 = gf.MeshIm(mesh5, pow(elements_degree, 2))
 
 ###############################################################################
 #
-# ## Model definition
+# Model definition
+# ++++++++++++++++
 #
 # We use a real model and declare the two variables which will represent the
 # displacements:
@@ -207,7 +209,8 @@ md.add_fem_variable("u5", mfu5)
 
 ###############################################################################
 #
-# ## Linearized elasticity bricks
+# Linearized elasticity bricks
+# ++++++++++++++++++++++++++++
 #
 # We add the Lame coefficients as data of the model and add a linearized
 # elasticity brick for the wheel and the foundation:
@@ -223,7 +226,8 @@ md.add_isotropic_linearized_elasticity_pstrain_brick(mim5, "u5", "E2", "nu")
 
 ###############################################################################
 #
-# ## Clamped condition at the bottom boundary
+# Clamped condition at the bottom boundary
+# ++++++++++++++++++++++++++++++++++++++++
 #
 # We prescribed the displacement at bottom face of the foundation to vanish,
 # for instance with a multiplier with the add of the following brick:
@@ -248,10 +252,8 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 )
 
 ###############################################################################
-#
-
-# ## Contact condition (use of interpolate transformations)
-
+# Contact condition (use of interpolate transformations)
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Now, let us see how to prescribed the contact condition between the two
 # structures. It is possible to use predefined bricks (see [Small sliding
 # contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction)
@@ -287,7 +289,6 @@ md.add_interpolate_transformation_from_expression(
 
 ###############################################################################
 #
-
 # As a consequence, it will be possible to use this transformation, from the
 # mesh of the wheel to the mesh of the foundation, into GWFL expressions.
 # Notes that this is here a very simple constant expression.
@@ -352,19 +353,15 @@ md.add_nonlinear_term(
 
 
 ###############################################################################
-#
-
-# ## Prescribing the rigidity of the rim and the vertical force
+# Prescribing the rigidity of the rim and the vertical force
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # We have now to prescribe the rigidity of the rim. This is a non-standard
 # condition, since we do not know a priori what will be the vertical
 # displacement of the rim. We can use an additional unknown for that vertical
 # displacement. We need a multiplier to prescribe the displacement on the rim
 # boundary:
-
 # ## Model solve
 # We can now solve our problem with:
-
-###############################################################################
 #
 
 
@@ -395,7 +392,8 @@ sigmayy5 = clambda * (Grad_u5[0, 0] + Grad_u5[1, 1]) + 2.0 * cmu * Grad_u5[1, 1]
 #     "max_res", 1e-9, "max_iter", 100, "noisy", "lsearch", "simplest", "alpha min", 0.8
 # )
 #
-# ## Export the solution
+# Export the solution
+# +++++++++++++++++++
 #
 # Now the code to export the solution with the VonMises stress:
 
@@ -568,7 +566,6 @@ plt.show()
 ###############################################################################
 # Plot the values of a dataset over a line through that dataset
 #
-
 # Run the filter and produce a line plot
 fig = plt.figure()
 ax = fig.add_subplot(311)
