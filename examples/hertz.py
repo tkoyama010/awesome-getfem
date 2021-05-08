@@ -541,8 +541,8 @@ ax.set_title("Displacements in Y direction of top side")
 ax.set_ylim(-1.0, 1.0)
 ax.set_ylabel("Displacements")
 
-a = [0.000, 15.000, 0.000]
-b = [5.000, 15.000, 0.000]
+a = [0.000, 12.000, 0.000]
+b = [5.000, 12.000, 0.000]
 sampled = d5.sample_over_line(a, b)
 values = sampled.get_array("Displacements")
 position = sampled.points[:, 0]
