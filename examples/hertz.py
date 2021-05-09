@@ -18,8 +18,8 @@ Run a Hertz problem and compare the results.
 # The problem setting
 # +++++++++++++++++++
 #
-# Let $\Omega^{1} \subset \mathbb{R}^{2}$ be the reference of a 2D cylinder 1
-# and $\Omega^{2} \subset \mathbb{R}^{2}$ the reference configuration of a
+# Let :math:`\Omega^{1} \subset \mathbb{R}^{2}` be the reference of a 2D cylinder 1
+# and :math:`\Omega^{2} \subset \mathbb{R}^{2}` the reference configuration of a
 # deformable cylinder. We consider small deformation of these two bodies
 # (linearized elasticity) and the contact between them.
 
@@ -59,6 +59,7 @@ gamma0 = 1.0 / E
 # We consider that the radius of the two cylinder is 5mm. We load the mesh of
 # the cylinder using the load of a mesh from a GetFEM ascii mesh file (see the
 # documentation of the Mesh object in the python interface).
+
 # !gmsh hertz.mesh -f msh2 -save -o hertz.msh
 mesh = gf.Mesh("import", "gmsh", "hertz.msh")
 mesh.translate([0.0, 5.0])
@@ -272,11 +273,10 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 # contact boundary of the foundation corresponds to a vanishing vertical
 # coordinate. So we define the transformation
 #
-# $$
-# X \longmapsto (X(1), -X(2))
-# $$
+# .. math::
+#    X \longmapsto (X(1), -X(2))
 #
-# where $X$ is the vector of coordinates of the point. We add this
+# where :math:`X` is the vector of coordinates of the point. We add this
 # transformation to the model with the command
 
 md.add_interpolate_transformation_from_expression(
@@ -306,17 +306,16 @@ md.add_interpolate_transformation_from_expression(
 # The corresponding term (to be added to the rest of the weak formulation)
 # reads:
 #
-# $$
-#   \cdots +  \int_{\Gamma_c} \lambda_N(X) (\delta_{u^1}(X)-\delta_{u^2}(\Pi(X)))\cdot n d\Gamma \\
+# .. math::
+#    \cdots +  \int_{\Gamma_c} \lambda_N(X) (\delta_{u^1}(X)-\delta_{u^2}(\Pi(X)))\cdot n d\Gamma \\
 #   -   \int_{\Gamma_c} \left(\lambda_N(X) + \left(\lambda_N(X) + \dfrac{1}{h_T\gamma_0}((X + u^1(X))\cdot n - (\Pi(X) - u^2(\Pi(X)))\cdot n\right)_-\right)\delta_{\lambda_N}(X) d\Gamma = 0 ~~~~ \forall \delta_{\lambda_N}, \forall \delta_{u^1}, \forall \delta_{u^2},
-# $$
 #
-# where $\Gamma_c$ is the slave contact boundary, $\lambda_N$ is the contact
-# multiplier (contact pressure), $h_T$ is the radius of the element, $\Pi$ is
-# the transformation, $n$ is the outward normal vector to the master contact
-# boundary (here $n = (0,1)$), $\gamma_0$ is an augmentation parameter, $(\cdot)_-:I\hspace{-0.2em}R\rightarrow I\hspace{-0.2em}R_+$
-# is the negative part and $\delta_{\lambda_N}, \delta_{u^1}, \delta_{u^2}$ are
-# the test  functions corresponding to $\lambda_N, u^1, u^2$, respectively.
+# where :math:`\Gamma_c` is the slave contact boundary, :math:`\lambda_N` is the contact
+# multiplier (contact pressure), :math:`h_T` is the radius of the element, :math:`\Pi` is
+# the transformation, :math:`n` is the outward normal vector to the master contact
+# boundary (here :math:`n = (0,1)`), :math:`\gamma_0` is an augmentation parameter, :math:`(\cdot)_-:I\hspace{-0.2em}R\rightarrow I\hspace{-0.2em}R_+`
+# is the negative part and :math:`\delta_{\lambda_N}, \delta_{u^1}, \delta_{u^2}` are
+# the test  functions corresponding to :math:`\lambda_N, u^1, u^2`, respectively.
 #
 # Using GWFL, the contact condition can be added by:
 
@@ -458,7 +457,7 @@ v5 = pv.read("von_mises5.vtk")
 s1 = pv.read("stress1.vtk")
 s2 = pv.read("stress2.vtk")
 s5 = pv.read("stress5.vtk")
-p = pv.Plotter(shape=(1, 3))
+p = pv.Plotter(shape=(1, 2))
 
 p.subplot(0, 0)
 p.add_text("Displacements")
@@ -484,14 +483,6 @@ p.add_mesh(e5.warp_by_vector(factor=100.00), color="black", line_width=2)
 p.show_grid()
 
 p.subplot(0, 1)
-p.add_text("Von Mises Stresses")
-cmap = plt.cm.get_cmap("rainbow", 20)
-p.add_mesh(v1, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(v2, clim=[0.0, 500.0], cmap=cmap)
-p.add_mesh(v5, clim=[0.0, 500.0], cmap=cmap)
-p.show_grid()
-
-p.subplot(0, 2)
 p.add_text("Sigmayy")
 cmap = plt.cm.get_cmap("rainbow", 20)
 p.add_mesh(s1, clim=[-300.0, 0.0], cmap=cmap)
@@ -534,7 +525,7 @@ angle2 = 10.0
 arc2 = pv.CircularArcFromNormal(center2, normal=normal2, polar=polar2, angle=angle2)
 p.add_mesh(arc2, color="gray", line_width=5)
 
-p.show(screenshot="contour.png", window_size=[2400, 1200], cpos="xy")
+p.show(screenshot="contour.png", cpos="xy")
 
 
 ###############################################################################
@@ -542,7 +533,6 @@ p.show(screenshot="contour.png", window_size=[2400, 1200], cpos="xy")
 #
 # Run the filter and produce a line plot
 
-plt.clf()
 fig = plt.figure()
 ax = fig.add_subplot(211)
 
@@ -592,73 +582,5 @@ ax.scatter(np.array([0.07611]), np.array([0.0]), label="Analytical")
 
 ax.legend()
 
-# plt.show()
+plt.show()
 plt.savefig("sigmayy.png")
-
-
-###############################################################################
-# Plot the values of a dataset over a line through that dataset
-#
-
-# Run the filter and produce a line plot
-fig = plt.figure()
-ax = fig.add_subplot(311)
-
-ax.set_title("Displacements of left side")
-
-ax.set_ylabel("Displacements")
-
-a = [0.000, -5.000, 0.000]
-b = [0.000, 0.000, 0.000]
-sampled = d2.sample_over_line(a, b)
-values = sampled.get_array("Displacements")
-position = sampled.points[:, 1]
-ax.plot(position, values[:, 0])
-ax.plot(position, values[:, 1])
-
-a = [0.000, 0.000, 0.000]
-b = [0.000, 10.000, 0.000]
-sampled = d1.sample_over_line(a, b)
-values = sampled.get_array("Displacements")
-position = sampled.points[:, 1]
-ax.plot(position, values[:, 0])
-ax.plot(position, values[:, 1])
-
-a = [0.000, 10.000, 0.000]
-b = [0.000, 12.000, 0.000]
-sampled = d5.sample_over_line(a, b)
-values = sampled.get_array("Displacements")
-position = sampled.points[:, 1]
-ax.plot(position, values[:, 0])
-ax.plot(position, values[:, 1])
-
-ax = fig.add_subplot(312)
-
-ax.set_title("Displacements in Y direction of top side")
-
-ax.set_ylabel("Displacements")
-
-a = [0.000, 12.000, 0.000]
-b = [5.000, 12.000, 0.000]
-sampled = d5.sample_over_line(a, b)
-values = sampled.get_array("Displacements")
-position = sampled.points[:, 0]
-ax.plot(position, values[:, 0])
-
-ax = fig.add_subplot(313)
-
-ax.set_title("Displacements in Y direction of bottom side")
-
-ax.set_ylim(-1.0, 1.0)
-ax.set_xlabel("X-coordinate")
-ax.set_ylabel("Displacements")
-
-a = [0.000, -5.000, 0.000]
-b = [5.000, -5.000, 0.000]
-sampled = d2.sample_over_line(a, b)
-values = sampled.get_array("Displacements")
-position = sampled.points[:, 0]
-ax.plot(position, values[:, 0])
-
-# plt.show()
-plt.savefig("displacements.png")
