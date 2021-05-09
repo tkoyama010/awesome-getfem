@@ -3,7 +3,7 @@
 Examples
 ========
 
-Here is a gallery of several examples demonstrating what PyVista can
+Here is a gallery of several examples demonstrating what GetFEM can
 do!
 
 All of these examples are live and available on MyBinder.
