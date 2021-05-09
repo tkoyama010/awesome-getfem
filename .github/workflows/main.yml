@@ -40,13 +40,13 @@ jobs:
         sudo apt-get install -y --no-install-recommends gv
         sudo apt-get install -y --no-install-recommends python3-pip
         sudo apt-get install -y --no-install-recommends python3-venv
-        python3 -m venv /venv
-        source /venv/bin/activate 
+        python3 -m venv ./venv
+        source ./venv/bin/activate 
         cd getfem 
         pip install --no-cache --upgrade pip 
         pip install -r requirements.txt 
         bash autogen.sh
-        ./configure --prefix=/venv --with-pic 
+        ./configure --prefix=./venv --with-pic 
         make -j8 
         make -j8 check
         make install
