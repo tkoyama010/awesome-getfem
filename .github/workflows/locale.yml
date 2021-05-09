@@ -32,15 +32,48 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y --no-install-recommends pandoc
-        pip3 install -U pip setuptools
-        pip3 install -r ./requirements.txt
+        pip install -r requirements.txt
+        git clone https://git.savannah.nongnu.org/git/getfem.git
+        sudo apt-get install -y --no-install-recommends automake
+        sudo apt-get install -y --no-install-recommends libtool
+        sudo apt-get install -y --no-install-recommends make
+        sudo apt-get install -y --no-install-recommends g++
+        sudo apt-get install -y --no-install-recommends libqd-dev
+        sudo apt-get install -y --no-install-recommends libqhull-dev
+        sudo apt-get install -y --no-install-recommends libmumps-seq-dev
+        sudo apt-get install -y --no-install-recommends liblapack-dev
+        sudo apt-get install -y --no-install-recommends libopenblas-dev
+        sudo apt-get install -y --no-install-recommends libpython3-dev
+        sudo apt-get install -y --no-install-recommends imagemagick
+        sudo apt-get install -y --no-install-recommends fig2dev
+        sudo apt-get install -y --no-install-recommends texlive
+        sudo apt-get install -y --no-install-recommends xzdec
+        sudo apt-get install -y --no-install-recommends fig2ps
+        sudo apt-get install -y --no-install-recommends gv
+        sudo apt-get install -y --no-install-recommends python3-pip
+        sudo apt-get install -y --no-install-recommends python3-venv
+        python3 -m venv /venv
+        source /venv/bin/activate 
+        cd getfem 
+        pip install --no-cache --upgrade pip 
+        pip install -r requirements.txt 
+        bash autogen.sh
+        ./configure --prefix=/venv --with-pic 
+        make -j8 
+        make -j8 check
+        make install
+        cd interface
+        make install
+        deactivate
     - name: update
       env:
         SPHINXINTL_TRANSIFEX_USERNAME: api
         SPHINXINTL_TRANSIFEX_PROJECT_NAME: getfem-binder
         TX_TOKEN: ${{ secrets.TX_TOKEN }}
       run: |
+        source /venv/bin/activate 
         sh ./locale/update.sh
+        deactivate
     - name: git_config
       run: |
         git config --global user.email $GITHUB_REPOSITORY
