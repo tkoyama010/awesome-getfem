@@ -269,8 +269,8 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 # Contact condition (use of interpolate transformations)
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Now, let us see how to prescribed the contact condition between the two
-# structures. It is possible to use predefined bricks (see [Small sliding
-# contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction)
+# structures. It is possible to use predefined bricks (see
+# `Small sliding contact with friction bricks <https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction>`_
 # for small deformation/small sliding contact and [Large sliding/large deformation contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large)
 # for large deformation/large sliding contact).
 # However, we will see here how to directly prescribe a contact condition using
