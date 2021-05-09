@@ -49,13 +49,26 @@ cmu = E / (2 * (1 + nu))
 clambdastar = 2 * clambda * cmu / (clambda + 2 * cmu)
 # Degree of the finite element methods
 elements_degree = 2
-# Force at the top boundary (N/mm)
-F = -200.0 / 10
+# Force at the top boundary (N)
+F = -200.0
 # Augmentation parameter for the augmented Lagrangian
 gamma0 = 1.0 / E
 
+# Diamter of cylinder (mm)
+D = 10.0
 
 ###############################################################################
+# Analytical result
+# +++++++++++++++++
+
+# (mm)
+B = np.sqrt(np.abs(2.0*F/np.pi*((1.0-nu**2)/E+(1.0-nu**2)/E)/(1.0/D+1.0/D)))
+# (N)
+PMAX = 2.0 * F / (np.pi*B)
+
+###############################################################################
+# Mesh generation
+# +++++++++++++++
 # We consider that the radius of the two cylinder is 5mm. We load the mesh of
 # the cylinder using the load of a mesh from a GetFEM ascii mesh file (see the
 # documentation of the Mesh object in the python interface).
@@ -236,6 +249,7 @@ md.add_initialized_data("r", [0, 0])
 md.add_initialized_data("H1", [[1, 0], [0, 0]])
 md.add_initialized_data("H2", [[0, 0], [0, 1]])
 md.add_initialized_data("F", F)
+md.add_initialized_data("D", D)
 
 md.add_generalized_Dirichlet_condition_with_multipliers(
     mim1, "u1", mfu1, LEFT_BOUND, "r", "H1"
@@ -246,7 +260,7 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 md.add_generalized_Dirichlet_condition_with_multipliers(
     mim2, "u2", mfu2, LEFT_BOUND, "r", "H1"
 )
-md.add_source_term_brick(mim5, "u5", "[0.0, F]", TOP_BOUND)
+md.add_source_term_brick(mim5, "u5", "[0.0, F/D]", TOP_BOUND)
 md.add_generalized_Dirichlet_condition_with_multipliers(
     mim5, "u5", mfu5, LEFT_BOUND, "r", "H1"
 )
@@ -555,7 +569,7 @@ values = sampled.get_array("Sigmayy")
 position = sampled.points[:, 1]
 ax.plot(position, values, label="C-D")
 
-ax.scatter(np.array([0.0]), np.array([-1673.16]), label="Analytical")
+ax.scatter(np.array([0.0]), np.array([PMAX]), label="Analytical")
 
 ax.legend()
 
@@ -577,8 +591,8 @@ values = sampled.get_array("Sigmayy")
 distance = sampled["Distance"]
 ax.plot(distance, values, label="Upper Ball Surface")
 
-ax.scatter(np.array([0.0]), np.array([-1673.16]), label="Analytical")
-ax.scatter(np.array([0.07611]), np.array([0.0]), label="Analytical")
+ax.scatter(np.array([0.0]), np.array([PMAX]), label="Analytical")
+ax.scatter(np.array([B]), np.array([0.0]), label="Analytical")
 
 ax.legend()
 
