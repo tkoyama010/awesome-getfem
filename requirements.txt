@@ -16,3 +16,4 @@ pyvirtualdisplay
 tabulate
 sphinx-gallery
 pydata_sphinx_theme
+pyvista
