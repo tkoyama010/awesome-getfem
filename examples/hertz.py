@@ -309,7 +309,7 @@ md.add_interpolate_transformation_from_expression(
 # model can be used.
 # If the expression of a transformation depends on the variable of the model,
 # the tangent linear system will automatically takes into account this
-# dependence (see [Interpolate transformations](https://getfem.readthedocs.io/en/latest/userdoc/gasm_high.html#ud-gasm-high-transf) for more details).
+# dependence (see `Interpolate transformation <https://getfem.readthedocs.io/en/latest/userdoc/gasm_high.html#ud-gasm-high-transf>`_ for more details).
 # Note also that transformation corresponding to a large sliding contact and
 # automatically searching for the correspondence between contact boundaries
 # exist in GetFEM (see [Integral contact brick with raytrace](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large-hlgav)).
