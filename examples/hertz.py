@@ -315,7 +315,7 @@ md.add_interpolate_transformation_from_expression(
 # exist in GetFEM (see `Integral contact brick with raytrace <https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large-hlgav>`).
 #
 # Using the defined transformation, we can write an integral contact condition
-# using an augmented Lagrangian formulation (see [Small sliding contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction)
+# using an augmented Lagrangian formulation (see `Small sliding contact with friction bricks <https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction>`
 # for more details).
 # The corresponding term (to be added to the rest of the weak formulation)
 # reads:
