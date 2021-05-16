@@ -119,7 +119,7 @@ for i, md in enumerate(mds):
 
 
 p = pv.Plotter(shape=(1, len(alphas)))
-for i, (md, mfu) in enumerate(zip(mds, mfus)):
+for i, alpha in enumerate(alphas):
 
     p.subplot(0, i)
     d = pv.read("displacement" + str(i) + ".vtk")
@@ -127,7 +127,7 @@ for i, (md, mfu) in enumerate(zip(mds, mfus)):
     p.add_mesh(d.warp_by_vector(factor=1.00), show_edges=True, color="white")
     p.camera_position = "yz"
     p.camera.enable_parallel_projection()
-    p.camera.zoom(4.0)
+    p.camera.zoom(1.75)
     p.show_grid()
 
 p.show(screenshot="displacement.png", window_size=[1200, 1400])
