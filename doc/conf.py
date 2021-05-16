@@ -33,7 +33,6 @@ release = "0.1"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = []
-extensions.append("nbsphinx")
 extensions.append("sphinx_gallery.gen_gallery")
 
 # -- Sphinx Gallery Options

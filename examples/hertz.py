@@ -269,9 +269,9 @@ md.add_generalized_Dirichlet_condition_with_multipliers(
 # Contact condition (use of interpolate transformations)
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Now, let us see how to prescribed the contact condition between the two
-# structures. It is possible to use predefined bricks (see [Small sliding
-# contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction)
-# for small deformation/small sliding contact and [Large sliding/large deformation contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large)
+# structures. It is possible to use predefined bricks (see
+# `Small sliding contact with friction bricks <https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction>`_
+# for small deformation/small sliding contact and `Large sliding/large deformation contact with friction bricks <https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large>`_
 # for large deformation/large sliding contact).
 # However, we will see here how to directly prescribe a contact condition using
 # an augmented Lagrangian formulation and the interpolate transformations.
@@ -309,13 +309,13 @@ md.add_interpolate_transformation_from_expression(
 # model can be used.
 # If the expression of a transformation depends on the variable of the model,
 # the tangent linear system will automatically takes into account this
-# dependence (see [Interpolate transformations](https://getfem.readthedocs.io/en/latest/userdoc/gasm_high.html#ud-gasm-high-transf) for more details).
+# dependence (see `Interpolate transformation <https://getfem.readthedocs.io/en/latest/userdoc/gasm_high.html#ud-gasm-high-transf>`_ for more details).
 # Note also that transformation corresponding to a large sliding contact and
 # automatically searching for the correspondence between contact boundaries
-# exist in GetFEM (see [Integral contact brick with raytrace](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large-hlgav)).
+# exist in GetFEM (see `Integral contact brick with raytrace <https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction_large_sliding.html#ud-model-contact-friction-large-hlgav>`).
 #
 # Using the defined transformation, we can write an integral contact condition
-# using an augmented Lagrangian formulation (see [Small sliding contact with friction bricks](https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction)
+# using an augmented Lagrangian formulation (see `Small sliding contact with friction bricks <https://getfem.readthedocs.io/en/latest/userdoc/model_contact_friction.html#ud-model-contact-friction>`
 # for more details).
 # The corresponding term (to be added to the rest of the weak formulation)
 # reads:

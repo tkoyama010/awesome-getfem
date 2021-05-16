@@ -19,15 +19,15 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-Tutorial
-========
-
-.. toctree::
-   :glob:
-
-   bunny.ipynb
-   demo_unit_disk.ipynb
-   cantilever.ipynb
-   dynamic_analysis.ipynb
-   gasm_high.ipynb
+.. Tutorial
+.. ========
+.. 
+.. .. toctree::
+..    :glob:
+.. 
+.. bunny.ipynb
+.. demo_unit_disk.ipynb
+.. cantilever.ipynb
+.. dynamic_analysis.ipynb
+.. gasm_high.ipynb
 .. ball_eigen.ipynb
