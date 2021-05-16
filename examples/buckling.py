@@ -33,13 +33,17 @@ for i, alpha in enumerate(alphas):
 
     mesh = gf.Mesh("cartesian", x, y, z)
     pts = mesh.pts()
-    pts += np.array([0.0*pts[2], alpha*(1.0 - np.cos(np.pi*pts[2]/(L/2.0))), 0.0*pts[2]])
+    pts += np.array(
+        [0.0 * pts[2], alpha * (1.0 - np.cos(np.pi * pts[2] / (L / 2.0))), 0.0 * pts[2]]
+    )
     mesh.set_pts(pts)
     meshs.append(mesh)
-    mesh.export_to_vtk("mesh.vtk", "ascii")
+    mesh.export_to_vtk("mesh" + str(i) + ".vtk", "ascii")
+
+for i, alpha in enumerate(alphas):
 
     p.subplot(0, i)
-    m = pv.read("mesh.vtk")
+    m = pv.read("mesh" + str(i) + ".vtk")
     p.add_mesh(m, show_edges=True)
     p.camera.zoom(2)
     p.show_grid()
@@ -87,26 +91,43 @@ for md, mfu, mim in zip(mds, mfus, mims):
     md.add_initialized_data("r2", [0.0, 0.0, 0.0])
     md.add_initialized_data("H1", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
     md.add_initialized_data("H2", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
-    md.add_generalized_Dirichlet_condition_with_multipliers(mim, "u", mfu, TOP_BOUND, "r1", "H1")
-    md.add_generalized_Dirichlet_condition_with_multipliers(mim, "u", mfu, BOTTOM_BOUND, "r2", "H2")
+    md.add_generalized_Dirichlet_condition_with_multipliers(
+        mim, "u", mfu, TOP_BOUND, "r1", "H1"
+    )
+    md.add_generalized_Dirichlet_condition_with_multipliers(
+        mim, "u", mfu, BOTTOM_BOUND, "r2", "H2"
+    )
 
-for md in mds:
+for i, md in enumerate(mds):
 
-    md.solve("max_res", 1E-9, "max_iter", 100, "noisy", "lsearch", "simplest",  "alpha min", 0.8)
+    md.solve(
+        "max_res",
+        1e-9,
+        "max_iter",
+        100,
+        "noisy",
+        "lsearch",
+        "simplest",
+        "alpha min",
+        0.8,
+    )
+
+    U = md.variable("u")
+    mfu.export_to_vtk(
+        "displacement" + str(i) + ".vtk", "ascii", mfu, U, "Displacements"
+    )
 
 
 p = pv.Plotter(shape=(1, len(alphas)))
 for i, (md, mfu) in enumerate(zip(mds, mfus)):
 
-    U = md.variable("u")
-    mfu.export_to_vtk("displacement.vtk", "ascii", mfu, U, "Displacements")
-
     p.subplot(0, i)
-    d = pv.read("displacement.vtk")
+    d = pv.read("displacement" + str(i) + ".vtk")
     d.set_active_vectors("Displacements")
-    p.add_mesh(d.warp_by_vector(factor=1.00), show_edges=True)
+    p.add_mesh(d.warp_by_vector(factor=1.00), show_edges=True, color="white")
     p.camera_position = "yz"
-    p.camera.zoom(1.5)
+    p.camera.enable_parallel_projection()
+    p.camera.zoom(4.0)
     p.show_grid()
 
 p.show(screenshot="displacement.png", window_size=[1200, 1400])
