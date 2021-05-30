@@ -22,6 +22,8 @@ h = 1.0
 L = 20.0
 # Degree of the finite element methods
 elements_degree = 2
+# Displacements of the TOP boundary
+displacements = np.linspace(0.0, 2.0, 100)
 
 meshs = []
 p = pv.Plotter(shape=(1, len(alphas)))
