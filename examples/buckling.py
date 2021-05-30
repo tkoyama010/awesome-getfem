@@ -98,7 +98,7 @@ for md, mfu, mim in zip(mds, mfus, mims):
         mim, "u", mfu, BOTTOM_BOUND, "r2", "H2"
     )
 
-for i, md in enumerate(mds):
+for i, (md, mfu) in enumerate(zip(mds, mfus)):
 
     md.solve(
         "max_res",
