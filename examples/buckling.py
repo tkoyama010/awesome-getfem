@@ -27,9 +27,12 @@ linear = False
 # Force
 # forces = np.arange(0.0, 100.0 + 1.0, 1.0)
 # forces = np.array([0.0, 10.0, 20.0, 30.0, 4.0, 50.0, 60.0, 70.0, 80.0, 90.0 , 100.0])
-forces = np.array([0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0 , 100.0])
+forces = np.array([0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0])
+# Augmentation parameter for the augmented Lagrangian
+gamma0 = 1./E
 
 mesh1s = []
+mesh2s = []
 p = pv.Plotter(shape=(1, len(alphas)))
 for i, alpha in enumerate(alphas):
 
@@ -48,6 +51,13 @@ for i, alpha in enumerate(alphas):
     mesh1s.append(mesh1)
     mesh1.export_to_vtk("mesh1" + str(i) + ".vtk", "ascii")
 
+    mesh2 = gf.Mesh("cartesian", x, y, np.array([L, L + 1.0]))
+    mesh2s.append(mesh2)
+    mesh2.export_to_vtk("mesh2" + str(i) + ".vtk", "ascii")
+
+del i
+del alpha
+
 for i, alpha in enumerate(alphas):
 
     p.subplot(0, i)
@@ -58,71 +68,146 @@ for i, alpha in enumerate(alphas):
 
 p.show(screenshot="mesh1.png", window_size=[1200, 1400])
 
-for mesh1 in mesh1s:
+del i
+del alpha
+
+for mesh1, mesh2 in zip(mesh1s, mesh2s):
+
+    TOP_BOUND = 1
+    BOTTOM_BOUND = 2
+    CONTACT_BOUND = 3
 
     # P = mesh1.pts()
     # c1 = (P[2, :] > L - 1e-6)
     # pid1 = np.compress(c1, list(range(0, mesh1.nbpts())))
-    # fb1 = mesh1.faces_from_pid(pid1)
-    fb1 = mesh1.outer_faces_with_direction([0.0, 0.0, 1.0], 0.01)
-    fb2 = mesh1.outer_faces_with_direction([0.0, 0.0, -1.0], 0.01)
+    # fb11 = mesh1.faces_from_pid(pid1)
+    fb11 = mesh1.outer_faces_with_direction([0.0, 0.0, 1.0], 0.01)
+    fb12 = mesh1.outer_faces_with_direction([0.0, 0.0, -1.0], 0.01)
 
-    TOP_BOUND = 1
-    BOTTOM_BOUND = 2
+    mesh1.set_region(CONTACT_BOUND, fb11)
+    mesh1.set_region(BOTTOM_BOUND, fb12)
 
-    mesh1.set_region(TOP_BOUND, fb1)
-    mesh1.set_region(BOTTOM_BOUND, fb2)
+    fb21 = mesh2.outer_faces_with_direction([0.0, 0.0, 1.0], 0.01)
+    fb22 = mesh2.outer_faces_with_direction([0.0, 0.0, -1.0], 0.01)
 
-mfus = []
-mims = []
-for mesh1 in mesh1s:
+    mesh2.set_region(TOP_BOUND, fb21)
+    mesh2.set_region(CONTACT_BOUND, fb22)
 
-    mfu = gf.MeshFem(mesh1, 3)
-    mfu.set_classical_fem(elements_degree)
-    mfus.append(mfu)
+del mesh1
+del mesh2
 
-    mim = gf.MeshIm(mesh1, pow(elements_degree, 2))
-    mims.append(mim)
+mfu1s = []
+mfu2s = []
+mim1s = []
+mim2s = []
+mflambda_Cs = []
+for mesh1, mesh2 in zip(mesh1s, mesh2s):
+
+    mfu1 = gf.MeshFem(mesh1, 3)
+    mfu1.set_classical_fem(elements_degree)
+    mfu1s.append(mfu1)
+
+    mim1 = gf.MeshIm(mesh1, pow(elements_degree, 2))
+    mim1s.append(mim1)
+
+    mfu2 = gf.MeshFem(mesh2, 3)
+    mfu2.set_classical_fem(elements_degree)
+    mfu2s.append(mfu2)
+
+    mim2 = gf.MeshIm(mesh2, pow(elements_degree, 2))
+    mim2s.append(mim2)
+
+    mflambda_C = gf.MeshFem(mesh1, 1)
+    mflambda_C.set_classical_fem(elements_degree-1)
+    mflambda_Cs.append(mflambda_C)
+
+del mesh1
+del mesh2
 
 mds = []
-for mfu, mim in zip(mfus, mims):
+for mfu1, mfu2 in zip(mfu1s, mfu2s):
 
     md = gf.Model("real")
-    md.add_fem_variable("u", mfu)
+    md.add_fem_variable("u1", mfu1)
+    md.add_fem_variable("u2", mfu2)
     mds.append(md)
 
-for md, mfu, mim in zip(mds, mfus, mims):
+del mfu1
+del mfu2
+
+for md, mim1, mim2 in zip(mds, mim1s, mim2s):
 
     if linear:
-        md.add_initialized_data('cmu1', cmu)
-        md.add_initialized_data('clambda1', clambda)
-        md.add_isotropic_linearized_elasticity_brick(mim, 'u', 'clambda1', 'cmu1')
-        md.add_initialized_data('cmu2', cmu*1000.0)
-        md.add_initialized_data('clambda2', clambda*1000.0)
-        md.add_isotropic_linearized_elasticity_brick(mim, 'u', 'clambda2', 'cmu2', TOP_BOUND)
+        md.add_initialized_data("cmu1", cmu)
+        md.add_initialized_data("clambda1", clambda)
+        md.add_isotropic_linearized_elasticity_brick(mim1, "u1", "clambda1", "cmu1")
     else:
         md.add_initialized_data("params", [clambda, cmu])
-        md.add_initialized_data("lambda", clambda*1000.0)
-        md.add_initialized_data("mu", cmu*1000.0)
         lawname = "SaintVenant Kirchhoff"
-        md.add_finite_strain_elasticity_brick(mim, lawname, "u", "params")
-        md.add_isotropic_linearized_elasticity_brick(mim, "u", "lambda", "mu", TOP_BOUND)
+        md.add_finite_strain_elasticity_brick(mim1, lawname, "u1", "params")
 
-for md, mfu, mim in zip(mds, mfus, mims):
+    md.add_initialized_data("cmu2", cmu * 1000.0)
+    md.add_initialized_data("clambda2", clambda * 1000.0)
+    md.add_isotropic_linearized_elasticity_brick(mim2, "u2", "clambda2", "cmu2")
+    md.add_isotropic_linearized_elasticity_brick(mim2, "u2", "clambda2", "cmu2")
 
-    md.add_initialized_data("r1", [0.0, 0.0, 0.0])
-    md.add_initialized_data("r2", [0.0, 0.0, 0.0])
-    md.add_initialized_data("H1", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
-    md.add_initialized_data("H2", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+del md
+del mim1
+del mim2
+
+for md, mfu1, mim1, mfu2, mim2 in zip(mds, mfu1s, mim1s, mfu2s, mim2s):
+
+    md.add_initialized_data("r11", [0.0, 0.0, 0.0])
+    md.add_initialized_data("r12", [0.0, 0.0, 0.0])
+    md.add_initialized_data("H11", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
+    md.add_initialized_data("H12", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
     md.add_generalized_Dirichlet_condition_with_multipliers(
-        mim, "u", mfu, TOP_BOUND, "r1", "H1"
+        mim1, "u1", mfu1, CONTACT_BOUND, "r11", "H11"
     )
     md.add_generalized_Dirichlet_condition_with_multipliers(
-        mim, "u", mfu, BOTTOM_BOUND, "r2", "H2"
+        mim1, "u1", mfu1, BOTTOM_BOUND, "r12", "H12"
     )
+
+    md.add_initialized_data("r21", [0.0, 0.0, 0.0])
+    md.add_initialized_data("r22", [0.0, 0.0, 0.0])
+    md.add_initialized_data("H21", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
+    md.add_initialized_data("H22", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
+    md.add_generalized_Dirichlet_condition_with_multipliers(
+        mim2, "u2", mfu2, TOP_BOUND, "r21", "H21"
+    )
+    md.add_generalized_Dirichlet_condition_with_multipliers(
+        mim2, "u2", mfu2, CONTACT_BOUND, "r21", "H21"
+    )
+
+del md
+del mfu1
+del mim1
+del mfu2
+del mim2
+
+for md, mesh1, mfu1, mim1, mesh2, mfu2, mim2, mflambda_C in zip(mds, mesh1s, mfu1s, mim1s, mesh2s, mfu2s, mim2s, mflambda_Cs):
+
+    md.add_interpolate_transformation_from_expression(
+        "Proj1", mesh1, mesh2, "[X(1);X(2);X(3)]"
+    )
+    md.add_initialized_data("gamma0", [gamma0])
+    md.add_filtered_fem_variable("lambda1", mflambda_C, CONTACT_BOUND)
+    md.add_nonlinear_term(
+        mim1,
+        "lambda1*(Test_u1.[0;0;-1])-lambda1*(Interpolate(Test_u2,Proj1).[0;0;-1])",
+        CONTACT_BOUND,
+    )
+    md.add_nonlinear_term(
+        mim1,
+        "-(gamma0*element_size)"
+        "*(lambda1 + neg_part(lambda1+(1/(gamma0*element_size))"
+        "*((u1-Interpolate(u2,Proj1)+X-Interpolate(X,Proj1)).[0;0;-1])))*Test_lambda1",
+        CONTACT_BOUND,
+    )
+
 
 curves = []
-for i, (md, mfu, mim) in enumerate(zip(mds, mfus, mims)):
+for i, (md, mfu1, mfu2, mim2) in enumerate(zip(mds, mfu1s, mfu2s, mim2s)):
     # md.add_initialized_data("force", [0.0, 0.0, 0.0])
 
     Fs = []
@@ -130,7 +215,7 @@ for i, (md, mfu, mim) in enumerate(zip(mds, mfus, mims)):
     # for j, force in enumerate(forces):
     for j in range(100):
         # md.set_variable("force", [0.0, 0.0, -force])
-        md.add_source_term_brick(mim, "u", "[0.0, 0.0, -1.0]", TOP_BOUND)
+        md.add_source_term_brick(mim2, "u2", "[0.0, 0.0, -1.0]", TOP_BOUND)
         iter_number = md.solve(
             "max_res",
             1e-6,
@@ -144,24 +229,43 @@ for i, (md, mfu, mim) in enumerate(zip(mds, mfus, mims)):
         )
 
         if iter_number == 200:
-           break
-        displacement = (((md.variable("u"))[mfu.dof_on_region(TOP_BOUND)]).reshape(-1, 3))[0, 2]
+            break
+        displacement = (
+            ((md.variable("u1"))[mfu1.dof_on_region(CONTACT_BOUND)]).reshape(-1, 3)
+        )[0, 2]
         if np.abs(displacement) > 20.0:
-          break
+            break
 
         displacements.append(displacement)
-        Fs.append(j*1.0)
-        U = md.variable("u")
-        mfu.export_to_vtk(
-            "displacement" + str(i) + "-" + "{:0=3}".format(j) + ".vtk", "ascii", mfu, U, "Displacements"
+        Fs.append(j * 1.0)
+        U1 = md.variable("u1")
+        mfu1.export_to_vtk(
+            "mfu1-" + str(i) + "-" + "{:0=3}".format(j) + ".vtk",
+            "ascii",
+            mfu1,
+            U1,
+            "Displacements",
+        )
+        U2 = md.variable("u2")
+        mfu2.export_to_vtk(
+            "mfu2-" + str(i) + "-" + "{:0=3}".format(j) + ".vtk",
+            "ascii",
+            mfu2,
+            U2,
+            "Displacements",
         )
 
     curves.append([Fs, displacements])
 
+del i
+del md
+del mfu1
+del mim2
+
 
 # p = pv.Plotter(shape=(1, len(alphas)))
 # for i, alpha in enumerate(alphas):
-# 
+#
 #     p.subplot(0, i)
 #     d = pv.read("displacement" + str(i) + ".vtk")
 #     d.set_active_vectors("Displacements")
@@ -170,5 +274,5 @@ for i, (md, mfu, mim) in enumerate(zip(mds, mfus, mims)):
 #     p.camera.enable_parallel_projection()
 #     p.camera.zoom(1.75)
 #     p.show_grid()
-# 
+#
 # p.show(screenshot="displacement.png", window_size=[1200, 1400])
