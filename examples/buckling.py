@@ -29,7 +29,7 @@ linear = False
 # forces = np.array([0.0, 10.0, 20.0, 30.0, 4.0, 50.0, 60.0, 70.0, 80.0, 90.0 , 100.0])
 forces = np.array([0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0 , 100.0])
 
-meshs = []
+mesh1s = []
 p = pv.Plotter(shape=(1, len(alphas)))
 for i, alpha in enumerate(alphas):
 
@@ -45,7 +45,7 @@ for i, alpha in enumerate(alphas):
     mesh1.set_pts(pts)
     # mesh1.merge(gf.Mesh("cartesian", x, y, np.array([L, L + 1.0])))
 
-    meshs.append(mesh1)
+    mesh1s.append(mesh1)
     mesh1.export_to_vtk("mesh1" + str(i) + ".vtk", "ascii")
 
 for i, alpha in enumerate(alphas):
@@ -58,7 +58,7 @@ for i, alpha in enumerate(alphas):
 
 p.show(screenshot="mesh1.png", window_size=[1200, 1400])
 
-for mesh1 in meshs:
+for mesh1 in mesh1s:
 
     # P = mesh1.pts()
     # c1 = (P[2, :] > L - 1e-6)
@@ -75,7 +75,7 @@ for mesh1 in meshs:
 
 mfus = []
 mims = []
-for mesh1 in meshs:
+for mesh1 in mesh1s:
 
     mfu = gf.MeshFem(mesh1, 3)
     mfu.set_classical_fem(elements_degree)
