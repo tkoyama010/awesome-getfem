@@ -37,51 +37,51 @@ for i, alpha in enumerate(alphas):
     y = np.linspace(0.0, h, 4)
     z = np.linspace(0.0, L, 80)
 
-    mesh = gf.Mesh("cartesian", x, y, z)
-    pts = mesh.pts()
+    mesh1 = gf.Mesh("cartesian", x, y, z)
+    pts = mesh1.pts()
     pts += np.array(
         [0.0 * pts[2], alpha * (1.0 - np.cos(np.pi * pts[2] / (L / 2.0))), 0.0 * pts[2]]
     )
-    mesh.set_pts(pts)
-    # mesh.merge(gf.Mesh("cartesian", x, y, np.array([L, L + 1.0])))
+    mesh1.set_pts(pts)
+    # mesh1.merge(gf.Mesh("cartesian", x, y, np.array([L, L + 1.0])))
 
-    meshs.append(mesh)
-    mesh.export_to_vtk("mesh" + str(i) + ".vtk", "ascii")
+    meshs.append(mesh1)
+    mesh1.export_to_vtk("mesh1" + str(i) + ".vtk", "ascii")
 
 for i, alpha in enumerate(alphas):
 
     p.subplot(0, i)
-    m = pv.read("mesh" + str(i) + ".vtk")
+    m = pv.read("mesh1" + str(i) + ".vtk")
     p.add_mesh(m, show_edges=True)
     p.camera.zoom(2)
     p.show_grid()
 
-p.show(screenshot="mesh.png", window_size=[1200, 1400])
+p.show(screenshot="mesh1.png", window_size=[1200, 1400])
 
-for mesh in meshs:
+for mesh1 in meshs:
 
-    # P = mesh.pts()
+    # P = mesh1.pts()
     # c1 = (P[2, :] > L - 1e-6)
-    # pid1 = np.compress(c1, list(range(0, mesh.nbpts())))
-    # fb1 = mesh.faces_from_pid(pid1)
-    fb1 = mesh.outer_faces_with_direction([0.0, 0.0, 1.0], 0.01)
-    fb2 = mesh.outer_faces_with_direction([0.0, 0.0, -1.0], 0.01)
+    # pid1 = np.compress(c1, list(range(0, mesh1.nbpts())))
+    # fb1 = mesh1.faces_from_pid(pid1)
+    fb1 = mesh1.outer_faces_with_direction([0.0, 0.0, 1.0], 0.01)
+    fb2 = mesh1.outer_faces_with_direction([0.0, 0.0, -1.0], 0.01)
 
     TOP_BOUND = 1
     BOTTOM_BOUND = 2
 
-    mesh.set_region(TOP_BOUND, fb1)
-    mesh.set_region(BOTTOM_BOUND, fb2)
+    mesh1.set_region(TOP_BOUND, fb1)
+    mesh1.set_region(BOTTOM_BOUND, fb2)
 
 mfus = []
 mims = []
-for mesh in meshs:
+for mesh1 in meshs:
 
-    mfu = gf.MeshFem(mesh, 3)
+    mfu = gf.MeshFem(mesh1, 3)
     mfu.set_classical_fem(elements_degree)
     mfus.append(mfu)
 
-    mim = gf.MeshIm(mesh, pow(elements_degree, 2))
+    mim = gf.MeshIm(mesh1, pow(elements_degree, 2))
     mims.append(mim)
 
 mds = []
