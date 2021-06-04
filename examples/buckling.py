@@ -208,14 +208,14 @@ for md, mesh1, mfu1, mim1, mesh2, mfu2, mim2, mflambda_C in zip(mds, mesh1s, mfu
 
 curves = []
 for i, (md, mfu1, mfu2, mim2) in enumerate(zip(mds, mfu1s, mfu2s, mim2s)):
-    # md.add_initialized_data("force", [0.0, 0.0, 0.0])
+    md.add_initialized_data("applied_force", [0.0, 0.0, 0.0])
+    md.add_source_term_brick(mim2, "u2", "applied_force", TOP_BOUND)
 
     Fs = []
     displacements = []
     # for j, force in enumerate(forces):
     for j in range(100):
-        # md.set_variable("force", [0.0, 0.0, -force])
-        md.add_source_term_brick(mim2, "u2", "[0.0, 0.0, -1.0]", TOP_BOUND)
+        md.set_variable("applied_force", [0.0, 0.0, -j*1.0])
         iter_number = md.solve(
             "max_res",
             1e-6,
