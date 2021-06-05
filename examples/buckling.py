@@ -29,7 +29,7 @@ linear = False
 # forces = np.array([0.0, 10.0, 20.0, 30.0, 4.0, 50.0, 60.0, 70.0, 80.0, 90.0 , 100.0])
 forces = np.array([0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0])
 # Augmentation parameter for the augmented Lagrangian
-gamma0 = 1./E
+gamma0 = 1.0 / E
 
 mesh1s = []
 mesh2s = []
@@ -97,10 +97,9 @@ del mesh1
 del mesh2
 
 mfu1s = []
-mfu2s = []
 mim1s = []
-mim2s = []
 mflambda_Cs = []
+mflambdas = []
 for mesh1, mesh2 in zip(mesh1s, mesh2s):
 
     mfu1 = gf.MeshFem(mesh1, 3)
@@ -110,32 +109,28 @@ for mesh1, mesh2 in zip(mesh1s, mesh2s):
     mim1 = gf.MeshIm(mesh1, pow(elements_degree, 2))
     mim1s.append(mim1)
 
-    mfu2 = gf.MeshFem(mesh2, 3)
-    mfu2.set_classical_fem(elements_degree)
-    mfu2s.append(mfu2)
-
-    mim2 = gf.MeshIm(mesh2, pow(elements_degree, 2))
-    mim2s.append(mim2)
+    mflambda = gf.MeshFem(mesh1, 3)
+    mflambda.set_classical_fem(elements_degree - 1)
+    mflambdas.append(mflambda)
 
     mflambda_C = gf.MeshFem(mesh1, 1)
-    mflambda_C.set_classical_fem(elements_degree-1)
+    mflambda_C.set_classical_fem(elements_degree - 1)
     mflambda_Cs.append(mflambda_C)
 
 del mesh1
 del mesh2
+del mfu1
 
 mds = []
-for mfu1, mfu2 in zip(mfu1s, mfu2s):
+for mfu1 in mfu1s:
 
     md = gf.Model("real")
     md.add_fem_variable("u1", mfu1)
-    md.add_fem_variable("u2", mfu2)
     mds.append(md)
 
 del mfu1
-del mfu2
 
-for md, mim1, mim2 in zip(mds, mim1s, mim2s):
+for md, mim1 in zip(mds, mim1s):
 
     if linear:
         md.add_initialized_data("cmu1", cmu)
@@ -146,76 +141,38 @@ for md, mim1, mim2 in zip(mds, mim1s, mim2s):
         lawname = "SaintVenant Kirchhoff"
         md.add_finite_strain_elasticity_brick(mim1, lawname, "u1", "params")
 
-    md.add_initialized_data("cmu2", cmu * 1000.0)
-    md.add_initialized_data("clambda2", clambda * 1000.0)
-    md.add_isotropic_linearized_elasticity_brick(mim2, "u2", "clambda2", "cmu2")
-    md.add_isotropic_linearized_elasticity_brick(mim2, "u2", "clambda2", "cmu2")
-
 del md
 del mim1
-del mim2
 
-for md, mfu1, mim1, mfu2, mim2 in zip(mds, mfu1s, mim1s, mfu2s, mim2s):
+for md, mfu1, mim1, mflambda in zip(mds, mfu1s, mim1s, mflambdas):
 
     md.add_initialized_data("r11", [0.0, 0.0, 0.0])
     md.add_initialized_data("r12", [0.0, 0.0, 0.0])
     md.add_initialized_data("H11", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
     md.add_initialized_data("H12", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
     md.add_generalized_Dirichlet_condition_with_multipliers(
-        mim1, "u1", mfu1, CONTACT_BOUND, "r11", "H11"
-    )
-    md.add_generalized_Dirichlet_condition_with_multipliers(
         mim1, "u1", mfu1, BOTTOM_BOUND, "r12", "H12"
     )
 
-    md.add_initialized_data("r21", [0.0, 0.0, 0.0])
-    md.add_initialized_data("r22", [0.0, 0.0, 0.0])
-    md.add_initialized_data("H21", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
-    md.add_initialized_data("H22", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
-    md.add_generalized_Dirichlet_condition_with_multipliers(
-        mim2, "u2", mfu2, TOP_BOUND, "r21", "H21"
-    )
-    md.add_generalized_Dirichlet_condition_with_multipliers(
-        mim2, "u2", mfu2, CONTACT_BOUND, "r21", "H21"
-    )
+    md.add_variable("alpha_D", 1)
+    md.add_filtered_fem_variable('lambda_D', mflambda, CONTACT_BOUND)
+    md.add_initialized_data('F', [0.0])
+    md.add_linear_term(mim1, "-lambda_D.Test_u1 + (alpha_D*[0;0;1]-u1).Test_lambda_D"
+                             " + (lambda_D.[0;0;1]+F)*Test_alpha_D", CONTACT_BOUND)
 
 del md
 del mfu1
 del mim1
-del mfu2
-del mim2
-
-for md, mesh1, mfu1, mim1, mesh2, mfu2, mim2, mflambda_C in zip(mds, mesh1s, mfu1s, mim1s, mesh2s, mfu2s, mim2s, mflambda_Cs):
-
-    md.add_interpolate_transformation_from_expression(
-        "Proj1", mesh1, mesh2, "[X(1);X(2);X(3)]"
-    )
-    md.add_initialized_data("gamma0", [gamma0])
-    md.add_filtered_fem_variable("lambda1", mflambda_C, CONTACT_BOUND)
-    md.add_nonlinear_term(
-        mim1,
-        "lambda1*(Test_u1.[0;0;-1])-lambda1*(Interpolate(Test_u2,Proj1).[0;0;-1])",
-        CONTACT_BOUND,
-    )
-    md.add_nonlinear_term(
-        mim1,
-        "-(gamma0*element_size)"
-        "*(lambda1 + neg_part(lambda1+(1/(gamma0*element_size))"
-        "*((u1-Interpolate(u2,Proj1)+X-Interpolate(X,Proj1)).[0;0;-1])))*Test_lambda1",
-        CONTACT_BOUND,
-    )
 
 
 curves = []
-for i, (md, mfu1, mfu2, mim2) in enumerate(zip(mds, mfu1s, mfu2s, mim2s)):
-    md.add_initialized_data("applied_force", [0.0, 0.0, 0.0])
-    md.add_source_term_brick(mim2, "u2", "applied_force", TOP_BOUND)
+for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
 
     Fs = []
     displacements = []
     # for j, force in enumerate(forces):
     for j in range(100):
-        md.set_variable("applied_force", [0.0, 0.0, -j*1.0])
+        md.set_variable("F", [j*1.0])
         iter_number = md.solve(
             "max_res",
             1e-6,
@@ -246,21 +203,12 @@ for i, (md, mfu1, mfu2, mim2) in enumerate(zip(mds, mfu1s, mfu2s, mim2s)):
             U1,
             "Displacements",
         )
-        U2 = md.variable("u2")
-        mfu2.export_to_vtk(
-            "mfu2-" + str(i) + "-" + "{:0=3}".format(j) + ".vtk",
-            "ascii",
-            mfu2,
-            U2,
-            "Displacements",
-        )
 
     curves.append([Fs, displacements])
 
 del i
 del md
 del mfu1
-del mim2
 
 
 # p = pv.Plotter(shape=(1, len(alphas)))
