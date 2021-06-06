@@ -15,7 +15,7 @@ clambda = E * nu / ((1 + nu) * (1 - 2 * nu))
 # Second Lame coefficient (MPa)
 cmu = E / (2 * (1 + nu))
 # Initially imperfect (mm)
-alphas = [0.0, 0.02, 0.2]
+alphas = [0.0, 0.01, 0.02, 0.1, 0.2]
 # X length (mm)
 b = 1.0
 # Y length (mm)
@@ -180,7 +180,7 @@ for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
         md.set_variable("F", [j*1.0])
         iter_number = md.solve(
             "max_res",
-            1e-6,
+            1e-9,
             "max_iter",
             200,
             "noisy",
@@ -210,6 +210,7 @@ for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
     ax.plot(alpha_Ds, Fs)
 
 plt.show()
+fig.savefig("buckling.png")
 
 del i
 del md
