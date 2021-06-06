@@ -1,6 +1,8 @@
 import getfem as gf
 import numpy as np
 import pyvista as pv
+import matplotlib.pyplot as plt
+
 
 pv.set_plot_theme("document")
 
@@ -164,12 +166,15 @@ del md
 del mfu1
 del mim1
 
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.set_xlim([0.0, -2.0])
+ax.set_ylim([0.0, 100.0])
 
-curves = []
 for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
 
     Fs = []
-    displacements = []
+    alpha_Ds = []
     # for j, force in enumerate(forces):
     for j in range(100):
         md.set_variable("F", [j*1.0])
@@ -187,13 +192,11 @@ for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
 
         if iter_number == 200:
             break
-        displacement = (
-            ((md.variable("u1"))[mfu1.dof_on_region(CONTACT_BOUND)]).reshape(-1, 3)
-        )[0, 2]
-        if np.abs(displacement) > 20.0:
+        alpha_D = md.variable("alpha_D")[0]
+        if np.abs(alpha_D) > 20.0:
             break
 
-        displacements.append(displacement)
+        alpha_Ds.append(alpha_D)
         Fs.append(j * 1.0)
         U1 = md.variable("u1")
         mfu1.export_to_vtk(
@@ -204,7 +207,9 @@ for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
             "Displacements",
         )
 
-    curves.append([Fs, displacements])
+    ax.plot(alpha_Ds, Fs)
+
+plt.show()
 
 del i
 del md
