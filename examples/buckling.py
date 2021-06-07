@@ -112,7 +112,7 @@ for mesh1, mesh2 in zip(mesh1s, mesh2s):
     mfu1s.append(mfu1)
 
     mfp1 = gf.MeshFem(mesh1, 1)
-    mfp.set_classical_discontinuous_fem(0)
+    mfp1.set_classical_discontinuous_fem(0)
 
     mim1 = gf.MeshIm(mesh1, pow(elements_degree, 2))
     mim1s.append(mim1)
@@ -180,6 +180,7 @@ for md, mfu1, mim1, mflambda in zip(mds, mfu1s, mim1s, mflambdas):
         " + (lambda_D.[0;0;1]+F)*Test_alpha_D",
         CONTACT_BOUND,
     )
+    md.add_linear_term(mim1, '1E-6*alpha_D*Test_alpha_D');
 
 del md
 del mfu1
