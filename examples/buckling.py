@@ -153,6 +153,9 @@ for md, mfu1, mim1, mflambda in zip(mds, mfu1s, mim1s, mflambdas):
     md.add_initialized_data("H11", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]])
     md.add_initialized_data("H12", [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
     md.add_generalized_Dirichlet_condition_with_multipliers(
+        mim1, "u1", mfu1, CONTACT_BOUND, "r11", "H11"
+    )
+    md.add_generalized_Dirichlet_condition_with_multipliers(
         mim1, "u1", mfu1, BOTTOM_BOUND, "r12", "H12"
     )
 
