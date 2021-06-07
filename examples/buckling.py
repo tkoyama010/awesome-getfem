@@ -32,6 +32,8 @@ linear = False
 forces = np.array([0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0])
 # Augmentation parameter for the augmented Lagrangian
 gamma0 = 1.0 / E
+# ensure that degree > 1 when incompressible is on..
+incompressible = False
 
 mesh1s = []
 mesh2s = []
@@ -99,6 +101,7 @@ del mesh1
 del mesh2
 
 mfu1s = []
+mfp1s = []
 mim1s = []
 mflambda_Cs = []
 mflambdas = []
@@ -107,6 +110,9 @@ for mesh1, mesh2 in zip(mesh1s, mesh2s):
     mfu1 = gf.MeshFem(mesh1, 3)
     mfu1.set_classical_fem(elements_degree)
     mfu1s.append(mfu1)
+
+    mfp1 = gf.MeshFem(mesh1, 1)
+    mfp.set_classical_discontinuous_fem(0)
 
     mim1 = gf.MeshIm(mesh1, pow(elements_degree, 2))
     mim1s.append(mim1)
@@ -140,8 +146,14 @@ for md, mim1 in zip(mds, mim1s):
         md.add_isotropic_linearized_elasticity_brick(mim1, "u1", "clambda1", "cmu1")
     else:
         md.add_initialized_data("params", [clambda, cmu])
-        lawname = "SaintVenant Kirchhoff"
-        md.add_finite_strain_elasticity_brick(mim1, lawname, "u1", "params")
+        if incompressible:
+            lawname = "Incompressible Mooney Rivlin"
+            md.add_finite_strain_elasticity_brick(mim, lawname, "u", "params")
+            md.add_fem_variable("p", mfp)
+            md.add_finite_strain_incompressibility_brick(mim, "u", "p")
+        else:
+            lawname = "SaintVenant Kirchhoff"
+            md.add_finite_strain_elasticity_brick(mim1, lawname, "u1", "params")
 
 del md
 del mim1
@@ -160,10 +172,14 @@ for md, mfu1, mim1, mflambda in zip(mds, mfu1s, mim1s, mflambdas):
     )
 
     md.add_variable("alpha_D", 1)
-    md.add_filtered_fem_variable('lambda_D', mflambda, CONTACT_BOUND)
-    md.add_initialized_data('F', [0.0])
-    md.add_linear_term(mim1, "-lambda_D.Test_u1 + (alpha_D*[0;0;1]-u1).Test_lambda_D"
-                             " + (lambda_D.[0;0;1]+F)*Test_alpha_D", CONTACT_BOUND)
+    md.add_filtered_fem_variable("lambda_D", mflambda, CONTACT_BOUND)
+    md.add_initialized_data("F", [0.0])
+    md.add_linear_term(
+        mim1,
+        "-lambda_D.Test_u1 + (alpha_D*[0;0;1]-u1).Test_lambda_D"
+        " + (lambda_D.[0;0;1]+F)*Test_alpha_D",
+        CONTACT_BOUND,
+    )
 
 del md
 del mfu1
@@ -180,7 +196,7 @@ for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
     alpha_Ds = []
     # for j, force in enumerate(forces):
     for j in range(100):
-        md.set_variable("F", [j*1.0])
+        md.set_variable("F", [j * 1.0])
         iter_number = md.solve(
             "max_res",
             1e-9,
