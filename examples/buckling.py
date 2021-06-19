@@ -1,8 +1,21 @@
+"""
+Comparison the FEM results and analytical results in buckling problem
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run a Buckling problem and compare the results.
+
+"""
+###############################################################################
+# Buckling problem
+# ================
+#
+# Let us begin by loading Getfem and fixing the parameters of the problem
+
+
 import getfem as gf
 import numpy as np
 import pyvista as pv
 import matplotlib.pyplot as plt
-
 
 pv.set_plot_theme("document")
 
@@ -26,18 +39,17 @@ L = 20.0
 elements_degree = 2
 # Linear
 linear = False
-# Force
-# forces = np.arange(0.0, 100.0 + 1.0, 1.0)
-# forces = np.array([0.0, 10.0, 20.0, 30.0, 4.0, 50.0, 60.0, 70.0, 80.0, 90.0 , 100.0])
-forces = np.array([0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0])
 # Augmentation parameter for the augmented Lagrangian
 gamma0 = 1.0 / E
 # ensure that degree > 1 when incompressible is on..
 incompressible = False
 
+###############################################################################
+# Mesh generation
+# +++++++++++++++
+
 mesh1s = []
 mesh2s = []
-p = pv.Plotter(shape=(1, len(alphas)))
 for i, alpha in enumerate(alphas):
 
     x = np.linspace(0.0, b, 4)
@@ -62,6 +74,10 @@ for i, alpha in enumerate(alphas):
 del i
 del alpha
 
+###############################################################################
+# The result is the following
+
+p = pv.Plotter(off_screen=True, shape=(1, len(alphas)))
 for i, alpha in enumerate(alphas):
 
     p.subplot(0, i)
@@ -72,6 +88,15 @@ for i, alpha in enumerate(alphas):
 
 p.show(screenshot="mesh1.png", window_size=[1200, 1400])
 
+
+###############################################################################
+# Boundary selection
+# ++++++++++++++++++
+# We have to select the different parts of the boundary where we will set some
+# boundary conditions, namely the boundary of the rim (in order to apply a
+# force and the fact that the rim is rigid), the contact boundary of the wheel
+# and the bottom boundary of the foundation that we will assume clamped.
+
 del i
 del alpha
 
@@ -81,10 +106,6 @@ for mesh1, mesh2 in zip(mesh1s, mesh2s):
     BOTTOM_BOUND = 2
     CONTACT_BOUND = 3
 
-    # P = mesh1.pts()
-    # c1 = (P[2, :] > L - 1e-6)
-    # pid1 = np.compress(c1, list(range(0, mesh1.nbpts())))
-    # fb11 = mesh1.faces_from_pid(pid1)
     fb11 = mesh1.outer_faces_with_direction([0.0, 0.0, 1.0], 0.01)
     fb12 = mesh1.outer_faces_with_direction([0.0, 0.0, -1.0], 0.01)
 
@@ -99,6 +120,13 @@ for mesh1, mesh2 in zip(mesh1s, mesh2s):
 
 del mesh1
 del mesh2
+
+###############################################################################
+#
+# Definition of finite elements methods and integration method
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#
+
 
 mfu1s = []
 mfp1s = []
@@ -129,6 +157,14 @@ del mesh1
 del mesh2
 del mfu1
 
+###############################################################################
+#
+# Model definition
+# ++++++++++++++++
+#
+# We use a real model and declare the two variables which will represent the
+# displacements:
+
 mds = []
 for mfu1 in mfu1s:
 
@@ -137,6 +173,14 @@ for mfu1 in mfu1s:
     mds.append(md)
 
 del mfu1
+
+###############################################################################
+#
+# Nonlinear elasticity bricks
+# ++++++++++++++++++++++++++++
+#
+# We add the Lame coefficients as data of the model and add a nonlinear
+# elasticity brick for the wheel and the foundation:
 
 for md, mim1 in zip(mds, mim1s):
 
@@ -157,6 +201,11 @@ for md, mim1 in zip(mds, mim1s):
 
 del md
 del mim1
+
+###############################################################################
+#
+# Condition at the boundary
+# +++++++++++++++++++++++++
 
 for md, mfu1, mim1, mflambda in zip(mds, mfu1s, mim1s, mflambdas):
 
@@ -186,16 +235,17 @@ del md
 del mfu1
 del mim1
 
+
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.set_xlim([0.0, -2.0])
 ax.set_ylim([0.0, 100.0])
 
+
 for i, (md, mfu1) in enumerate(zip(mds, mfu1s)):
 
     Fs = []
     alpha_Ds = []
-    # for j, force in enumerate(forces):
     for j in range(100):
         md.set_variable("F", [j * 1.0])
         iter_number = md.solve(
@@ -235,18 +285,3 @@ fig.savefig("buckling.png")
 del i
 del md
 del mfu1
-
-
-# p = pv.Plotter(shape=(1, len(alphas)))
-# for i, alpha in enumerate(alphas):
-#
-#     p.subplot(0, i)
-#     d = pv.read("displacement" + str(i) + ".vtk")
-#     d.set_active_vectors("Displacements")
-#     p.add_mesh(d.warp_by_vector(factor=1.00), show_edges=True, color="white")
-#     p.camera_position = "yz"
-#     p.camera.enable_parallel_projection()
-#     p.camera.zoom(1.75)
-#     p.show_grid()
-#
-# p.show(screenshot="displacement.png", window_size=[1200, 1400])

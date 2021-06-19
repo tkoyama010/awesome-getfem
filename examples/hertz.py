@@ -6,8 +6,8 @@ Run a Hertz problem and compare the results.
 
 """
 ###############################################################################
-# A finite element analysis of elastic contact problem
-# ====================================================
+# Finite element analysis of elastic contact problem
+# ==================================================
 #
 # In this example of a deformable ``cylinder 1`` enters in contact with a
 # deformable  ``cylinder 2``. We use here python interface, translate this
